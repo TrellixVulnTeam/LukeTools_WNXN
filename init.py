@@ -1,6 +1,7 @@
 nuke.tprint('LukeTools init.py')
 
-#higx tools
+
+nuke.pluginAddPath('pixelfudger')
 nuke.pluginAddPath('./higx/PointRender')
 
 
