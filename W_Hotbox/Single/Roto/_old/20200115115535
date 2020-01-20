@@ -1,0 +1,11 @@
+#----------------------------------------------------------------------------------------------------------
+#
+# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
+#
+# NAME: freeze Animation
+#
+#----------------------------------------------------------------------------------------------------------
+
+import freezeRoto
+reload(freezeRoto)
+freezeRoto.freezeRoto()
