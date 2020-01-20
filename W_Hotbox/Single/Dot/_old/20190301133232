@@ -1,0 +1,21 @@
+#----------------------------------------------------------------------------------------------------------
+#
+# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
+#
+# NAME: make Connector
+# COLOR: #54360f
+#
+#----------------------------------------------------------------------------------------------------------
+
+selection = nuke.selectedNodes()
+
+if len(selection) == 1:
+    n = selection[0]
+    
+    if "Connector" not in n.name():
+        txt = nuke.getInput('Change label', 'new label')
+
+        if txt:
+            n.setName("Connector")
+            n.knob('note_font_size').setValue(44)
+            n.knob('label').setValue(txt.upper())
