@@ -1,0 +1,27 @@
+#----------------------------------------------------------------------------------------------------------
+#
+# AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
+#
+# NAME: DotLow
+#
+#----------------------------------------------------------------------------------------------------------
+
+nodes = nuke.selectedNodes()
+dot = nuke.Node('Dot')
+
+if len(nodes) == 2:
+
+    if nodes[0].ypos() > nodes[1].ypos():
+        upper = nodes[1]
+        lower = nodes[0]
+
+    else:
+        upper = nodes[0]
+        lower = nodes[1]
+
+    dot.setXpos(upper.xpos()+upper.screenWidth()/2-dot.screenWidth()/2)
+    dot.setYpos(lower.ypos()+lower.screenHeight()/2-dot.screenHeight()/2)
+    dot.setInput(0,upper)
+    lower.setInput(0,dot)
+
+
