@@ -10,10 +10,17 @@ lukeGizmosMenu = nuke.toolbar("Nodes").addMenu( "Luke" )
 #Gizmos
 lukeGizmosMenu.addCommand("AdvancedGrain", "nuke.createNode('AdvancedGrain')", '')
 lukeGizmosMenu.addCommand("expoglow", "nuke.createNode('expoglow')", '')
+lukeGizmosMenu.addCommand("GradMagic", "nuke.createNode('gradmagic')", '')
+lukeGizmosMenu.addCommand("DespillMadness", "nuke.createNode('DespillMadness')", '')
+lukeGizmosMenu.addCommand("KeyEdgeExtend", "nuke.createNode('KeyEdgeExtend')", '')
+
+import pixelfudger
 
 import sb_backdrop
 lukeGizmosMenu.addCommand("sb Backdrop", 'sb_backdrop.sb_backdrop()', '')
 
+
+#Tools
 import channel_hotbox
 nuke.menu('Nuke').findItem('Edit').addCommand('HotBox', 'channel_hotbox.start()', 'shift+v')
 
@@ -23,9 +30,6 @@ nuke.menu( 'Nuke' ).addCommand( 'Luke/Label connector', "labelConnector.runLabel
 import AnimationMaker  
 
 import W_hotbox, W_hotboxManager
-
-import pixelfudger
-
 
 #searchReplacePanel
 import SearchReplacePanel
@@ -40,3 +44,4 @@ nuke.menu('Pane').addCommand('SearchReplace', addSRPanel)
  
 #THIS LINE WILL REGISTER THE PANEL SO IT CAN BE RESTORED WITH LAYOUTS
 nukescripts.registerPanel('com.ohufx.SearchReplace', addSRPanel)
+#searchReplacePanelEnd

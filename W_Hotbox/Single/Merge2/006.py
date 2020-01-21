@@ -2,10 +2,10 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: BBox Union
-# COLOR: #684539
+# NAME: Multiply
 #
 #----------------------------------------------------------------------------------------------------------
 
 for i in nuke.selectedNodes():
-    i.knob('bbox').setValue('union')
+    i.knob('output').setValue('rgba')
+    i.knob('operation').setValue('multiply')

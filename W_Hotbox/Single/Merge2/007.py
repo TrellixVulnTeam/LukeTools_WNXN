@@ -2,10 +2,10 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: BBox B
-# COLOR: #684539
+# NAME: Copy
 #
 #----------------------------------------------------------------------------------------------------------
 
 for i in nuke.selectedNodes():
-    i.knob('bbox').setValue('B')
+    i.knob('output').setValue('rgba')
+    i.knob('operation').setValue('copy')

@@ -2,10 +2,10 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: rgba
+# NAME: rgb
 # COLOR: #50523b
 #
 #----------------------------------------------------------------------------------------------------------
 
 for i in nuke.selectedNodes():
-    i.knob('output').setValue('rgba')
+    i.knob('output').setValue('rgb')

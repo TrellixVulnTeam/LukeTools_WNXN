@@ -1,0 +1,267 @@
+Group {
+name KeyEdgeExtend
+tile_color 0xff9f15ff
+selected true
+xpos -1315
+ypos 777
+addUserKnob {20 KeyEdgeExtend}
+addUserKnob {4 method M {blur levelset}}
+addUserKnob {7 mainerode t "The amount of pixels to erode the core with (the kept FG layer)" R 0 5}
+mainerode 4
+addUserKnob {7 alphaerode t "The amount of pixels to erode the matte with to later be blurred and extended." R 0 5}
+alphaerode 3
+addUserKnob {4 mode M {normal min max}}
+addUserKnob {26 divider_blur l "blur parameters "}
+addUserKnob {7 alphablur t "The amount of pixels to blur the edge features with (sets the amount of edge extention)" R 0 10}
+alphablur 5
+addUserKnob {26 divider_levelset l "levelset parameters "}
+addUserKnob {7 threshold}
+threshold 0.5
+addUserKnob {7 extend R 0 100}
+extend 20
+addUserKnob {7 levelsetblur l blur R 0 20}
+levelsetblur 4
+addUserKnob {7 blurerode R 0 10}
+blurerode 2
+}
+Input {
+inputs 0
+name img
+xpos -348
+ypos 84
+}
+Dot {
+name Dot65
+xpos -314
+ypos 156
+}
+set N7796a800 [stack 0]
+Dot {
+name Dot66
+xpos -100
+ypos 156
+}
+Dot {
+name Dot67
+xpos -100
+ypos 724
+}
+set N7c3ee000 [stack 0]
+Dot {
+name Dot2
+xpos -100
+ypos 852
+}
+set N7c3ef800 [stack 0]
+push $N7c3ee000
+push $N7796a800
+Unpremult {
+name Unpremult9
+xpos -348
+ypos 210
+}
+FilterErode {
+channels alpha
+size {{parent.mainerode i}}
+name mainerode
+xpos -348
+ypos 255.5
+}
+Premult {
+name Premult8
+xpos -348
+ypos 310.5
+}
+push $N7796a800
+Dot {
+name Dot7
+xpos -488
+ypos 156
+}
+set N58a03000 [stack 0]
+FilterErode {
+channels alpha
+size {{parent.blurerode}}
+name alphaerode1
+selected true
+xpos -522
+ypos 238
+}
+Invert {
+name Invert1
+xpos -522
+ypos 452
+}
+Dot {
+name Dot8
+xpos -488
+ypos 521
+}
+push $N58a03000
+Dot {
+name Dot68
+xpos -698
+ypos 156
+}
+FilterErode {
+channels alpha
+size {{parent.alphaerode}}
+name alphaerode
+xpos -732
+ypos 243
+}
+Premult {
+name Premult9
+xpos -732
+ypos 309
+}
+set Ne10bb000 [stack 0]
+Unpremult {
+name Unpremult4
+xpos -653
+ypos 373
+}
+AdjBBox {
+numpixels {{parent.extend}}
+name AdjBBox1
+xpos -653
+ypos 399
+}
+LevelSet {
+threshold {{parent.threshold}}
+output -rgba.alpha
+create_matte true
+matte_limit {{parent.extend}}
+extrapolated rgb
+name LevelSet1
+xpos -653
+ypos 453
+}
+Blur {
+inputs 1+1
+size {{parent.levelsetblur}}
+name Blur1
+label "size \[value size]"
+xpos -653
+ypos 505
+}
+set Ne10ba000 [stack 0]
+push $Ne10bb000
+Blur {
+size {{parent.alphablur i}}
+name alphablur
+xpos -819
+ypos 374
+}
+Unpremult {
+name Unpremult8
+xpos -819
+ypos 412
+}
+Dot {
+name Dot9
+xpos -785
+ypos 527
+}
+Switch {
+inputs 2
+which {{parent.method}}
+name Switch1
+xpos -727
+ypos 594
+}
+Dot {
+name Dot1
+xpos -693
+ypos 671
+}
+Merge2 {
+inputs 2
+name Merge19
+xpos -348
+ypos 667
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy1
+xpos -348
+ypos 714
+}
+Premult {
+name Premult10
+xpos -348
+ypos 785
+}
+CopyBBox {
+inputs 2
+name CopyBBox1
+xpos -348
+ypos 848
+}
+Dot {
+name Dot3
+xpos -314
+ypos 935
+}
+set Nf3fe3800 [stack 0]
+Dot {
+name Dot4
+xpos -221
+ypos 935
+}
+set Nf3fe3400 [stack 0]
+push $N7c3ef800
+Dot {
+name Dot5
+xpos -100
+ypos 933
+}
+set Nf3fe3000 [stack 0]
+Merge2 {
+inputs 2
+operation max
+name Max
+xpos -134
+ypos 1078
+}
+Dot {
+name Dot6
+xpos -100
+ypos 1177
+}
+push $Nf3fe3400
+push $Nf3fe3000
+Merge2 {
+inputs 2
+operation min
+name Min
+xpos -255
+ypos 1078
+}
+push $Nf3fe3800
+Switch {
+inputs 3
+which {{parent.mode}}
+name Switch2
+xpos -348
+ypos 1173
+}
+Output {
+name Output1
+xpos -348
+ypos 1272
+}
+push $Ne10ba000
+push $Ne10ba000
+Viewer {
+inputs 2
+frame 1011
+frame_range 1001-1120
+viewerProcess "Rec.709 (ACES)"
+name Viewer1
+xpos 614
+ypos 1134
+}
+end_group

@@ -2,10 +2,9 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: BBox Union
-# COLOR: #684539
+# NAME: All
 #
 #----------------------------------------------------------------------------------------------------------
 
 for i in nuke.selectedNodes():
-    i.knob('bbox').setValue(0)
+    i.knob('channels').setValue('all')

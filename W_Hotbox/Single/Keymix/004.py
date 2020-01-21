@@ -2,9 +2,9 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: BBox Union/B
+# NAME: alpha
 #
 #----------------------------------------------------------------------------------------------------------
 
 for i in nuke.selectedNodes():
-	i.knob('bbox').setValue(1-int(i.knob('bbox').getValue()))
+    i.knob('channels').setValue('alpha')
