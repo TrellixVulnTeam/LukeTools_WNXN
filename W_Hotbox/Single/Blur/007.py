@@ -7,7 +7,6 @@
 #
 #----------------------------------------------------------------------------------------------------------
 
-
 def emptySelection(selection):
     for i in selection:
         i.knob('selected').setValue(False)
@@ -27,10 +26,10 @@ for i in selection:
     dotNode.setYpos(postion[1]-dotNode.screenHeight()/2)
     
     blurNode.setXpos(postion[0]+200-blurNode.screenWidth()/2)
-    blurNode.setYpos(postion[1]-50+blurNode.screenHeight()/2)
+    blurNode.setYpos(postion[1]-70+blurNode.screenHeight()/2)
 
     rotoNode.setXpos(postion[0]+200-rotoNode.screenWidth()/2)
-    rotoNode.setYpos(postion[1]-80+rotoNode.screenHeight()/2)
+    rotoNode.setYpos(postion[1]-110+rotoNode.screenHeight()/2)
 
     i.setInput(1,dotNode)
     nuke.show(blurNode)

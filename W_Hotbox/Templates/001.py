@@ -3,7 +3,8 @@
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
 # NAME: New Mask
-# COLOR: #305132
+# COLOR: #262626
+# TEXTCOLOR: #262626
 #
 #----------------------------------------------------------------------------------------------------------
 

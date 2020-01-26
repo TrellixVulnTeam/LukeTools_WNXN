@@ -41,21 +41,25 @@ def getCornerPinMatrixAtFrame(node, frame, refFrame):
 
 
 #--------------------------------''' Define Frame Range'''---------------------------------    
-    
-frames = nuke.getFramesAndViews('get FrameRange', '%s-%s' % (nuke.root().firstFrame(), nuke.root().lastFrame()))
+
+p = nuke.Panel('Rotomatrix')
+p.addSingleLineInput('Frames', '%s-%s' % (nuke.root().firstFrame(), nuke.root().lastFrame()))
+p.addSingleLineInput('Ref Frame',nuke.frame())
 
 
-if (frames):
+ret = p.show()
+
+
+if (ret):
+    frames = p.value('Frames')
+    ref = int(p.value('Ref Frame'))
     
-    frame_range = nuke.FrameRange( frames[0] )
+    frame_range = nuke.FrameRange( frames )
     
     for n in nuke.selectedNodes():
     
         n["selected"].setValue(False)
-        
-        ref = 1105
-        
-        
+             
         c = nuke.createNode("Roto")
         c.setInput(0,None)
         c.setInput(1,None)
@@ -74,7 +78,7 @@ if (frames):
         
         tn = str(n['name'].getValue())
         tr = str(frame_range)
-        c["label"].setValue('Matrix -- ' + tn + '\n FrameRange ' + tr)
+        c["label"].setValue('Matrix -- ' + tn + '\nFrameRange ' + tr + '\nRef Frame ' + str(ref))
         
         xpos = n['xpos'].value()
         ypos = n['ypos'].value()

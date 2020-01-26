@@ -41,40 +41,50 @@ def getCornerPinMatrixAtFrame(node, frame, refFrame):
 
 
 #--------------------------------''' Define Frame Range'''---------------------------------    
+
+p = nuke.Panel('Rotomatrix')
+p.addSingleLineInput('Frames', '%s-%s' % (nuke.root().firstFrame(), nuke.root().lastFrame()))
+p.addSingleLineInput('Ref Frame',nuke.frame())
+
+
+ret = p.show()
+
+
+if (ret):
+    frames = p.value('Frames')
+    ref = int(p.value('Ref Frame'))
     
-frames = nuke.getFramesAndViews('get FrameRange', '%s-%s' % (nuke.root().firstFrame(), nuke.root().lastFrame()))
-frame_range = nuke.FrameRange( frames[0] )
-
-
-
-
-n = nuke.selectedNode()
-n["selected"].setValue(False)
-
-ref = 1001
-
-
-c = nuke.createNode("RotoPaint")
-
-curve = c['curves']
-root = curve.rootLayer
-transform = root.getTransform()
-
-
-for i in frame_range:
-    matrix = getCornerPinMatrixAtFrame(n, i, ref)
-    for j in range(16):
-        extraMatrixKnob = transform.getExtraMatrixAnimCurve(0,j)
-        extraMatrixKnob.addKey(i,matrix[j])
-
-tn = str(n['name'].getValue())
-tr = str(frame_range)
-c["label"].setValue('Matrix -- ' + tn + '\n FrameRange ' + tr)
-
-xpos = n['xpos'].value()
-ypos = n['ypos'].value()
-            
-c_width = c.screenWidth()
-c_height = c.screenHeight()
-            
-c.setXYpos(int(xpos) + int(c_width) + 50 , int(ypos))
+    frame_range = nuke.FrameRange( frames )
+    
+    for n in nuke.selectedNodes():
+    
+        n["selected"].setValue(False)
+             
+        c = nuke.createNode("RotoPaint")
+        c.setInput(0,None)
+        c.setInput(1,None)
+        c.setInput(2,None)
+        
+        curve = c['curves']
+        root = curve.rootLayer
+        transform = root.getTransform()
+        
+        
+        for i in frame_range:
+            matrix = getCornerPinMatrixAtFrame(n, i, ref)
+            for j in range(16):
+                extraMatrixKnob = transform.getExtraMatrixAnimCurve(0,j)
+                extraMatrixKnob.addKey(i,matrix[j])
+        
+        tn = str(n['name'].getValue())
+        tr = str(frame_range)
+        c["label"].setValue('Matrix -- ' + tn + '\nFrameRange ' + tr + '\nRef Frame ' + str(ref))
+        
+        xpos = n['xpos'].value()
+        ypos = n['ypos'].value()
+                    
+        c_width = c.screenWidth()
+        c_height = c.screenHeight()
+                    
+        c.setXYpos(int(xpos) + int(c_width) + 50 , int(ypos))
+    

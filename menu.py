@@ -10,6 +10,7 @@ lukeGizmosMenu = nuke.toolbar("Nodes").addMenu( "Luke" )
 #Gizmos
 lukeGizmosMenu.addCommand("AdvancedGrain", "nuke.createNode('AdvancedGrain')", '')
 lukeGizmosMenu.addCommand("expoglow", "nuke.createNode('expoglow')", '')
+lukeGizmosMenu.addCommand("UnsharpMask", "nuke.createNode('UnsharpMask')", '')
 lukeGizmosMenu.addCommand("GradMagic", "nuke.createNode('gradmagic')", '')
 lukeGizmosMenu.addCommand("DespillMadness", "nuke.createNode('DespillMadness')", '')
 lukeGizmosMenu.addCommand("KeyEdgeExtend", "nuke.createNode('KeyEdgeExtend')", '')
