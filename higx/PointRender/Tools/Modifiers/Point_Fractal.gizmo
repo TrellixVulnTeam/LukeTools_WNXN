@@ -3,7 +3,7 @@ Group {
  tile_color 0x434343ff
  note_font_color 0x7dadf9ff
  addUserKnob {20 User t test}
- addUserKnob {26 _1 l "" +STARTLINE T "Point Fractal 1.1\n"}
+ addUserKnob {26 info l "" +STARTLINE T "Point Fractal 1.11\n"}
  addUserKnob {26 devider_noise l "<b><font color=#7DADF9>Noise Settings</font><b>"}
  addUserKnob {6 EnableOffset l "Enable Offset Input" t "Put a map into the \"Offset\" input of this node to modulate the noise based on the luminance of the map.\n\nThe red channal controls the low frequencies while the green channel controls the high frequencies.\n\nYou can for example use this to create a radially shaped noise." +STARTLINE}
  addUserKnob {6 Noise_Absolute l "Absolute Noise" t "Negative values in the noise offset is made positive." -STARTLINE}
@@ -16,107 +16,38 @@ Group {
  addUserKnob {18 Amplitude}
  Amplitude 0.5
  addUserKnob {6 Amplitude_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Amplitude_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Amplitude_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Amplitude_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Amplitude_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Amplitude_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Amplitude_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Amplitude_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Amplitude_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Amplitude_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {3 Itterations}
+ addUserKnob {3 Itterations l Iterations}
  Itterations 1
  addUserKnob {26 invis_devider_noise l "" +STARTLINE T " "}
  addUserKnob {26 Devider_Frequency l "<b><font color=#7DADF9>Freq Control</font><b>"}
  addUserKnob {19 Freq_Offset l "General Offset" t "This is like a 3D translation, letting you move the current noise pattern in the X, Y, Z and W (4th dimention)" R 0 10}
  Freq_Offset {0 0 0 0}
  addUserKnob {6 Freq_Offset_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_Offset_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_Offset_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_Offset_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_Offset_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_Offset_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_Offset_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_Offset_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_Offset_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_Offset_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_Offset_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {19 Freq_GeneralScale l "Genral Scale" t "This lets you control the scale of each individual noise axis."}
  Freq_GeneralScale 1
  addUserKnob {6 Freq_GeneralScale_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_GeneralScale_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_GeneralScale_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_GeneralScale_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_GeneralScale_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_GeneralScale_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_GeneralScale_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_GeneralScale_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_GeneralScale_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_GeneralScale_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_GeneralScale_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {26 invis_devider_freq l "" +STARTLINE T " "}
  addUserKnob {19 Freq_EvolveLow l "Evolve Low" t "This lets you evolve (auto animate) the noise in a particular direction. The \"Low\" part means that this only affects the low frequencies.\n\nTo avoid a \"scrolling\" effect you can use the 4th dimention to break up the spatial cohearence." R 0 10}
  Freq_EvolveLow {0.5 0 0 0.5}
  addUserKnob {6 Freq_EvolveLow_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_EvolveLow_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_EvolveLow_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_EvolveLow_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_EvolveLow_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_EvolveLow_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_EvolveLow_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_EvolveLow_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_EvolveLow_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_EvolveLow_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_EvolveLow_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {6 Freq_ScaleLow_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {19 Freq_EvolveHigh l "Evolve High" t "This lets you evolve (auto animate) the noise in a particular direction. The \"High\" part means that this only affects the high frequencies.\n\nTo avoid a \"scrolling\" effect you can use the 4th dimention to break up the spatial cohearence."}
  Freq_EvolveHigh {0 0 0 0}
  addUserKnob {6 Freq_EvolveHigh_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_EvolveHigh_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_EvolveHigh_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_EvolveHigh_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_EvolveHigh_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_EvolveHigh_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_EvolveHigh_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_EvolveHigh_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_EvolveHigh_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_EvolveHigh_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_EvolveHigh_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {26 invis_devider_freq2 l "" +STARTLINE T " "}
  addUserKnob {19 Freq_ScaleLow l "Scale Low" t "This lets you scale the noise in a particular axis. The \"Low\" part means that this only affects the low frequencies."}
  Freq_ScaleLow {1 1 1 1}
  addUserKnob {6 Freq_ScaleLow_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_ScaleLow_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_ScaleLow_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_ScaleLow_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_ScaleLow_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_ScaleLow_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_ScaleLow_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_ScaleLow_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_ScaleLow_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_ScaleLow_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_ScaleLow_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {19 Freq_ScaleHigh l "Scale High" t "This lets you scale the noise in a particular axis. The \"High\" part means that this only affects the high frequencies."}
  Freq_ScaleHigh {1 1 1 1}
  addUserKnob {6 Freq_ScaleHigh_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_ScaleHigh_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_ScaleHigh_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_ScaleHigh_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_ScaleHigh_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_ScaleHigh_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_ScaleHigh_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_ScaleHigh_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_ScaleHigh_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_ScaleHigh_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 Freq_ScaleHigh_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {26 invis_devider_freq3 l "" +STARTLINE T " "}
  addUserKnob {26 Curve l "<b><font color=#7DADF9>Curve Noise</font><b>"}
  addUserKnob {6 CurveNoise_Enable l Enable t "Adds a gamma curve to the noise intensity making noise near the \"Offset\" value more flat. This is a experimental feature." +STARTLINE}
  addUserKnob {6 CurveNoise_Invert l Invert t "Inverts the effect of the curved noise." -STARTLINE}
  addUserKnob {7 CurveGain l "Curve Gain" R -10 10}
  CurveGain 3
- addUserKnob {7 CurveOffset R -2 2}
+ addUserKnob {7 CurveOffset l "Curve Offset" R -2 2}
  addUserKnob {26 gabgen l "" +STARTLINE T "\n"}
  addUserKnob {26 info_mask l "<b><font color=#7DADF9>Mask</font><b>"}
  addUserKnob {41 maskChannelMask l "" t "If a node is connected to the mask input, this will let you mask off the effect of the noise.\nIts recommended that you use the Point_Texture node to ensure a correct aspect and size." -STARTLINE T Merge1.maskChannelMask}
@@ -170,7 +101,7 @@ Group {
   xpos -548
   ypos 114
  }
-set N618db000 [stack 0]
+set N61d2e400 [stack 0]
 add_layer {pos pos.red pos.green pos.blue pos.alpha}
  Shuffle {
   in pos
@@ -178,7 +109,7 @@ add_layer {pos pos.red pos.green pos.blue pos.alpha}
   xpos -470
   ypos 110
  }
-set N618dac00 [stack 0]
+set N61d2e000 [stack 0]
  Multiply {
   value 0
   name Multiply1
@@ -192,7 +123,7 @@ set N618dac00 [stack 0]
   xpos -338
   ypos 150
  }
-push $N618dac00
+push $N61d2e000
  BlinkScript {
   inputs 2
   kernelSourceFile /Users/madshagbarth/Github/Nuke-Private/Blink/PointRender/Modify/Fractal_v08.cpp
@@ -222,7 +153,7 @@ push $N618dac00
   xpos -338
   ypos 321
  }
-push $N618dac00
+push $N61d2e000
  BlinkScript {
   kernelSourceFile /Users/madshagbarth/Github/Nuke-Private/Blink/PointRender/Modify/Fractal_v06.cpp
   recompileCount 60
@@ -273,7 +204,7 @@ push $N618dac00
   xpos -470
   ypos 420
  }
-push $N618db000
+push $N61d2e400
  Merge2 {
   inputs 2+1
   operation copy
@@ -291,7 +222,7 @@ push $N618db000
   xpos -582
   ypos 587
  }
-push $N618db000
+push $N61d2e400
  Crop {
   box {0 0 {width} {height}}
   reformat true

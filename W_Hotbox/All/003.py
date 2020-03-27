@@ -2,10 +2,20 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: change Multiple Knobs
-# COLOR: #6b4205
+# NAME: paste to each selected
+# COLOR: #434e52
 #
 #----------------------------------------------------------------------------------------------------------
 
-import mvHamNukePy.mvChangeKnobs
-mvHamNukePy.mvChangeKnobs.changeKnobs()
+selection = nuke.selectedNodes()
+
+for i in selection:
+    i.knob('selected').setValue('False')
+
+for i in selection:
+    i.knob('selected').setValue('True')
+    nuke.nodePaste('%clipboard%')
+    i.knob('selected').setValue('False')
+
+for i in selection:
+    i.knob('selected').setValue('True')

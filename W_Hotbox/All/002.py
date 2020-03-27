@@ -2,20 +2,20 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: paste to each selected
-# COLOR: #434e52
+# NAME: add enableOnRender
+# COLOR: #524641
 #
 #----------------------------------------------------------------------------------------------------------
 
-selection = nuke.selectedNodes()
+nodes = nuke.selectedNodes()
 
-for i in selection:
-    i.knob('selected').setValue('False')
+for n in nodes:
 
-for i in selection:
-    i.knob('selected').setValue('True')
-    nuke.nodePaste('%clipboard%')
-    i.knob('selected').setValue('False')
-
-for i in selection:
-    i.knob('selected').setValue('True')
+    str = n.knob('label').getValue()
+    
+    if n.Class() != ('Dot') and n.Class() != ('BackdropNode'):
+        if "enableOnRender" not in str:
+            if str == '':
+                n.knob('label').setValue(str + r'enableOnRender')    
+            else:
+                n.knob('label').setValue(str + r' \n enableOnRender')

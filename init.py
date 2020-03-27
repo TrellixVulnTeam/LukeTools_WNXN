@@ -5,6 +5,3 @@ nuke.pluginAddPath('pixelfudger')
 nuke.pluginAddPath('./higx/PointRender')
 
 nuke.pluginAddPath('gizmos')
-
-
-
