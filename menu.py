@@ -3,6 +3,7 @@ nuke.tprint('LukeTools menu.py')
 #knobDefaults
 nuke.knobDefault('Roto.cliptype', "0")
 nuke.knobDefault('Merge.bbox', "B")
+nuke.knobDefault('Write.create_directories', "1")
 
 #Menues
 lukeGizmosMenu = nuke.toolbar("Nodes").addMenu( "Luke" )
