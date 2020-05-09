@@ -1,9 +1,18 @@
 nuke.tprint('LukeTools menu.py')
 
+if __lukescripts_local__:
+    nuke.tprint('local LukeTools menu.py')
+    import L_newProject
+    nuke.menu( 'Nuke' ).addCommand( 'Luke/new Project', "L_newProject.L_newProject()")
+
+    import L_callbacks
+    nuke.addOnCreate(L_callbacks.writeNodeFields, nodeClass= "Write")
+
 #knobDefaults
 nuke.knobDefault('Roto.cliptype', "0")
 nuke.knobDefault('Merge.bbox', "B")
 nuke.knobDefault('Write.create_directories', "1")
+nuke.knobDefault('Write.file_type', "exr")
 
 #Menues
 lukeGizmosMenu = nuke.toolbar("Nodes").addMenu( "Luke" )
@@ -21,10 +30,9 @@ import pixelfudger
 import sb_backdrop
 lukeGizmosMenu.addCommand("sb Backdrop", 'sb_backdrop.sb_backdrop()', '')
 
-
 #Tools
 import channel_hotbox
-nuke.menu('Nuke').findItem('Edit').addCommand('HotBox', 'channel_hotbox.start()', 'shift+v')
+nuke.menu('Nuke').findItem('Edit').addCommand('HotBox', 'channel_hotbox.start()', 'alt+v')
 
 import labelConnector
 nuke.menu( 'Nuke' ).addCommand( 'Luke/Label connector', "labelConnector.runLabelMatch()", 'ctrl+shift+y' )
@@ -47,3 +55,4 @@ nuke.menu('Pane').addCommand('SearchReplace', addSRPanel)
 #THIS LINE WILL REGISTER THE PANEL SO IT CAN BE RESTORED WITH LAYOUTS
 nukescripts.registerPanel('com.ohufx.SearchReplace', addSRPanel)
 #searchReplacePanelEnd
+

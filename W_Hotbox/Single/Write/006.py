@@ -7,11 +7,11 @@
 #
 #----------------------------------------------------------------------------------------------------------
 
-import LL_pyseq
+import L_pyseq
 
 for node  in nuke.selectedNodes():
     if node["file"].value():
-        seq = LL_pyseq.img2pyseq(node["file"].value())
+        seq = L_pyseq.img2pyseq(node["file"].value())
         read = nuke.nodes.Read(file=node["file"].value(), 
                                     xpos=node.xpos()+0,
                                     ypos=node.ypos()+100,

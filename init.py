@@ -1,5 +1,15 @@
+# global __lukescripts_local__
+__lukescripts_local__ = True
+
 nuke.tprint('LukeTools init.py')
 
+if __lukescripts_local__:
+    nuke.tprint('local LukeTools init.py')
+
+    import L_callbacks
+    nuke.addBeforeRender(L_callbacks.updateAllWriteNames)
+    nuke.addBeforeRender(L_callbacks.enableOnRender)
+    nuke.addKnobChanged(L_callbacks.updateWriteName, nodeClass="Write")
 
 nuke.pluginAddPath('pixelfudger')
 nuke.pluginAddPath('./higx/PointRender')

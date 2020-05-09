@@ -1,4 +1,11 @@
 {
     "python.pythonPath": "C:\\Python27\\python.exe",
-    "python.autoComplete.extraPaths": ["C:/Program Files/Nuke12.0v3/pythonextensions"]
+    "python.formatting.autopep8Args": [
+        "--max-line-length",
+        "150"
+    ],
+    "python.autoComplete.extraPaths": [
+        "C:/Program Files/Nuke12.0v3/pythonextensions"
+    ],
+    "editor.formatOnSave": false
 }

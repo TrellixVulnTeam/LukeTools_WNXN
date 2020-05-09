@@ -13,8 +13,6 @@ nodes = nuke.allNodes()
 
 for n in nodes:
 
-    str = n.knob('label').getValue()
-
-    if "enableOnRender" in str:
+    if "enableOnRender" in n.knob('label').getValue():
         n.knob('disable').setValue(True)
         
