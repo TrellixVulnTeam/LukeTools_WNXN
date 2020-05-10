@@ -56,3 +56,7 @@ nuke.menu('Pane').addCommand('SearchReplace', addSRPanel)
 nukescripts.registerPanel('com.ohufx.SearchReplace', addSRPanel)
 #searchReplacePanelEnd
 
+import knob_scripter
+
+import RetimeCamera
+nuke.menu( 'Nuke' ).addCommand( 'Luke/Retime Camera', 'RetimeCamera.create_RCPanel()')

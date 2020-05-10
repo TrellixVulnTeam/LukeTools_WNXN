@@ -52,14 +52,15 @@ def enableOnRender():
 def writeNodeFields():
     n = nuke.thisNode()
 
-    k = nuke.Tab_Knob("Luke","Luke")
-    n.addKnob(k)
+    if not n.knob('Luke'):
+        k = nuke.Tab_Knob("Luke","Luke")
+        n.addKnob(k)
 
-    k = nuke.Boolean_Knob("pre","Pre Render")
-    n.addKnob(k)
+        k = nuke.Boolean_Knob("pre","Pre Render")
+        n.addKnob(k)
 
-    k = nuke.String_Knob("preLabel","Pre Render Label")
-    n.addKnob(k)
+        k = nuke.String_Knob("preLabel","Pre Render Label")
+        n.addKnob(k)
 
-    k = nuke.String_Knob("versionOverride","Render Version Override")
-    n.addKnob(k)
+        k = nuke.String_Knob("versionOverride","Render Version Override")
+        n.addKnob(k)

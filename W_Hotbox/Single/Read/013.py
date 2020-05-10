@@ -7,10 +7,10 @@
 #
 #----------------------------------------------------------------------------------------------------------
 
-import pyseq
+import L_pyseq
 writes = list()
 for read in nuke.selectedNodes():
-    seq = pyseq.img2pyseq(read["file"].value())
+    seq = L_pyseq.img2pyseq(read["file"].value())
     if seq:
         write = nuke.nodes.Write()
         write["file_type"].setValue("exr")
