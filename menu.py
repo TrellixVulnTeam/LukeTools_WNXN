@@ -1,5 +1,7 @@
 nuke.tprint('LukeTools menu.py')
 
+import nukescripts
+
 if __lukescripts_local__:
     nuke.tprint('local LukeTools menu.py')
     import L_newProject
@@ -60,3 +62,7 @@ import knob_scripter
 
 import RetimeCamera
 nuke.menu( 'Nuke' ).addCommand( 'Luke/Retime Camera', 'RetimeCamera.create_RCPanel()')
+
+# custom Drag and Drop Handler
+import L_dragDropHandler
+nukescripts.drop.addDropDataCallback(L_dragDropHandler.dropHandler)
