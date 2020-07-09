@@ -3,7 +3,7 @@ import nukescripts
 import subprocess
 
 def djvViewThis(selectedNodes):
-    filename = ''
+    args = ''
     for n in selectedNodes:
         name = n.knob('file').value()
         if "%0" in name:
@@ -11,11 +11,17 @@ def djvViewThis(selectedNodes):
         
         colorspace = n.knob('colorspace').value()
 
-        filename += '"%s" -ocio_image "%s" ' %(name, colorspace)
-    openDjvView(filename)
+        if 'default (' in colorspace:
+            colorspace = colorspace[9:-1]
 
-def openDjvView(filename):
+        args += '"%s" -ocio_image "%s" ' %(name, colorspace)
 
-    call = 'C:\\Program Files\\DJV2\\bin\\djv.exe %s' %(filename)
+    args += '-speed "%s"' %(str(int(nuke.root().knob('fps').value())))
+    args += ' -frame "%s"' %(str(nuke.frame()))
+    openDjvView(args)
+
+def openDjvView(args):
+
+    call = 'C:\\Program Files\\DJV2\\bin\\djv.exe %s' %(args)
     print call
     subprocess.Popen(call)

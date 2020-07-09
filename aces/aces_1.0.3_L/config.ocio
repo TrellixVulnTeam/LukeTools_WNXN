@@ -6,6 +6,9 @@ luma: [0.2126, 0.7152, 0.0722]
 
 description: An ACES config generated from python
 
+roles:
+  scene_linear: ACES - ACEScg
+
 
 displays:
   ACES:
