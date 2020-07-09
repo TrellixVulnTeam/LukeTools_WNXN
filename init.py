@@ -26,4 +26,14 @@ nuke.pluginAddPath('./higx/PointRender')
 
 nuke.pluginAddPath('gizmos')
 
-nuke.pluginAddPath('pythonlibrary')
+nuke.pluginAddPath( './gizmos/bm_NukeTools' )
+
+nuke.pluginAddPath('icons')
+
+
+
+nuke.pluginAddPath('./GradientEditor')
+nuke.pluginAddPath('./GradientEditor/icons')
+nuke.pluginAddPath('./GradientEditor/tools')
+nuke.pluginAddPath('./GradientEditor/grapichs')
+nuke.pluginAddPath('./GradientEditor/python')

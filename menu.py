@@ -31,12 +31,30 @@ nuke.knobDefault('Merge.bbox', "B")
 lukeGizmosMenu = nuke.toolbar("Nodes").addMenu( "Luke" )
 
 #Gizmos
-lukeGizmosMenu.addCommand("AdvancedGrain", "nuke.createNode('AdvancedGrain')", '')
-lukeGizmosMenu.addCommand("expoglow", "nuke.createNode('expoglow')", '')
-lukeGizmosMenu.addCommand("UnsharpMask", "nuke.createNode('UnsharpMask')", '')
-lukeGizmosMenu.addCommand("GradMagic", "nuke.createNode('gradmagic')", '')
-lukeGizmosMenu.addCommand("DespillMadness", "nuke.createNode('DespillMadness')", '')
-lukeGizmosMenu.addCommand("KeyEdgeExtend", "nuke.createNode('KeyEdgeExtend')", '')
+lukeGizmosMenu.addCommand("L_AdvancedGrain", "nuke.createNode('L_AdvancedGrain')", '')
+lukeGizmosMenu.addCommand("L_expoglow", "nuke.createNode('L_expoglow')", '')
+lukeGizmosMenu.addCommand("L_UnsharpMask", "nuke.createNode('L_UnsharpMask')", '')
+lukeGizmosMenu.addCommand("L_GradMagic", "nuke.createNode('L_gradmagic')", '')
+lukeGizmosMenu.addCommand("L_DespillMadness", "nuke.createNode('L_DespillMadness')", '')
+lukeGizmosMenu.addCommand("L_LUE4NUKE", "nuke.createNode('L_LUE4NUKE')", '')
+lukeGizmosMenu.addCommand("L_GradientEditor", "nuke.createNode('h_gradienteditor')", '')
+lukeGizmosMenu.addCommand("L_Deflicker_Velocity", "nuke.createNode('L_Deflicker_Velocity')", '')
+
+lukeGizmosMenu.addCommand("EdgeExtend/L_KeyEdgeExtend", "nuke.createNode('L_KeyEdgeExtend')", '')
+lukeGizmosMenu.addCommand("EdgeExtend/L_FillSampler", "nuke.createNode('L_FillSampler')", '')
+lukeGizmosMenu.addCommand("EdgeExtend/L_Pixelspread", "nuke.createNode('L_Pixelspread')", '')
+
+lukeGizmosMenu.addCommand("X_Tools/L_X_Aton", "nuke.createNode('L_X_Aton')", '')
+lukeGizmosMenu.addCommand("X_Tools/L_X_Distort", "nuke.createNode('L_X_Distort')", '')
+lukeGizmosMenu.addCommand("X_Tools/L_X_Tesla", "nuke.createNode('L_X_Tesla')", '')
+
+lukeGizmosMenu.addCommand('bm/L_bm_OpticalGlow', 'nuke.createNode("L_bm_OpticalGlow")', icon="bm_OpticalGlow_icon.png")
+lukeGizmosMenu.addCommand('bm/L_bm_Lightwrap', 'nuke.createNode("L_bm_Lightwrap")', icon="bm_Lightwrap_icon.png")
+lukeGizmosMenu.addCommand('bm/L_bm_NoiseGen', 'nuke.createNode("L_bm_NoiseGen")', icon="bm_NoiseGen_icon.png")
+lukeGizmosMenu.addCommand('bm/L_bm_CurveRemapper', 'nuke.createNode("L_bm_CurveRemapper")', icon="bm_CurveRemapper_icon.png")
+lukeGizmosMenu.addCommand('bm/L_bm_CameraShake', 'nuke.createNode("L_bm_CameraShake")', icon="bm_CameraShake_icon.png")
+lukeGizmosMenu.addCommand('bm/L_bm_EdgeMatte', 'nuke.createNode("L_bm_EdgeMatte")', icon="BlackOutside.png")
+lukeGizmosMenu.addCommand('bm/L_bm_MatteCheck', 'nuke.createNode("L_bm_MatteCheck")', icon="bm_MatteCheck_icon.png")
 
 import pixelfudger
 
@@ -74,6 +92,7 @@ import knob_scripter
 import RetimeCamera
 nuke.menu( 'Nuke' ).addCommand( 'Luke/Retime Camera', 'RetimeCamera.create_RCPanel()')
 
-# custom Drag and Drop Handler
-import L_dragDropHandler
-nukescripts.drop.addDropDataCallback(L_dragDropHandler.dropHandler)
+import ColorGradientUi
+
+import L_ToolSets
+L_ToolSets.createToolsetsMenu(nuke.menu("Nodes"))
