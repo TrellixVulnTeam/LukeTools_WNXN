@@ -3,12 +3,15 @@ import nukescripts
 import subprocess
 
 def djvViewThis(selectedNodes):
-    filename = ""
+    filename = ''
     for n in selectedNodes:
         name = n.knob('file').value()
-        name = nukescripts.replaceHashes(name) % n.knob('first').value()
+        if "%0" in name:
+            name = nukescripts.replaceHashes(name) % n.knob('first').value()
+        
+        colorspace = n.knob('colorspace').value()
 
-        filename += name + " "
+        filename += '"%s" -ocio_image "%s" ' %(name, colorspace)
     openDjvView(filename)
 
 def openDjvView(filename):
