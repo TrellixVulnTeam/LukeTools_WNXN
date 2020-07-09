@@ -10,17 +10,22 @@ if __lukescripts_local__:
     import L_callbacks
     nuke.addOnCreate(L_callbacks.writeNodeFields, nodeClass= "Write")
 
-#knobDefaults
+    # knobDefaults local
+    nuke.knobDefault('Root.workingSpaceLUT', "acescg")
+    nuke.knobDefault('Root.int8Lut', "out_srgb")
+    nuke.knobDefault('Root.int16Lut', "out_srgb")
+    nuke.knobDefault('Root.logLut', "logc3ei800_alexawide")
+    nuke.knobDefault('Root.floatLut', "acescg")
+
+    nuke.knobDefault('Write.create_directories', "1")
+    nuke.knobDefault('Write.file_type', "exr")
+
+
+# knobDefaults
+
 nuke.knobDefault('Roto.cliptype', "0")
 nuke.knobDefault('Merge.bbox', "B")
-nuke.knobDefault('Write.create_directories', "1")
-nuke.knobDefault('Write.file_type', "exr")
 
-nuke.knobDefault('Root.workingSpaceLUT', "acescg")
-nuke.knobDefault('Root.int8Lut', "out_srgb")
-nuke.knobDefault('Root.int16Lut', "out_srgb")
-nuke.knobDefault('Root.logLut', "logc3ei800_alexawide")
-nuke.knobDefault('Root.floatLut', "acescg")
 
 #Menues
 lukeGizmosMenu = nuke.toolbar("Nodes").addMenu( "Luke" )
