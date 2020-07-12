@@ -17,6 +17,11 @@ if __lukescripts_local__:
     nuke.knobDefault('Root.logLut', "logc3ei800_alexawide")
     nuke.knobDefault('Root.floatLut', "acescg")
 
+    nuke.knobDefault('Root.format', "HD_1080")
+    nuke.knobDefault('Root.fps', "25")
+    nuke.knobDefault('Root.first_frame', "1001")
+    nuke.knobDefault('Root.last_frame', "1101")
+
     nuke.knobDefault('Write.create_directories', "1")
     nuke.knobDefault('Write.file_type', "exr")
 

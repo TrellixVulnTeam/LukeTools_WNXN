@@ -39,7 +39,7 @@ def L_newProject():
         os.makedirs(pscripts)
     nuke.scriptSaveAs(pscriptname)
 
-    write = nuke.createNode('Write')
+    write = nuke.createNode('Write', inPanel = False)
 
     pnode = nuke.nodes.NoOp(name = "L_PROJECT")
     pnode.setXpos(write.xpos() + 300)
