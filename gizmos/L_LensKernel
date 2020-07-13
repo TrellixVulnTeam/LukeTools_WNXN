@@ -1,0 +1,206 @@
+set cut_paste_input [stack 0]
+version 12.0 v3
+push $cut_paste_input
+Group {
+ name L_LensKernel
+ selected true
+ xpos -354
+ ypos -625
+ addUserKnob {20 User}
+ addUserKnob {20 group l Input n 1}
+ addUserKnob {41 gamma T INPUT_CC.gamma}
+ addUserKnob {41 gain T INPUT_CC.gain}
+ addUserKnob {41 range T input_keyer.range}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 group_3 l color n 1}
+ addUserKnob {41 saturation l "input saturation" T INPUT_CC.saturation}
+ addUserKnob {41 inner_color l "inner color" T FLARE.inner_color}
+ addUserKnob {41 ring_color l "outer color" T FLARE.ring_color}
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+ addUserKnob {20 group_1 l Dot n 1}
+ addUserKnob {41 gamma_1 l falloff T DOT_FALLOFF.gamma}
+ addUserKnob {41 mix_2 l "dot amount" T DOT_AMOUNT.mix}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 group_2 l Flare n 1}
+ addUserKnob {41 corners_angle l angle T FLARE.corners_angle}
+ addUserKnob {41 gamma_2 l falloff T FLARE_FALLOFF.gamma}
+ addUserKnob {7 flare_amount l "flare amount"}
+ flare_amount 0.695
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {20 group_4 l noise n 1}
+ addUserKnob {41 size l "noise size" T NOISE.size}
+ addUserKnob {41 zoffset l "noise z" T NOISE.zoffset}
+ addUserKnob {41 mix_1 l "noise amount" T NOISE_STRENGTH.mix}
+ addUserKnob {20 endGroup_4 l endGroup n -1}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {41 size_1 l soften T SOFTEN.size}
+ addUserKnob {41 scale T FLARE_SIZE.scale}
+ addUserKnob {6 boolean l "show flare" +STARTLINE}
+}
+ Crop {
+  inputs 0
+  box {0 0 1000 1000}
+  reformat true
+  crop false
+  name Crop1
+  xpos 419
+  ypos -294
+ }
+set N6b49f400 [stack 0]
+ Radial {
+  area {100 100 900 900}
+  name Radial1
+  xpos 644
+  ypos -247
+ }
+ Grade {
+  black 0.08
+  white 0.79
+  gamma 0.2
+  name FLARE_FALLOFF
+  xpos 644
+  ypos -164
+ }
+push $N6b49f400
+ Noise {
+  maskChannelMask rgba.red
+  size 100
+  zoffset 2.98
+  center {960 540}
+  name NOISE
+  xpos 522
+  ypos -250
+ }
+push $N6b49f400
+ Radial {
+  opacity 0.248
+  area {380.75 380.75 619.25 619.25}
+  color {1}
+  color_panelDropped true
+  name DOT
+  xpos 307
+  ypos -247
+ }
+ Grade {
+  white {{parent.FLARE.inner_color} {parent.FLARE.inner_color} {parent.FLARE.inner_color} 1}
+  white_panelDropped true
+  gamma 0.33
+  name DOT_FALLOFF
+  xpos 307
+  ypos -190
+ }
+push $N6b49f400
+ Flare {
+  position {500 500}
+  radius {147.91 339.91 500}
+  ring_color {0.43 0.43 0.43}
+  ring_color_panelDropped true
+  inner_color {1 1 1}
+  inner_color_panelDropped true
+  outer_falloff 5
+  brightness {{"0.01 * parent.flare_amount"}}
+  corners 8
+  flattening 200
+  sharpness 1
+  corners_angle -4
+  asym_multiplier 0.79
+  asym_angle 54
+  mult_offset 0
+  name FLARE
+  xpos 419
+  ypos -248
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  bbox B
+  output rgb
+  mix 0.39
+  name DOT_AMOUNT
+  xpos 419
+  ypos -179
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  bbox B
+  mix 0.3
+  name NOISE_STRENGTH
+  xpos 419
+  ypos -116
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  bbox B
+  name Merge1
+  xpos 419
+  ypos -54
+ }
+ Blur {
+  name SOFTEN
+  xpos 419
+  ypos 30
+ }
+ Reformat {
+  type scale
+  resize distort
+  name FLARE_SIZE
+  xpos 419
+  ypos 139
+ }
+set Nac7c6c00 [stack 0]
+ Grade {
+  white 1000
+  name Grade2
+  xpos 419
+  ypos 211
+ }
+push $Nac7c6c00
+ Input {
+  inputs 0
+  name InputIMG
+  xpos 192
+  ypos -336
+ }
+ ColorCorrect {
+  name INPUT_CC
+  xpos 192
+  ypos -153
+ }
+ Keyer {
+  operation "luminance key"
+  range {0 2.379965152 7.013181485 7.200727254}
+  name input_keyer
+  xpos 192
+  ypos -61
+ }
+ Premult {
+  name Premult1
+  xpos 192
+  ypos 30
+ }
+ Convolve2 {
+  inputs 2
+  channels rgb
+  filter_channel rgba.red
+  use_input_channels true
+  filter_bounds format
+  normalize false
+  name Convolve1
+  xpos 192
+  ypos 182
+ }
+ Switch {
+  inputs 2
+  which {{parent.boolean}}
+  name toggle_show_flare
+  xpos 192
+  ypos 265
+ }
+ Output {
+  name Output1
+  xpos 192
+  ypos 345
+ }
+end_group
