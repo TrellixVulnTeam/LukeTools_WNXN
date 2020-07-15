@@ -7,9 +7,6 @@ if __lukescripts_local__:
     import L_newProject
     nuke.menu( 'Nuke' ).addCommand( 'Luke/new Project', "L_newProject.L_newProject()")
 
-    import L_callbacks
-    nuke.addOnCreate(L_callbacks.writeNodeFields, nodeClass= "Write")
-
     # knobDefaults local
     nuke.knobDefault('Root.workingSpaceLUT', "acescg")
     nuke.knobDefault('Root.int8Lut', "out_srgb")
@@ -20,7 +17,7 @@ if __lukescripts_local__:
     nuke.knobDefault('Root.format', "HD_1080")
     nuke.knobDefault('Root.fps', "25")
     nuke.knobDefault('Root.first_frame', "1001")
-    nuke.knobDefault('Root.last_frame', "1101")
+    nuke.knobDefault('Root.last_frame', "1100")
 
     nuke.knobDefault('Write.create_directories', "1")
     nuke.knobDefault('Write.file_type', "exr")
@@ -30,6 +27,9 @@ if __lukescripts_local__:
 
 nuke.knobDefault('Roto.cliptype', "0")
 nuke.knobDefault('Merge.bbox', "B")
+
+import L_createRead
+nuke.menu( 'Nuke' ).addCommand( 'Luke/create Read', "L_createRead.createReadFromWrite()", "shift+r")
 
 
 #Menues
@@ -67,7 +67,6 @@ import pixelfudger
 import sb_backdrop
 lukeGizmosMenu.addCommand("sb Backdrop", 'sb_backdrop.sb_backdrop()', '')
 
-#Tools
 import channel_hotbox
 nuke.menu('Nuke').findItem('Edit').addCommand('HotBox', 'channel_hotbox.start()', 'alt+v')
 
@@ -78,20 +77,14 @@ import AnimationMaker
 
 import W_hotbox, W_hotboxManager
 
-#searchReplacePanel
 import SearchReplacePanel
-
 def addSRPanel():
         '''Run the panel script and add it as a tab into the pane it is called from'''
         myPanel = SearchReplacePanel.SearchReplacePanel()
         return myPanel.addToPane()
  
-#THIS LINE WILL ADD THE NEW ENTRY TO THE PANE MENU
 nuke.menu('Pane').addCommand('SearchReplace', addSRPanel)
- 
-#THIS LINE WILL REGISTER THE PANEL SO IT CAN BE RESTORED WITH LAYOUTS
 nukescripts.registerPanel('com.ohufx.SearchReplace', addSRPanel)
-#searchReplacePanelEnd
 
 import knob_scripter
 

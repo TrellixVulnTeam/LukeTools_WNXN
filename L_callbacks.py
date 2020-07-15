@@ -1,5 +1,7 @@
 import nuke
 import nukescripts
+import re
+import os
 
 def updateAllWriteNames():
     if nuke.toNode("L_PROJECT"):
@@ -7,7 +9,11 @@ def updateAllWriteNames():
             updateWriteName(n)
 
 def updateWriteName(n = ""):
-    if nuke.toNode("L_PROJECT"):
+    kname = ''
+    if nuke.thisKnob():
+        kname = nuke.thisKnob().name()
+        
+    if nuke.toNode("L_PROJECT") and kname != 'selected':
         if not n:
             n = nuke.thisNode()
 
@@ -24,18 +30,22 @@ def updateWriteName(n = ""):
             pwritename += 'prerender_'
 
         if n.knob("preLabel").getValue():
-            pwrite += n.knob("preLabel").getValue() + '/'
-            pwritename += n.knob("preLabel").getValue() + '_'
+            prelabel = re.sub(r'[\s]', '', n.knob("preLabel").getValue())
+            n.knob("preLabel").setValue(prelabel)
+            pwrite += prelabel + '/'
+            pwritename += prelabel + '_'
 
         versionnumber = '001'
 
         if n.knob("versionOverride").getValue():
-            versionnumber = n.knob("versionOverride").getValue()
-        else:
-            versionnumber = nukescripts.version_get(nuke.root().name(), 'v')[1]
+            versionnumber = re.sub(r'[\D]', '', n.knob("versionOverride").getValue())
+            n.knob("versionOverride").setValue(versionnumber)
+
+        elif nuke.root().name():
+            versionnumber = re.search("v\d+", os.path.basename(nuke.root().name())).group()[1:]
 
         pwrite += 'v' + versionnumber + '/'
-        pwritename += 'v' + versionnumber + '.######.'
+        pwritename += 'v' + versionnumber + '.####.'
 
         pwrite += n.knob('file_type').value() + '/'
         pwritename += n.knob('file_type').value()

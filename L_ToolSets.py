@@ -1,7 +1,7 @@
 import os 
 import nuke 
 import nukescripts 
- 
+
 class CreateToolsetsPanel(nukescripts.PythonPanel): 
   def __init__(self): 
     nukescripts.PythonPanel.__init__( self, 'Create ToolSet', 'uk.co.thefoundry.CreateToolset') 
@@ -10,14 +10,15 @@ class CreateToolsetsPanel(nukescripts.PythonPanel):
     # Loop through and find all user folders 
     self.userFolders = []
     self.rootDir = '' 
+
     for d in nuke.pluginPath(): 
       if os.path.isdir(d): 
-        if "LukeTools" in d: 
-          dircontents = os.listdir(d) 
-          if "ToolSets" in dircontents: 
-            self.rootDir = d
-            fullPath = os.path.join(d, "ToolSets") 
-            self.buildFolderList(fullPath, '') 
+        if "LukeTools" in (d[-10:]): 
+          fullPath = os.path.join(d, "L_ToolSets", "ToolSets") 
+          if not os.path.exists(fullPath):
+            os.mkdir(fullPath)
+          self.rootDir = os.path.join(d, "L_ToolSets") 
+          self.buildFolderList(fullPath, '') 
            
     self.menuItemChoice = nuke.CascadingEnumeration_Knob('menuItemChoice','ToolSets menu', ['root'] + self.userFolders) 
     self.menuItemChoice.setTooltip("The menu location that the ToolSet will appear in. Specify 'root' to place the ToolSet in the main ToolSets menu.") 
@@ -88,7 +89,7 @@ def checkForEmptyToolsetDirectories(currPath):
     removed = False 
     for root, dirs, files in os.walk(currPath): 
       if files == [] and dirs == []: 
-        if root.split('/')[-1] != 'ToolSets':
+        if root.split('/')[-1] != 'L_ToolSets':
           os.rmdir(root) 
           removed = True 
          
@@ -105,8 +106,8 @@ def createToolsetsMenu(toolbar):
   m.addCommand("-", "", "") 
   if populateToolsetsMenu(m, False): 
     m.addCommand("-", "", "")   
-    n = m.addMenu("Delete", "ToolsetDelete.png") 
-    populateToolsetsMenu(n, True) 
+    # n = m.addMenu("Delete", "ToolsetDelete.png") 
+    # populateToolsetsMenu(n, True) 
   m.addCommand("Refresh", "L_ToolSets.refreshToolsetsMenu()", "", icon="icon_node_redo.png") 
   
  
@@ -130,10 +131,10 @@ def traversePluginPaths(m, delete, allToolsetsList, isLocal):
     if isLocal and (d.find("LukeTools") == -1): 
       continue 
     if os.path.isdir(d): 
-      if "LukeTools" in d: 
+      if "LukeTools" in d[-10:]: 
         dircontents = os.listdir(d) 
-        if "ToolSets" in dircontents: 
-            fullPath = "/".join([d, "ToolSets"]) 
+        if "L_ToolSets" in dircontents: 
+            fullPath = "/".join([d, "L_ToolSets","ToolSets"]) 
             if createToolsetMenuItems(m, fullPath, fullPath, delete, allToolsetsList, isLocal): 
               ret = True 
   return ret           

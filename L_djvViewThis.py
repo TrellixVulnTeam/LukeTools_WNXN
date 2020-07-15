@@ -22,6 +22,6 @@ def djvViewThis(selectedNodes):
 
 def openDjvView(args):
 
-    call = 'C:\\Program Files\\DJV2\\bin\\djv.exe %s' %(args)
+    call = 'djv %s' %(args)
     print call
     subprocess.Popen(call)
