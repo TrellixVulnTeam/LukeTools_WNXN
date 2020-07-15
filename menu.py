@@ -45,6 +45,7 @@ lukeGizmosMenu.addCommand("L_LUE4NUKE", "nuke.createNode('L_LUE4NUKE')", '')
 lukeGizmosMenu.addCommand("L_GradientEditor", "nuke.createNode('h_gradienteditor')", '')
 lukeGizmosMenu.addCommand("L_Deflicker_Velocity", "nuke.createNode('L_Deflicker_Velocity')", '')
 lukeGizmosMenu.addCommand("L_LensKernel", "nuke.createNode('L_LensKernel')", '')
+lukeGizmosMenu.addCommand("L_aPMatte", "nuke.createNode('L_aPMatte')", '')
 
 lukeGizmosMenu.addCommand("EdgeExtend/L_KeyEdgeExtend", "nuke.createNode('L_KeyEdgeExtend')", '')
 lukeGizmosMenu.addCommand("EdgeExtend/L_FillSampler", "nuke.createNode('L_FillSampler')", '')
