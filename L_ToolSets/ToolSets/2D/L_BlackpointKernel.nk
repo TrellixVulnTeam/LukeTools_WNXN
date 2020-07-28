@@ -1,0 +1,114 @@
+set cut_paste_input [stack 0]
+version 12.0 v3
+BackdropNode {
+ inputs 0
+ name BackdropNode6
+ tile_color 0x414744ff
+ label "black point extr"
+ note_font_size 44
+ selected true
+ xpos 564
+ ypos -248
+ bdwidth 186
+ bdheight 359
+}
+push $cut_paste_input
+Dot {
+ name Dot19
+ selected true
+ xpos 648
+ ypos -181
+}
+Reformat {
+ type scale
+ scale 0.25
+ name Reformat4
+ selected true
+ xpos 614
+ ypos -154
+}
+Group {
+ name BlackPointKernel
+ selected true
+ xpos 614
+ ypos -128
+ addUserKnob {20 BlackPointKernel}
+ addUserKnob {41 "Min Color" T "BlinkScript5.BlackPointKernel_Min Color"}
+ addUserKnob {41 "Max Color" T "BlinkScript5.BlackPointKernel_Max Color"}
+ addUserKnob {41 "Divider x" T "BlinkScript5.BlackPointKernel_Divider x"}
+ addUserKnob {41 "Divider y" T "BlinkScript5.BlackPointKernel_Divider y"}
+ addUserKnob {26 ""}
+ addUserKnob {41 "Local GPU: " T BlinkScript5.gpuName}
+ addUserKnob {41 "Use GPU if Available" T BlinkScript5.useGPUIfAvailable}
+ addUserKnob {26 txt l CAUTION T "GPU not recommended, as it executes on a few pixels only.\nCPU will be faster with low divider values.\nGPU might be faster with very high dividers only."}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 1548
+  ypos -246
+ }
+ BlinkScript {
+  kernelSourceFile //data/HAM-1406-00249-MVH/_LukeS/blackpoint/blackpointkernel_v002.cpp
+  recompileCount 55
+  ProgramGroup 1
+  KernelDescription "2 \"BlackPointKernel\" iterate pixelWise 382e2e6288181e82e74ddc4914831561676d2171e22f3aa9bb7443c2e205f71f 2 \"src\" Read Ranged2D \"dst\" Write Random 4 \"Min Color\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"Max Color\" Float 4 AADIQgAAyEIAAMhCAADIQg== \"Divider x\" Int 1 AwAAAA== \"Divider y\" Int 1 AwAAAA== 4 \"mincolor_input\" 4 1 \"maxcolor_input\" 4 1 \"dividerx\" 1 1 \"dividery\" 1 1 6 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"mod\" Int 2 1 AAAAAAAAAAA= \"modrange\" Int 2 1 AAAAAAAAAAA= \"minColorBrightness\" Float 1 1 AAAAAA== \"maxColorBrightness\" Float 1 1 AAAAAA=="
+  kernelSource "\nkernel BlackPointKernel : ImageComputationKernel<ePixelWise> \{\n\n    Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n    Image<eWrite, eAccessRandom, eEdgeClamped> dst;\n\n    param:\n\n    float4 mincolor_input;\n    float4 maxcolor_input;\n\n    int dividerx;\n    int dividery;\n\n\n    local:\n\n    // float4 mincolor;\n    // float4 maxcolor;\n\n    int2 mod;\n    int2 modrange;\n\n    float minColorBrightness;\n    float maxColorBrightness;\n\n\n\n    // define\n    void define() \{\n\n        defineParam(mincolor_input, \"Min Color\", float4(0));\n        defineParam(maxcolor_input, \"Max Color\", float4(100.0f));\n        defineParam(dividerx, \"Divider x\", 3);\n        defineParam(dividery, \"Divider y\", 3);\n\n    \}\n\n\n    // init\n    void init() \{\n\n        // mincolor = mincolor_input;\n        // maxcolor = maxcolor_input;\n\n        minColorBrightness = mincolor_input.x*0.299f + mincolor_input.y*0.587f + mincolor_input.z*0.114f;\n        maxColorBrightness = maxcolor_input.x*0.299f + maxcolor_input.y*0.587f + maxcolor_input.z*0.114f;\n\n        int cdividerx;\n        int cdividery;\n        if (dividerx < 1) \{cdividerx = 1;\} else \{cdividerx=dividerx;\}\n        if (dividery < 1) \{cdividery = 1;\} else \{cdividery=dividery;\}\n\n        mod.x = (int)floor((float)src.bounds.x2 / (float)cdividerx);\n        mod.y = (int)floor((float)src.bounds.y2 / (float)cdividery);\n        if (cdividerx%2==0) \{mod.x -= 1;\}\n        if (cdividery%2==0) \{mod.y -= 1;\}\n\n        modrange.x = (int)ceil(mod.x/2);\n        modrange.y = (int)ceil(mod.y/2);\n\n        src.setRange(-modrange.x, -modrange.y, modrange.x, modrange.y);\n    \}\n\n\n    // process\n    void process(int2 pos) \{\n\n        // center pattern\n        int2 poscentered;\n        poscentered.x = (int)floor((float)pos.x-(float)dst.bounds.x2/2.0);\n        poscentered.y = (int)floor((float)pos.y-(float)dst.bounds.y2/2.0);\n\n        // only execute on pixels that are necessary\n        if (poscentered.x%mod.x == 0 && poscentered.y%mod.y == 0) \{\n\n            SampleType(src) cell_mincolor(maxcolor_input);\n            float cell_mincolor_brightness = maxColorBrightness;\n\n            // find min brightness in modrange\n            for (int i = -modrange.x; i <= modrange.x; i++) \{\n                for (int j = -modrange.y; j <= modrange.y; j++) \{\n\n                    if (pos.x+i >= dst.bounds.x1 && pos.x+i <= dst.bounds.x2 && pos.y+j >= dst.bounds.y1 && pos.y+j <= dst.bounds.y2) \{\n                        SampleType(src) cursample = src(i,j);\n                        float sampleBrightness = cursample.x*0.299f + cursample.y*0.587f + cursample.z*0.114f;\n\n                        if (sampleBrightness < cell_mincolor_brightness && sampleBrightness >= minColorBrightness) \{\n                            cell_mincolor = cursample;\n                            cell_mincolor_brightness = sampleBrightness;\n                        \}\n                    \}\n\n                \}\n            \}\n\n            // write pixels in modrange\n            for (int i = -modrange.x; i <= modrange.x; i++) \{\n                for (int j = -modrange.y; j <= modrange.y; j++) \{\n\n                    if (pos.x+i >= dst.bounds.x1 && pos.x+i <= dst.bounds.x2 && pos.y+j >= dst.bounds.y1 && pos.y+j <= dst.bounds.y2) \{\n                        dst(pos.x+i,pos.y+j) = cell_mincolor;\n                    \}\n\n                \}\n            \}\n\n\n        \}\n    \}\n\};\n"
+  useGPUIfAvailable false
+  vectorize false
+  rebuild ""
+  "BlackPointKernel_Min Color" 0.0001
+  "BlackPointKernel_Max Color" 0.097
+  "BlackPointKernel_Divider x" 2
+  "BlackPointKernel_Divider y" 1
+  rebuild_finalise ""
+  name BlinkScript5
+  xpos 1548
+  ypos -206
+ }
+ Output {
+  name Output1
+  xpos 1548
+  ypos -106
+ }
+end_group
+TimeOffset {
+ time_offset {{-(parent.FrameBlend2.numframes/2)}}
+ time ""
+ name TimeOffset2
+ selected true
+ xpos 614
+ ypos -97
+}
+FrameBlend {
+ channels rgb
+ numframes 10
+ name FrameBlend2
+ selected true
+ xpos 614
+ ypos -66
+}
+Reformat {
+ type scale
+ scale 4
+ name Reformat5
+ selected true
+ xpos 614
+ ypos -24
+}
+Blur {
+ channels rgba
+ size {1000 0}
+ name Blur8
+ selected true
+ xpos 614
+ ypos 8
+}
+Dot {
+ name Connector5
+ label "BLACK POINT"
+ note_font_size 44
+ selected true
+ xpos 648
+ ypos 66
+}
