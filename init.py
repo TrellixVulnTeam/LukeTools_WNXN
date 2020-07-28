@@ -20,7 +20,6 @@ if __lukescripts_local__:
 
 
     import sr_rollingAutoSave
-
     nuke.addAutoSaveFilter( sr_rollingAutoSave.onAutoSave ) 
     nuke.addAutoSaveRestoreFilter( sr_rollingAutoSave.onAutoSaveRestore ) 
     nuke.addAutoSaveDeleteFilter( sr_rollingAutoSave.onAutoSaveDelete ) 

@@ -1,0 +1,132 @@
+set cut_paste_input [stack 0]
+version 12.0 v3
+push $cut_paste_input
+push 0
+Group {
+ inputs 2
+ name MutliLayerCopy
+ tile_color 0xaa36a2ff
+ selected true
+ xpos -945
+ ypos -1362
+ addUserKnob {20 User}
+ addUserKnob {41 channels l "Layer Copy" T Copy1.channels}
+ addUserKnob {41 channels_1 l "Layer Copy" T Copy2.channels}
+ addUserKnob {41 channels_2 l "Layer Copy" T Copy3.channels}
+ addUserKnob {41 channels_3 l "Layer Copy" T Copy4.channels}
+ addUserKnob {41 channels_4 l "Layer Copy" T Copy5.channels}
+ addUserKnob {41 channels_5 l "Layer Copy" T Copy6.channels}
+ addUserKnob {41 channels_6 l "Layer Copy" T Copy7.channels}
+ addUserKnob {41 channels_7 l "Layer Copy" T Copy8.channels}
+ addUserKnob {41 channels_8 l "Layer Copy" T Copy9.channels}
+ addUserKnob {41 channels_9 l "Layer Copy" T Copy10.channels}
+}
+ Input {
+  inputs 0
+  name InputA
+  xpos -1350
+  ypos -290
+  number 1
+ }
+set N34643000 [stack 0]
+push $N34643000
+push $N34643000
+push $N34643000
+push $N34643000
+push $N34643000
+push $N34643000
+push $N34643000
+push $N34643000
+push $N34643000
+ Input {
+  inputs 0
+  name InputB
+  xpos -1104
+  ypos -301
+ }
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  name Copy1
+  xpos -1104
+  ypos -263
+ }
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  name Copy2
+  xpos -1104
+  ypos -221
+ }
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  name Copy3
+  xpos -1104
+  ypos -179
+ }
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  name Copy4
+  xpos -1104
+  ypos -137
+ }
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  name Copy5
+  xpos -1104
+  ypos -95
+ }
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  name Copy6
+  xpos -1104
+  ypos -53
+ }
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  name Copy7
+  xpos -1104
+  ypos -11
+ }
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  name Copy8
+  xpos -1104
+  ypos 31
+ }
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  name Copy9
+  xpos -1104
+  ypos 73
+ }
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  name Copy10
+  xpos -1104
+  ypos 115
+ }
+ Output {
+  name Output1
+  xpos -1104
+  ypos 215
+ }
+end_group

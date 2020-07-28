@@ -13,7 +13,7 @@ def updateWriteName(n = ""):
     if nuke.thisKnob():
         kname = nuke.thisKnob().name()
         
-    if nuke.toNode("L_PROJECT") and kname != 'selected':
+    if nuke.toNode("L_PROJECT") and not kname in ['xpos','ypos','selected']:
         if not n:
             n = nuke.thisNode()
 
@@ -45,7 +45,27 @@ def updateWriteName(n = ""):
             versionnumber = re.search("v\d+", os.path.basename(nuke.root().name())).group()[1:]
 
         pwrite += 'v' + versionnumber + '/'
-        pwritename += 'v' + versionnumber + '.####.'
+        pwritename += 'v' + versionnumber
+
+        if n['file_type'].value() == 'mov':
+            metacodec = {
+                "apcn" : "prores422", 
+                "apch" : "prores422hq", 
+                "apcs" : "prores422LT", 
+                "apco" : "prores422PR", 
+                "ap4h" : "prores444", 
+                "ap4x" : "prores444XQ"
+                }
+
+            if n['meta_codec'].value() in metacodec:
+                pwritename += '_' + metacodec[n['meta_codec'].value()]
+
+            
+
+        else:
+            pwritename += '.####'
+            
+        pwritename += '.'
 
         pwrite += n.knob('file_type').value() + '/'
         pwritename += n.knob('file_type').value()

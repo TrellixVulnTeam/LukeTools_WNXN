@@ -1,5 +1,6 @@
 nuke.tprint('LukeTools menu.py')
 
+import nuke
 import nukescripts
 
 if __lukescripts_local__:
@@ -30,7 +31,6 @@ nuke.knobDefault('Merge.bbox', "B")
 
 import L_createRead
 nuke.menu( 'Nuke' ).addCommand( 'Luke/create Read', "L_createRead.createReadFromWrite()", "shift+r")
-
 
 #Menues
 lukeGizmosMenu = nuke.toolbar("Nodes").addMenu( "Luke" )
@@ -96,3 +96,21 @@ import ColorGradientUi
 
 import L_ToolSets
 L_ToolSets.createToolsetsMenu(nuke.menu("Nodes"))
+
+# Kiss
+from kiss import connection_handler
+from kiss.constants import KISS_HOTKEY
+
+def add_to_ui():
+    """Initialize commands."""
+    nuke.menu("Nuke").findItem("Edit").addCommand(
+        "kiss", connection_handler.launch_kiss, KISS_HOTKEY)
+
+add_to_ui()
+# Kiss end
+
+nuke.menu('Nuke').findItem('Edit').findItem('Extract').setShortcut('e')
+
+# drag n drop handler
+import L_dragDropHandler
+nukescripts.drop.addDropDataCallback(L_dragDropHandler.dropHandler)
