@@ -65,25 +65,33 @@ def L_newProject():
 
         if not os.path.isdir(pscripts):
             os.makedirs(pscripts)
+
+        if exists:
+            n['proot'].setValue(proot)
+            n['pproject'].setValue(pproject)
+            n['pshot'].setValue(pshot)
+            n['ptask'].setValue(ptask)
+            
+        else:
+            write = nuke.createNode('Write', inpanel = False)
+
+            pnode.setXpos(write.xpos() + 300)
+            pnode.setYpos(write.ypos() + 200)
+
+            k = nuke.File_Knob("proot","Root")
+            k.setValue(proot)
+            pnode.addKnob(k)
+
+            k = nuke.String_Knob("pproject","Project")
+            k.setValue(pproject)
+            pnode.addKnob(k)
+
+            k = nuke.String_Knob("pshot","Shot")
+            k.setValue(pshot)
+            pnode.addKnob(k)
+
+            k = nuke.String_Knob("ptask","Task")
+            k.setValue(ptask)
+            pnode.addKnob(k)
+
         nuke.scriptSaveAs(pscriptname)
-
-        write = nuke.createNode('Write', inpanel = False)
-
-        pnode.setXpos(write.xpos() + 300)
-        pnode.setYpos(write.ypos() + 200)
-
-        k = nuke.File_Knob("proot","Root")
-        k.setValue(proot)
-        pnode.addKnob(k)
-
-        k = nuke.String_Knob("pproject","Project")
-        k.setValue(pproject)
-        pnode.addKnob(k)
-
-        k = nuke.String_Knob("pshot","Shot")
-        k.setValue(pshot)
-        pnode.addKnob(k)
-
-        k = nuke.String_Knob("ptask","Task")
-        k.setValue(ptask)
-        pnode.addKnob(k)
