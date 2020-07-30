@@ -3,60 +3,87 @@ import os
 import L_callbacks
 def L_newProject():
 
+    pnode = False
+
+    proot = 'K:/_VFX/'
+    pproject = 'L'
+    pshot = 'sh0100'
+    ptask = 'comp'
+    exists = False
+
+    for n in nuke.allNodes():
+        if n.name() == 'L_PROJECT':
+            pnode = n
+            proot = n['proot'].value()
+            pproject = n['pproject'].value()
+            pshot = n['pshot'].value()
+            ptask = n['ptask'].value()
+            exists = True
+            break
+
+    if not pnode:
+        pnode = nuke.nodes.NoOp(name = "L_PROJECT")
+
+
     p = nuke.Panel('KLXR NEW PROJECT')
-    p.addSingleLineInput('Root', 'K:/_VFX/')
-    p.addSingleLineInput('Project', 'L')
-    p.addSingleLineInput('Shot','sh0100')
-    p.addSingleLineInput('Task','comp')
+    p.addSingleLineInput('Root', proot)
+    p.addSingleLineInput('Project', pproject)
+    p.addSingleLineInput('Shot', pshot)
+    p.addSingleLineInput('Task', ptask)
 
-    p.show()
+    p.setWidth(300)
 
-    proot = p.value('Root')
-    pproject = p.value('Project')
-    pshot = p.value('Shot')
-    ptask = p.value('Task')
+    if exists:
+        p.setTitle('PROJECT ALREADY EXISTS!')
 
 
-    if proot == '':
-        nuke.message('No Root')
-        return    
-    if pproject == '':
-        nuke.message('No Project')
-        return
-    if pshot == '':
-        nuke.message('No Shot')
-        return
-    if ptask == '':
-        nuke.message('No Task')
-        return
+    if p.show():
 
-    pfolder = proot + pproject+'/'+pshot+'/'
+        proot = p.value('Root')
+        pproject = p.value('Project')
+        pshot = p.value('Shot')
+        ptask = p.value('Task')
 
-    pscripts = pfolder+'scripts/'
-    pscriptname = pscripts + pproject + '_' + pshot + '_' + ptask + '_v001.nk'
 
-    if not os.path.isdir(pscripts):
-        os.makedirs(pscripts)
-    nuke.scriptSaveAs(pscriptname)
+        if proot == '':
+            nuke.message('No Root')
+            return    
+        if pproject == '':
+            nuke.message('No Project')
+            return
+        if pshot == '':
+            nuke.message('No Shot')
+            return
+        if ptask == '':
+            nuke.message('No Task')
+            return
 
-    write = nuke.createNode('Write', inpanel = False)
+        pfolder = proot + pproject+'/'+pshot+'/'
 
-    pnode = nuke.nodes.NoOp(name = "L_PROJECT")
-    pnode.setXpos(write.xpos() + 300)
-    pnode.setYpos(write.ypos() + 200)
+        pscripts = pfolder+'scripts/'
+        pscriptname = pscripts + pproject + '_' + pshot + '_' + ptask + '_v001.nk'
 
-    k = nuke.File_Knob("proot","Root")
-    k.setValue(proot)
-    pnode.addKnob(k)
+        if not os.path.isdir(pscripts):
+            os.makedirs(pscripts)
+        nuke.scriptSaveAs(pscriptname)
 
-    k = nuke.String_Knob("pproject","Project")
-    k.setValue(pproject)
-    pnode.addKnob(k)
+        write = nuke.createNode('Write', inpanel = False)
 
-    k = nuke.String_Knob("pshot","Shot")
-    k.setValue(pshot)
-    pnode.addKnob(k)
+        pnode.setXpos(write.xpos() + 300)
+        pnode.setYpos(write.ypos() + 200)
 
-    k = nuke.String_Knob("ptask","Task")
-    k.setValue(ptask)
-    pnode.addKnob(k)
+        k = nuke.File_Knob("proot","Root")
+        k.setValue(proot)
+        pnode.addKnob(k)
+
+        k = nuke.String_Knob("pproject","Project")
+        k.setValue(pproject)
+        pnode.addKnob(k)
+
+        k = nuke.String_Knob("pshot","Shot")
+        k.setValue(pshot)
+        pnode.addKnob(k)
+
+        k = nuke.String_Knob("ptask","Task")
+        k.setValue(ptask)
+        pnode.addKnob(k)

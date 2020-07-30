@@ -13,7 +13,7 @@ def updateWriteName(n = ""):
     if nuke.thisKnob():
         kname = nuke.thisKnob().name()
         
-    if nuke.toNode("L_PROJECT") and not kname in ['xpos','ypos','selected']:
+    if nuke.toNode("L_PROJECT") and not kname in ['xpos','ypos']:
         if not n:
             n = nuke.thisNode()
 
