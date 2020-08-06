@@ -8,7 +8,7 @@
 #----------------------------------------------------------------------------------------------------------
 
 import os
-from Qt import QtWidgets
+from PySide2 import QtWidgets
 
 clipboard = QtWidgets.QApplication.clipboard()
 

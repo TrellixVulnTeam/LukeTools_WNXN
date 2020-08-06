@@ -46,3 +46,8 @@ nuke.pluginAddPath('./GradientEditor/tools')
 nuke.pluginAddPath('./GradientEditor/grapichs')
 nuke.pluginAddPath('./GradientEditor/python')
 
+# AutoFlare
+nuke.pluginAddPath('AutoFlare')
+nuke.pluginAddPath('./AutoFlare/BOKEHS')
+nuke.pluginAddPath('./AutoFlare/BOKEHS/polygons')
+

@@ -12,10 +12,11 @@ def updateWriteName(n = ""):
     kname = ''
     if nuke.thisKnob():
         kname = nuke.thisKnob().name()
-        
-    if nuke.toNode("L_PROJECT") and not kname in ['xpos','ypos']:
-        if not n:
+    if not n:
             n = nuke.thisNode()
+        
+    if nuke.toNode("L_PROJECT") and not kname in ['xpos','ypos','inputChange'] and not n['disable'] == 1:
+        
 
         pn = nuke.toNode("L_PROJECT")
 

@@ -21,6 +21,10 @@ import nukescripts
 
 
 def fileHandler(dropped_data):
+
+    for singlenode in nuke.allNodes():
+        singlenode["selected"].setValue(0)
+
     file_path = dropped_data
     file_range = ''
 

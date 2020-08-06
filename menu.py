@@ -22,6 +22,15 @@ if __lukescripts_local__:
 
     nuke.knobDefault('Write.create_directories', "1")
     nuke.knobDefault('Write.file_type', "exr")
+    nuke.knobDefault('Write.write_full_layer_names', "1")
+    nuke.knobDefault('Write.standard layer name format', "1")
+
+    nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Anamorphic_Standard_Degree_4", "nuke.createNode('LD_3DE4_Anamorphic_Standard_Degree_4')")
+    nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Anamorphic_Rescaled_Degree_4", "nuke.createNode('LD_3DE4_Anamorphic_Rescaled_Degree_4')")
+    nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Anamorphic_Degree_6", "nuke.createNode('LD_3DE4_Anamorphic_Degree_6')")
+    nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Radial_Standard_Degree_4", "nuke.createNode('LD_3DE4_Radial_Standard_Degree_4')")
+    nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Radial_Fisheye_Degree_8", "nuke.createNode('LD_3DE4_Radial_Fisheye_Degree_8')")
+    nuke.menu("Nodes").addCommand("3DE4/LD_3DE_Classic_LD_Model", "nuke.createNode('LD_3DE_Classic_LD_Model')")
 
 
 # knobDefaults
@@ -31,6 +40,10 @@ nuke.knobDefault('Merge.bbox', "B")
 
 import L_createRead
 nuke.menu( 'Nuke' ).addCommand( 'Luke/create Read', "L_createRead.createReadFromWrite()", "shift+r")
+
+import L_openInFileBrowser
+nuke.menu( 'Nuke' ).addCommand( 'Luke/Open in File Browser', "L_openInFileBrowser.openInFileBrowser()", "alt+shift+e")
+
 
 #Menues
 lukeGizmosMenu = nuke.toolbar("Nodes").addMenu( "Luke" )
@@ -45,6 +58,7 @@ lukeGizmosMenu.addCommand("L_LUE4NUKE", "nuke.createNode('L_LUE4NUKE')", '')
 lukeGizmosMenu.addCommand("L_GradientEditor", "nuke.createNode('h_gradienteditor')", '')
 lukeGizmosMenu.addCommand("L_Deflicker_Velocity", "nuke.createNode('L_Deflicker_Velocity')", '')
 lukeGizmosMenu.addCommand("L_LensKernel", "nuke.createNode('L_LensKernel')", '')
+lukeGizmosMenu.addCommand("L_OpticalZDefocus", "nuke.createNode('L_OpticalZDefocus')", '')
 lukeGizmosMenu.addCommand("L_aPMatte", "nuke.createNode('L_aPMatte')", '')
 
 lukeGizmosMenu.addCommand("EdgeExtend/L_KeyEdgeExtend", "nuke.createNode('L_KeyEdgeExtend')", '')
@@ -62,6 +76,8 @@ lukeGizmosMenu.addCommand('bm/L_bm_CurveRemapper', 'nuke.createNode("L_bm_CurveR
 lukeGizmosMenu.addCommand('bm/L_bm_CameraShake', 'nuke.createNode("L_bm_CameraShake")', icon="bm_CameraShake_icon.png")
 lukeGizmosMenu.addCommand('bm/L_bm_EdgeMatte', 'nuke.createNode("L_bm_EdgeMatte")', icon="BlackOutside.png")
 lukeGizmosMenu.addCommand('bm/L_bm_MatteCheck', 'nuke.createNode("L_bm_MatteCheck")', icon="bm_MatteCheck_icon.png")
+
+lukeGizmosMenu.addCommand('L_AutoFlare', 'nuke.createNode("AutoFlare2")')
 
 import pixelfudger
 
