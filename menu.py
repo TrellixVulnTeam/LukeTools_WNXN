@@ -42,7 +42,10 @@ import L_createRead
 nuke.menu( 'Nuke' ).addCommand( 'Luke/create Read', "L_createRead.createReadFromWrite()", "shift+r")
 
 import L_openInFileBrowser
-nuke.menu( 'Nuke' ).addCommand( 'Luke/Open in File Browser', "L_openInFileBrowser.openInFileBrowser()", "alt+shift+e")
+nuke.menu( 'Nuke' ).addCommand( 'Luke/Open in File Browser', "L_openInFileBrowser.openInFileBrowser()", "ctrl+shift+e")
+
+import L_djvViewThis
+nuke.menu( 'Nuke' ).addCommand( 'Luke/DJV this', "L_djvViewThis.djvViewThis(nuke.selectedNodes())", "ctrl+shift+d")
 
 
 #Menues

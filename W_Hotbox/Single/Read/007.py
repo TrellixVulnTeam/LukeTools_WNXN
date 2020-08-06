@@ -8,5 +8,4 @@
 #----------------------------------------------------------------------------------------------------------
 
 import L_djvViewThis
-reload(L_djvViewThis)
 L_djvViewThis.djvViewThis(nuke.selectedNodes())
