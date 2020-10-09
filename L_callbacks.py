@@ -16,6 +16,10 @@ def updateWriteName(n = ""):
             n = nuke.thisNode()
         
     if nuke.toNode("L_PROJECT") and not kname in ['xpos','ypos','inputChange'] and not n['disable'] == 1:
+
+        if 'override_all' in n.knobs():
+            if n['override_all'].getValue():
+                return
         
 
         pn = nuke.toNode("L_PROJECT")
@@ -94,4 +98,8 @@ def writeNodeFields():
         n.addKnob(k)
 
         k = nuke.String_Knob("versionOverride","Render Version Override")
+        n.addKnob(k)
+
+        k = nuke.Boolean_Knob("override_all","Disable write node callback")
+        k.setFlag(nuke.STARTLINE)
         n.addKnob(k)

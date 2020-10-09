@@ -82,6 +82,8 @@ lukeGizmosMenu.addCommand('bm/L_bm_MatteCheck', 'nuke.createNode("L_bm_MatteChec
 
 lukeGizmosMenu.addCommand('L_AutoFlare', 'nuke.createNode("AutoFlare2")')
 
+lukeGizmosMenu.addCommand("L_aeBrokenEdges", "nuke.createNode(\"L_aeBrokenEdges\")", icon="BrokenEdges_icon.png")
+
 import pixelfudger
 
 import sb_backdrop

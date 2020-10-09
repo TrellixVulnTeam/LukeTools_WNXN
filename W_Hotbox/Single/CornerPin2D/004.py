@@ -83,8 +83,5 @@ if (ret):
         xpos = n['xpos'].value()
         ypos = n['ypos'].value()
                     
-        c_width = c.screenWidth()
-        c_height = c.screenHeight()
-                    
-        c.setXYpos(int(xpos) + int(c_width) + 50 , int(ypos))
+        c.setXYpos(int(xpos), int(ypos) + 70)
     

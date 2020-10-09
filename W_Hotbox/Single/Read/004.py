@@ -6,6 +6,10 @@
 #
 #----------------------------------------------------------------------------------------------------------
 
-for i in nuke.selectedNodes():
-    b = i.knob('checkVersions')
-    b.execute()
+#for i in nuke.selectedNodes():
+#    b = i.knob('checkVersions')
+#    b.execute()
+
+import nukescripts
+nukescripts.version_latest()
+
