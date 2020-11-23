@@ -129,6 +129,22 @@ colorspaces:
     allocation: uniform
     allocationvars: [0, 1]
 
+
+  - !<ColorSpace>
+    name: mocha_working
+    family: Luke
+    equalitygroup: ""
+    bitdepth: 32f
+    description: |
+      The ACEScg color space
+
+      ACES Transform ID : ACEScsc.ACEScg_to_ACES
+    isdata: false
+    allocation: lg2
+    allocationvars: [-8, 5, 0.00390625]
+    to_reference: !<ColorSpaceTransform> {src: ACES - ACEScg, dst: ACES - ACES2065-1}
+
+
   - !<ColorSpace>
     name: ACES - ACES2065-1
     family: ACES
