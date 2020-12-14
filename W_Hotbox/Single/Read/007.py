@@ -2,10 +2,10 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: DJV this
-# COLOR: #1d7577
+# NAME: Reload Read
+# COLOR: #2c522c
 #
 #----------------------------------------------------------------------------------------------------------
 
-import L_djvViewThis
-L_djvViewThis.djvViewThis(nuke.selectedNodes())
+for i in nuke.selectedNodes():
+    i.knob('reload').execute()

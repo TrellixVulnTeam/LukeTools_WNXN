@@ -1,0 +1,645 @@
+set cut_paste_input [stack 0]
+version 12.0 v3
+push $cut_paste_input
+Group {
+ name edgeStretch1
+ selected true
+ xpos -238
+ ypos 1368
+ addUserKnob {20 User}
+ addUserKnob {41 size l blurAlpha t "- defines the width of the effect" T Blur1.size}
+ addUserKnob {41 uv_scale l "UV scale" t "- defines the strength of the effect" T IDistort1.uv_scale}
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannelMask l "" -STARTLINE T Merge5.maskChannelMask}
+ addUserKnob {41 inject -STARTLINE T Merge5.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Merge5.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T Merge5.fringe}
+ addUserKnob {41 mix T Merge5.mix}
+ addUserKnob {26 ""}
+ addUserKnob {20 info n 1}
+ info 0
+ addUserKnob {26 johannesMasanz l "" +STARTLINE T "edgeStretch_v001 by Johannes Masanz\n\nThis tool expects an rgba input. \nThe RGB pixels will be pushed outwards \nat the edges of the alpha matte."}
+ addUserKnob {20 endGroup n -1}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -580
+  ypos -289
+ }
+ Dot {
+  name Dot3
+  xpos -546
+  ypos -193
+ }
+set N20f400 [stack 0]
+ Dot {
+  name Dot2
+  xpos -546
+  ypos 1872
+ }
+set N20f800 [stack 0]
+push $N20f800
+ Input {
+  inputs 0
+  name mask
+  xpos 103
+  ypos 1132
+  number 1
+ }
+push $N20f400
+ Clamp {
+  channels alpha
+  name Clamp1
+  xpos -483
+  ypos -203
+ }
+ Dot {
+  name Dot7
+  xpos -373
+  ypos -193
+ }
+set N20c400 [stack 0]
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle3
+  tile_color 0xffffffff
+  xpos -229
+  ypos -197
+  addUserKnob {20 Presets}
+  addUserKnob {26 a l "All Channels"}
+  addUserKnob {6 redAll l Red +STARTLINE}
+  addUserKnob {6 greenAll l Green +STARTLINE}
+  addUserKnob {6 blueAll l Blue +STARTLINE}
+  addUserKnob {6 alphaAll l Alpha +STARTLINE}
+  addUserKnob {6 noAlpha l "No Alpha" +STARTLINE}
+  addUserKnob {26 ""}
+  addUserKnob {6 auto_label l "Auto Label" -STARTLINE}
+  auto_label true
+ }
+ Dot {
+  name Dot8
+  xpos -23
+  ypos -193
+ }
+set N20cc00 [stack 0]
+ Blur {
+  size 2
+  quality 50
+  name Blur1
+  xpos -57
+  ypos -41
+ }
+ set C20d000 [stack 0]
+set N20d000 [stack 0]
+ Blur {
+  size 2
+  name Blur12
+  xpos 123
+  ypos -41
+ }
+ set C20d400 [stack 0]
+ Dot {
+  name Dot9
+  xpos 259
+  ypos -31
+ }
+set N20d800 [stack 0]
+ Grade {
+  channels alpha
+  blackpoint 0.6
+  whitepoint 0.7
+  white_clamp true
+  name Grade3
+  xpos 225
+  ypos 32
+ }
+set N20dc00 [stack 0]
+ Invert {
+  name Invert2
+  xpos 225
+  ypos 734
+ }
+push $N20dc00
+push $N20d800
+ Dot {
+  name Dot10
+  xpos 513
+  ypos -31
+ }
+ Grade {
+  channels alpha
+  blackpoint 0.3
+  whitepoint 0.4
+  white_clamp true
+  invert_mask true
+  name Grade4
+  xpos 479
+  ypos 32
+ }
+ ChannelMerge {
+  inputs 2
+  operation stencil
+  name ChannelMerge1
+  xpos 479
+  ypos 129
+ }
+push $N20d000
+ Dot {
+  name Dot1
+  xpos -23
+  ypos 5
+ }
+set N20b000 [stack 0]
+ Transform {
+  translate {-1 0}
+  center {1082 697}
+  shutteroffset centred
+  name Transform1
+  xpos -231
+  ypos 52
+ }
+push $N20b000
+ Transform {
+  translate {1 0}
+  center {1082 697}
+  shutteroffset centred
+  name Transform2
+  xpos -103
+  ypos 50
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge1
+  xpos -160
+  ypos 89
+ }
+ Shuffle {
+  red alpha
+  green black
+  blue black
+  name Shuffle1
+  tile_color 0x9e3c6300
+  xpos -160
+  ypos 115
+  addUserKnob {20 Presets}
+  addUserKnob {26 a l "All Channels"}
+  addUserKnob {6 redAll l Red +STARTLINE}
+  addUserKnob {6 greenAll l Green +STARTLINE}
+  addUserKnob {6 blueAll l Blue +STARTLINE}
+  addUserKnob {6 alphaAll l Alpha +STARTLINE}
+  addUserKnob {6 noAlpha l "No Alpha" +STARTLINE}
+  addUserKnob {26 ""}
+  addUserKnob {6 auto_label l "Auto Label" -STARTLINE}
+  auto_label true
+ }
+push $N20b000
+ Transform {
+  translate {0 -1}
+  center {1082 697}
+  shutteroffset centred
+  name Transform3
+  xpos -8
+  ypos 50
+ }
+push $N20b000
+ Transform {
+  translate {0 1}
+  center {1082 697}
+  shutteroffset centred
+  name Transform4
+  xpos 99
+  ypos 52
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge2
+  xpos 48
+  ypos 91
+ }
+ Shuffle {
+  red black
+  blue black
+  name Shuffle2
+  tile_color 0x9e3c6300
+  xpos 48
+  ypos 117
+  addUserKnob {20 Presets}
+  addUserKnob {26 a l "All Channels"}
+  addUserKnob {6 redAll l Red +STARTLINE}
+  addUserKnob {6 greenAll l Green +STARTLINE}
+  addUserKnob {6 blueAll l Blue +STARTLINE}
+  addUserKnob {6 alphaAll l Alpha +STARTLINE}
+  addUserKnob {6 noAlpha l "No Alpha" +STARTLINE}
+  addUserKnob {26 ""}
+  addUserKnob {6 auto_label l "Auto Label" -STARTLINE}
+  auto_label true
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge3
+  xpos -56
+  ypos 171
+ }
+push $N20cc00
+clone $C20d400 {
+  xpos 123
+  ypos -203
+  selected false
+ }
+ Dot {
+  name Dot11
+  xpos 832
+  ypos -193
+ }
+set N209c00 [stack 0]
+ Dot {
+  name Dot5
+  xpos 980
+  ypos -193
+ }
+set N204000 [stack 0]
+ Dot {
+  name Dot12
+  xpos 1116
+  ypos -193
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle7
+  tile_color 0xffffffff
+  xpos 1082
+  ypos -73
+  addUserKnob {20 Presets}
+  addUserKnob {26 a l "All Channels"}
+  addUserKnob {6 redAll l Red +STARTLINE}
+  addUserKnob {6 greenAll l Green +STARTLINE}
+  addUserKnob {6 blueAll l Blue +STARTLINE}
+  addUserKnob {6 alphaAll l Alpha +STARTLINE}
+  addUserKnob {6 noAlpha l "No Alpha" +STARTLINE}
+  addUserKnob {26 ""}
+  addUserKnob {6 auto_label l "Auto Label" -STARTLINE}
+  auto_label true
+ }
+set N204800 [stack 0]
+push $N204800
+ ChannelMerge {
+  inputs 2
+  operation xor
+  name ChannelMerge4
+  xpos 1082
+  ypos 18
+ }
+ Grade {
+  channels alpha
+  whitepoint 0.5
+  black_clamp false
+  name Grade8
+  xpos 1082
+  ypos 95
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle8
+  tile_color 0xffffffff
+  xpos 1082
+  ypos 133
+  addUserKnob {20 Presets}
+  addUserKnob {26 a l "All Channels"}
+  addUserKnob {6 redAll l Red +STARTLINE}
+  addUserKnob {6 greenAll l Green +STARTLINE}
+  addUserKnob {6 blueAll l Blue +STARTLINE}
+  addUserKnob {6 alphaAll l Alpha +STARTLINE}
+  addUserKnob {6 noAlpha l "No Alpha" +STARTLINE}
+  addUserKnob {26 ""}
+  addUserKnob {6 auto_label l "Auto Label" -STARTLINE}
+  auto_label true
+ }
+clone $C20d000 {
+  xpos 1082
+  ypos 159
+  selected false
+ }
+set N205800 [stack 0]
+ Unpremult {
+  name Unpremult4
+  xpos 1082
+  ypos 197
+ }
+push $N209c00
+ Grade {
+  channels alpha
+  blackpoint 0.6
+  whitepoint 0.7
+  white_clamp true
+  name Grade5
+  xpos 798
+  ypos -79
+ }
+push $N204000
+ Grade {
+  channels alpha
+  blackpoint 0.3
+  whitepoint 0.4
+  white_clamp true
+  invert_mask true
+  name Grade6
+  xpos 946
+  ypos -79
+ }
+ ChannelMerge {
+  inputs 2
+  operation stencil
+  name ChannelMerge2
+  xpos 798
+  ypos 18
+ }
+push $N205800
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy3
+  xpos 798
+  ypos 159
+ }
+ Premult {
+  name Premult4
+  xpos 798
+  ypos 197
+ }
+ Blur {
+  size 3.7
+  name Blur10
+  xpos 798
+  ypos 223
+ }
+clone $C20d000 {
+  xpos 798
+  ypos 261
+  selected false
+ }
+ Unpremult {
+  name Unpremult5
+  xpos 798
+  ypos 299
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name Merge7
+  xpos 798
+  ypos 351
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  name Merge6
+  xpos -56
+  ypos 351
+ }
+set N200400 [stack 0]
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 479
+  ypos 432
+ }
+ Premult {
+  name Premult2
+  xpos 479
+  ypos 534
+ }
+ Blur {
+  size 2
+  name Blur9
+  xpos 479
+  ypos 569
+ }
+ Blur {
+  size {{"clamp(Blur1.size, 0, 4)"}}
+  name Blur4
+  xpos 479
+  ypos 607
+ }
+set N201400 [stack 0]
+ Expression {
+  channel0 alpha
+  expr0 a==0?0:1
+  name Expression1
+  xpos 627
+  ypos 613
+ }
+ Blur {
+  size 2
+  name Blur5
+  xpos 627
+  ypos 645
+ }
+push $N201400
+ Blur {
+  inputs 1+1
+  size {{"clamp(parent.Blur1.size-4, 0, 4)"}}
+  invert_mask true
+  name Blur3
+  xpos 479
+  ypos 645
+ }
+ Dot {
+  name Dot13
+  xpos 513
+  ypos 700
+ }
+set N1fe400 [stack 0]
+ Expression {
+  channel0 alpha
+  expr0 a==0?0:1
+  name Expression2
+  xpos 627
+  ypos 696
+ }
+ Blur {
+  size 4
+  name Blur7
+  xpos 627
+  ypos 722
+ }
+push $N1fe400
+ Blur {
+  inputs 1+1
+  size {{"clamp(parent.Blur1.size-8, 0, 8)"}}
+  invert_mask true
+  name Blur6
+  xpos 479
+  ypos 722
+ }
+ Dot {
+  name Dot14
+  xpos 513
+  ypos 798
+ }
+set N1ff400 [stack 0]
+ Expression {
+  channel0 alpha
+  expr0 a==0?0:1
+  name Expression3
+  xpos 627
+  ypos 794
+ }
+ FilterErode {
+  size 2
+  name FilterErode2
+  xpos 627
+  ypos 820
+ }
+ Blur {
+  size 2
+  name Blur11
+  xpos 627
+  ypos 858
+ }
+ FilterErode {
+  size 10
+  filter gaussian
+  name FilterErode3
+  xpos 627
+  ypos 896
+ }
+push $N1ff400
+ Unpremult {
+  name Unpremult2
+  xpos 479
+  ypos 852
+ }
+set N1fc800 [stack 0]
+ Expression {
+  channel0 alpha
+  expr0 a==0?0:1
+  name Expression4
+  xpos 358
+  ypos 852
+ }
+ Blur {
+  size {{"clamp(parent.Blur1.size-16, 0, 1000000)"}}
+  invert_mask true
+  name Blur8
+  xpos 358
+  ypos 878
+ }
+ Unpremult {
+  name Unpremult3
+  xpos 358
+  ypos 916
+ }
+push $N1fc800
+ Merge2 {
+  inputs 2+1
+  operation copy
+  invert_mask true
+  name Merge8
+  xpos 479
+  ypos 1002
+ }
+set N77f4b400 [stack 0]
+push $N200400
+ Merge2 {
+  inputs 2+1
+  operation copy
+  name Merge4
+  xpos -56
+  ypos 1002
+ }
+push $N20c400
+ Dot {
+  name Dot6
+  xpos -373
+  ypos 1065
+ }
+set N77f4bc00 [stack 0]
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle4
+  xpos -192
+  ypos 1061
+ }
+ Merge2 {
+  inputs 2+1
+  operation copy
+  name Merge5
+  selected true
+  xpos -56
+  ypos 1132
+ }
+push $N77f4bc00
+ ShuffleCopy {
+  inputs 2
+  alpha alpha2
+  black red
+  white green
+  out2 forward
+  name ShuffleCopy1
+  xpos -56
+  ypos 1316
+ }
+ IDistort {
+  channels rgb
+  uv forward
+  uv_scale 2
+  filter Keys
+  name IDistort1
+  xpos -56
+  ypos 1656
+ }
+ Dot {
+  name Dot4
+  xpos -22
+  ypos 1872
+ }
+ ShuffleCopy {
+  inputs 2
+  in forward
+  alpha alpha2
+  black red
+  white green
+  out2 forward
+  name ShuffleCopy2
+  xpos -470
+  ypos 1868
+ }
+ ShuffleCopy {
+  inputs 2
+  in alpha
+  alpha red
+  black red
+  white green
+  name ShuffleCopy3
+  xpos -580
+  ypos 1957
+ }
+ Output {
+  name Output1
+  xpos -580
+  ypos 2135
+ }
+push $N77f4b400
+ Viewer {
+  frame_range 1001-1030
+  name Viewer1
+  xpos 479
+  ypos 1028
+ }
+end_group

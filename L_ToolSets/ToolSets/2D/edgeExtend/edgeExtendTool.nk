@@ -1,0 +1,494 @@
+set cut_paste_input [stack 0]
+version 12.0 v3
+push $cut_paste_input
+Group {
+ name edgeExtendTool1
+ selected true
+ xpos -129
+ ypos 1257
+ addUserKnob {20 main}
+ addUserKnob {4 alpha M {"keep original" extend}}
+ addUserKnob {19 initBlackAndGamma_blackpoint l blackpoint R 0 0.9999}
+ initBlackAndGamma_blackpoint 0.9
+ addUserKnob {6 initBlackAndGamma_blackpoint_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 initBlackAndGamma_blackpoint_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 initBlackAndGamma_blackpoint_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 initBlackAndGamma_blackpoint_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 initBlackAndGamma_blackpoint_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 initBlackAndGamma_gamma_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 initErode l erode R 0 100}
+ addUserKnob {6 initGammaErode_gamma_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {14 firstPassBlur R 0 100}
+ firstPassBlur 2
+ addUserKnob {14 firstPassErode R 0 100}
+ addUserKnob {6 secondPass +STARTLINE}
+ secondPass true
+ addUserKnob {14 secondPassBlur l blur R 0 100}
+ secondPassBlur 4
+ addUserKnob {14 secondPassErode l erode R 0 100}
+ secondPassErode 1
+ addUserKnob {6 thirdPass +STARTLINE}
+ thirdPass true
+ addUserKnob {6 thirdPassStat +INVISIBLE +STARTLINE}
+ thirdPassStat true
+ addUserKnob {14 thirdPassBlur l blur R 0 100}
+ thirdPassBlur 8
+ addUserKnob {14 thirdPassErode l erode R 0 100}
+ thirdPassErode 3
+ addUserKnob {6 fourthPass +STARTLINE}
+ fourthPass true
+ addUserKnob {6 fourthPassStat +INVISIBLE +STARTLINE}
+ fourthPassStat true
+ addUserKnob {14 fourthPassBlur l blur R 0 100}
+ fourthPassBlur 16
+ addUserKnob {14 fourthPassErode l erode R 0 100}
+ fourthPassErode 6
+ addUserKnob {6 fifthPass +STARTLINE}
+ fifthPass true
+ addUserKnob {14 fifthPassBlur l blur R 0 100}
+ fifthPassBlur 32
+ addUserKnob {14 fifthPassErode l erode R 0 100}
+ fifthPassErode 12
+ addUserKnob {26 ""}
+ addUserKnob {14 softenEdge t "soften the outer edge" R 0 100}
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannelMask l mask -STARTLINE T Merge1.maskChannelMask}
+ addUserKnob {41 inject -STARTLINE T Merge1.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Merge1.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T Merge1.fringe}
+ addUserKnob {41 mix T Merge1.mix}
+ addUserKnob {20 info n 1}
+ info 0
+ addUserKnob {26 jm l "" +STARTLINE T "EdgeExtend_v3.1 by Johannes Masanz\n\nThis node expects an unpremultiplied rgba input.\n\nThe first two knobs just twaek the alpha \nbefore the other operations happen and basically \nhelp fefine how much to cut off an edge \nbefore extending.\n\n"}
+ addUserKnob {20 endGroup n -1}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -350
+  ypos 479
+ }
+set Nd58fe000 [stack 0]
+ Input {
+  inputs 0
+  name mask
+  xpos -506
+  ypos 1546
+  number 1
+ }
+push $Nd58fe000
+ Clamp {
+  channels alpha
+  name initClamp
+  xpos -350
+  ypos 539
+ }
+ Grade {
+  channels alpha
+  blackpoint {{parent.initBlackAndGamma_blackpoint.r}}
+  white_clamp true
+  name initBlackAndGamma
+  xpos -350
+  ypos 577
+ }
+set N9102f000 [stack 0]
+ FilterErode {
+  size {{parent.initErode} {parent.initErode}}
+  name initErode
+  xpos -236
+  ypos 577
+ }
+ Grade {
+  channels alpha
+  blackpoint 0.001
+  name Grade2
+  xpos -236
+  ypos 615
+ }
+push $N9102f000
+ Merge2 {
+  inputs 2
+  operation min
+  name initMin
+  xpos -350
+  ypos 621
+ }
+ Grade {
+  add 0.1
+  black_clamp false
+  name initColorOffset
+  xpos -350
+  ypos 647
+ }
+set Nd0b02000 [stack 0]
+push $Nd0b02000
+ Premult {
+  name edPremult1
+  xpos -475
+  ypos 682
+ }
+ Blur {
+  size {{parent.firstPassBlur} {parent.firstPassBlur}}
+  name edBlur1
+  xpos -475
+  ypos 731
+ }
+ Unpremult {
+  name edUnpremult1
+  xpos -475
+  ypos 777
+ }
+push $Nd0b02000
+ FilterErode {
+  size {{parent.firstPassErode} {parent.firstPassErode}}
+  filter gaussian
+  name edErode1
+  xpos -236
+  ypos 719
+ }
+push $Nd0b02000
+ Merge2 {
+  inputs 2
+  operation min
+  name edMergeMin1
+  xpos -350
+  ypos 725
+ }
+ Premult {
+  name edPremultEroded1
+  xpos -350
+  ypos 751
+ }
+ Merge2 {
+  inputs 2
+  operation under
+  name edMergeUnder1
+  xpos -350
+  ypos 777
+ }
+ Expression {
+  channel0 alpha
+  expr0 g>b?(g>0?1:0):(b>0?1:0)
+  name edRedIsZero2
+  xpos -350
+  ypos 803
+  disable {{1-parent.secondPass}}
+ }
+set Ne7411000 [stack 0]
+ Premult {
+  name edPremult2
+  xpos -475
+  ypos 803
+  disable {{1-parent.secondPass}}
+ }
+ Blur {
+  size {{parent.secondPassBlur} {parent.secondPassBlur}}
+  name edBlur2
+  xpos -475
+  ypos 852
+  disable {{1-parent.secondPass}}
+ }
+ Unpremult {
+  name edUnpremult2
+  xpos -475
+  ypos 898
+  disable {{1-parent.secondPass}}
+ }
+push $Ne7411000
+ FilterErode {
+  size {{parent.secondPassErode} {parent.secondPassErode}}
+  filter gaussian
+  name edErode2
+  xpos -236
+  ypos 840
+  disable {{1-parent.secondPass}}
+ }
+push $Ne7411000
+ Merge2 {
+  inputs 2
+  operation min
+  name edMergeMin2
+  xpos -350
+  ypos 846
+  disable {{1-parent.secondPass}}
+ }
+ Premult {
+  name edPremultEroded2
+  xpos -350
+  ypos 872
+  disable {{1-parent.secondPass}}
+ }
+ Merge2 {
+  inputs 2
+  operation under
+  name edMergeUnder2
+  xpos -350
+  ypos 898
+  disable {{1-parent.secondPass}}
+ }
+ Expression {
+  channel0 alpha
+  expr0 g>b?(g>0?1:0):(b>0?1:0)
+  name edRedIsZero3
+  xpos -350
+  ypos 924
+  disable {{1-parent.thirdPass}}
+ }
+set Nd00a7000 [stack 0]
+ Premult {
+  name edPremult3
+  xpos -475
+  ypos 924
+  disable {{1-parent.thirdPass}}
+ }
+ Blur {
+  size {{parent.thirdPassBlur} {parent.thirdPassBlur}}
+  name edBlur3
+  xpos -475
+  ypos 973
+  disable {{1-parent.thirdPass}}
+ }
+ Unpremult {
+  name edUnpremult3
+  xpos -475
+  ypos 1019
+  disable {{1-parent.thirdPass}}
+ }
+push $Nd00a7000
+ FilterErode {
+  size {{parent.thirdPassErode} {parent.thirdPassErode}}
+  filter gaussian
+  name edErode3
+  xpos -236
+  ypos 961
+  disable {{1-parent.thirdPass}}
+ }
+push $Nd00a7000
+ Merge2 {
+  inputs 2
+  operation min
+  name edMergeMin3
+  xpos -350
+  ypos 967
+  disable {{1-parent.thirdPass}}
+ }
+ Premult {
+  name edPremultEroded3
+  xpos -350
+  ypos 993
+  disable {{1-parent.thirdPass}}
+ }
+ Merge2 {
+  inputs 2
+  operation under
+  name edMergeUnder3
+  xpos -350
+  ypos 1019
+  disable {{1-parent.thirdPass}}
+ }
+ Expression {
+  channel0 alpha
+  expr0 g>b?(g>0?1:0):(b>0?1:0)
+  name edRedIsZero4
+  xpos -350
+  ypos 1045
+  disable {{1-parent.fourthPass}}
+ }
+set Na1443000 [stack 0]
+ Premult {
+  name edPremult4
+  xpos -475
+  ypos 1045
+  disable {{1-parent.fourthPass}}
+ }
+ Blur {
+  size {{parent.fourthPassBlur} {parent.fourthPassBlur}}
+  name edBlur4
+  xpos -475
+  ypos 1094
+  disable {{1-parent.fourthPass}}
+ }
+ Unpremult {
+  name edUnpremult4
+  xpos -475
+  ypos 1140
+  disable {{1-parent.fourthPass}}
+ }
+push $Na1443000
+ FilterErode {
+  size {{parent.fourthPassErode} {parent.fourthPassErode}}
+  filter gaussian
+  name edErode4
+  xpos -236
+  ypos 1082
+  disable {{1-parent.fourthPass}}
+ }
+push $Na1443000
+ Merge2 {
+  inputs 2
+  operation min
+  name edMergeMin4
+  xpos -350
+  ypos 1088
+  disable {{1-parent.fourthPass}}
+ }
+ Premult {
+  name edPremultEroded4
+  xpos -350
+  ypos 1114
+  disable {{1-parent.fourthPass}}
+ }
+ Merge2 {
+  inputs 2
+  operation under
+  name edMergeUnder4
+  xpos -350
+  ypos 1140
+  disable {{1-parent.fourthPass}}
+ }
+ Expression {
+  channel0 alpha
+  expr0 g>b?(g>0?1:0):(b>0?1:0)
+  name edRedIsZero6
+  xpos -350
+  ypos 1166
+  disable {{1-parent.fifthPass}}
+ }
+set N8ea95400 [stack 0]
+ Premult {
+  name edPremult5
+  xpos -475
+  ypos 1166
+  disable {{1-parent.fifthPass}}
+ }
+ Blur {
+  size {{parent.fifthPassBlur} {parent.fifthPassBlur}}
+  name edBlur5
+  xpos -475
+  ypos 1215
+  disable {{1-parent.fifthPass}}
+ }
+ Unpremult {
+  name edUnpremult5
+  xpos -475
+  ypos 1261
+  disable {{1-parent.fifthPass}}
+ }
+push $N8ea95400
+ FilterErode {
+  size {{parent.fifthPassErode} {parent.fifthPassErode}}
+  filter gaussian
+  name edErode5
+  xpos -236
+  ypos 1203
+  disable {{1-parent.fifthPass}}
+ }
+push $N8ea95400
+ Merge2 {
+  inputs 2
+  operation min
+  name edMergeMin5
+  xpos -350
+  ypos 1209
+  disable {{1-parent.fifthPass}}
+ }
+ Premult {
+  name edPremultEroded5
+  xpos -350
+  ypos 1235
+  disable {{1-parent.fifthPass}}
+ }
+ Merge2 {
+  inputs 2
+  operation under
+  name edMergeUnder5
+  xpos -350
+  ypos 1261
+  disable {{1-parent.fifthPass}}
+ }
+ Expression {
+  channel0 alpha
+  expr0 g>b?(g>0?1:0):(b>0?1:0)
+  name edRedIsZero5
+  xpos -350
+  ypos 1295
+ }
+set N17693400 [stack 0]
+ Blur {
+  channels alpha
+  size {{parent.softenEdge}}
+  name edSoftenEdge1
+  xpos -612
+  ypos 1289
+ }
+ Grade {
+  channels alpha
+  blackpoint 0.95
+  gamma 0.98
+  white_clamp true
+  name Grade1
+  xpos -612
+  ypos 1353
+ }
+ FilterErode {
+  size {{-parent.edSoftenEdge1.size/4}}
+  filter gaussian
+  name FilterErode1
+  xpos -612
+  ypos 1411
+ }
+ ChannelMerge {
+  inputs 2
+  name ChannelMerge2
+  xpos -475
+  ypos 1404
+ }
+push $N17693400
+ ChannelMerge {
+  inputs 2
+  operation min
+  bbox B
+  name ChannelMerge1
+  xpos -350
+  ypos 1404
+  disable {{"edSoftenEdge1.size < 0.001"}}
+ }
+ Grade {
+  add 0.1
+  reverse true
+  black_clamp false
+  name initColorOffset1
+  xpos -350
+  ypos 1456
+ }
+ Premult {
+  name Premult1
+  xpos -350
+  ypos 1482
+ }
+push $Nd58fe000
+ Merge2 {
+  inputs 2+1
+  operation copy
+  maskChannelInput -rgba.alpha
+  name Merge1
+  xpos -350
+  ypos 1546
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  selected true
+  xpos -350
+  ypos 1628
+  disable {{parent.alpha}}
+ }
+ Output {
+  name Output1
+  xpos -350
+  ypos 1732
+ }
+end_group

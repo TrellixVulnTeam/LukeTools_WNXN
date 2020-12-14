@@ -2,10 +2,12 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Reload Read
-# COLOR: #2c522c
+# NAME: RV this
+# COLOR: #1d7577
 #
 #----------------------------------------------------------------------------------------------------------
 
-for i in nuke.selectedNodes():
-    i.knob('reload').execute()
+import L_RVThis
+reload(L_RVThis)
+
+L_RVThis.RVThis(nuke.selectedNodes())

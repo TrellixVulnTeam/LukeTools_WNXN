@@ -9,4 +9,4 @@
 #----------------------------------------------------------------------------------------------------------
 
 for i in nuke.selectedNodes():
-    i.knob('localizationPolicy').setValue(0)
+    i.knob('localizationPolicy').setValue(1)

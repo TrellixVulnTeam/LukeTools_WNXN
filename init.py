@@ -51,3 +51,6 @@ nuke.pluginAddPath('AutoFlare')
 nuke.pluginAddPath('./AutoFlare/BOKEHS')
 nuke.pluginAddPath('./AutoFlare/BOKEHS/polygons')
 
+
+nuke.pluginAddPath('rv_ocio')
+

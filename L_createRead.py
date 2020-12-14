@@ -30,6 +30,7 @@ def createReadFromWrite():
                 read.knob('colorspace').setValue('out_srgb')
                 read.knob('xpos').setValue(node.xpos()+0)
                 read.knob('ypos').setValue(node.ypos()+100)
+                read.knob('localizationPolicy').setValue(3)
 
             else:
                 seq = L_pyseq.img2pyseq(file)
@@ -44,6 +45,7 @@ def createReadFromWrite():
                                                 origlast= seq.end())
                                                 
                     read.knob('colorspace').setValue(int(node.knob('colorspace').getValue()))
+                    read.knob('localizationPolicy').setValue(3)
 
                 else:
                     nuke.message(node.name() + ': No files found')    

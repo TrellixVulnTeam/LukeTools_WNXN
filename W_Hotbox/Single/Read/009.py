@@ -2,20 +2,19 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Check EXR
-# COLOR: #660547
+# NAME: Set Project Range
+# COLOR: #52462c
 #
 #----------------------------------------------------------------------------------------------------------
 
-for read in nuke.allNodes("Read"):
-    error = ""
-    if read["file"].value().endswith("exr"):
-        if read.metadata()["exr/channels"] not in ("A:{1 0 1 1},B:{1 0 1 1},G:{1 0 1 1},R:{1 0 1 1}", "B:{1 0 1 1},G:{1 0 1 1},R:{1 0 1 1}"):
-            error += "channels dont match multipart description"
-        if read.metadata()["input/bitsperchannel"] == "32-bit float":
-            error += "\n32 bit float"
-        
-        if error:
-            error += "\nTHIS IS PROBABLY NO MULTIPART IMAGE SUPER SLOW PLEASE CONVERT"
-            read["label"].setValue(error)
-            read["note_font_size"].setValue(30)
+node = nuke.selectedNode()
+
+first = node.knob('first').value()
+last = node.knob('last').value()
+
+nuke.Root().knob('first_frame').setValue(first)
+nuke.Root().knob('last_frame').setValue(last)
+nuke.Root().knob('lock_range').setValue(1)
+
+if nuke.frame() not in range(first,last+1):
+    nuke.frame(first)

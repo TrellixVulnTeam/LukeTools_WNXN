@@ -2,9 +2,9 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Union
+# NAME: BBox Union
 #
 #----------------------------------------------------------------------------------------------------------
 
 for i in nuke.selectedNodes():
-	i.knob('operation').setValue('union')
+    i.knob('bbox').setValue(0)

@@ -153,7 +153,7 @@ def connectNodeToDot(node,dot):
     undo.begin(undoEventText)
     labelNode = node["label"].value()
     labelDot = dot["label"].value()
-    if labelNode == labelDot:
+    if labelNode == labelDot and !node.name().startswith("Connector"):
         node.setInput(0,dot)
         node["hide_input"].setValue(True)
         undo.end()

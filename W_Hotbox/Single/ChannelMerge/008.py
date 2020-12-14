@@ -2,10 +2,9 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: RV this
-# COLOR: #1d7577
+# NAME: Union
 #
 #----------------------------------------------------------------------------------------------------------
 
-import L_RVThis
-L_RVThis.RVThis(nuke.selectedNodes())
+for i in nuke.selectedNodes():
+	i.knob('operation').setValue('union')

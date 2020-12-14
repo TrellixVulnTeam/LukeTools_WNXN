@@ -2,10 +2,9 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: RV this
-# COLOR: #1d7577
+# NAME: set lin_srgb
 #
 #----------------------------------------------------------------------------------------------------------
 
-import L_RVThis
-L_RVThis.RVThis(nuke.selectedNodes())
+for n in nuke.selectedNodes():
+    n.knob('colorspace').setValue(6)

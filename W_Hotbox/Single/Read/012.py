@@ -2,11 +2,20 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Set Project Format
-# COLOR: #52462c
+# NAME: create EXR Write
+# COLOR: #b29100
 #
 #----------------------------------------------------------------------------------------------------------
 
-node = nuke.selectedNode()
-format = node.knob('format').value()
-nuke.Root().knob('format').setValue(format)
+import pythonlibrary.L_pyseq as L_pyseq
+writes = list()
+for read in nuke.selectedNodes():
+    seq = L_pyseq.img2pyseq(read["file"].value())
+    if seq:
+        write = nuke.nodes.Write()
+        write["file_type"].setValue("exr")
+        write.setInput(0,read)
+        oldname = read["file"].value()
+        oldext = oldname.split(".")[-1]
+        write["file"].setValue(oldname.replace(oldext,"exr"))
+        writes.append(write)

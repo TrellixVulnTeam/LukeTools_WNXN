@@ -2,50 +2,50 @@ set cut_paste_input [stack 0]
 version 12.0 v3
 push $cut_paste_input
 NoOp {
-name ffmpeg_write
-onCreate "n = nuke.thisNode()\n#Set fps on create\nn\['fps'].setValue(nuke.root().fps())\n\n"
-knobChanged "import os\nimport re\nimport nukescripts\n\nn = nuke.thisNode()\nk = nuke.thisKnob()\n\nif not k.name() in \['xpos','ypos']:\n\n    i = n\['inFile']\n    o = n\['outFile']\n    p = n\['prefix']\n    f = n\['fileName']\n    s = n\['suffix']\n    e = n\['env']\n    st = n\['start']\n    ep = n\['envPath']\n    op = n\['outPreview']\n    cp = n\['cmdPreview']\n    c = \['.mov', '.mp4']\n    co = \['libx264', 'libx265']\n\n    #Set values when input gets connected\n    if n.input(0):\n        if os.path.isfile(n.input(0)\['file'].evaluate()):\n    \n            i.setValue(nukescripts.replaceHashes(nuke.filename(n.input(0))))\n        \n            outVal = os.path.dirname(i.value()).split('/')\[:-1]\n            outVal.append(c\[int(n\['fileType'].getValue())]\[1:])\n            o.setValue('/'.join(outVal)+'/')\n            if n.input(0).Class() == 'Read':\n                st.setValue(n.input(0)\['first'].value())\n            else:\n                st.setValue(nuke.root()\['first_frame'].value())\n        \n            f.setValue(re.sub(r'.%.*d.\\w*', \"\", os.path.basename(nukescripts.replaceHashes(i.value()))))\n        else:\n            f.setValue('')\n            o.setValue('')\n            \n    \n    #Custom ffmpeg path\n    if e.value():\n        ep.setVisible(True)\n    else:\n        ep.setFlag(0x40000)\n    \n    #Set output preview\n    if i.value() and o.value():\n        if i.value() or o.value():\n            name = ''.join((o.value()+p.value(), f.value(), s.value())) + c\[int(n\['fileType'].getValue())]\n        else:\n            name = o.value()+f.value() + c\[n\['fileType'].getValue()]\n        op.setValue(name)\n    else:\n        op.setValue('File not found')\n    \n    #Set command preview\n    if i.value() and o.value() and f.value():\n        if e.value() and not os.path.isfile(ep.value()):\n            cp.setValue('')\n        elif not e.value():\n            if e.value():\n                args = ep.value() + ' '\n            else:\n                args = 'ffmpeg '\n                \n            if n\['audio'].value():\n                args += '-i ' + re.escape(n\['audio'].evaluate())\n            \n            \n    #        args+=  ' -apply_trc ' + cs\[int(n\['colorspace'].getValue())] \\\n            args+=  ' -framerate ' + str(int(n\['fps'].value())) \\\n                +   ' -start_number '       + str(int(st.value())) \\\n                +   ' -i \"'         + re.sub(r'/',r'\\\\',i.value()) + '\"' \\\n                +   ' -c:v '       + co\[int(n\['codec'].getValue())] \\\n                +   ' -crf '       + str(int(n\['crf'].value())) \\\n                +   ' -preset veryslow' \\\n                +   ' -pix_fmt yuv420p' \\\n                +   ' \"'            + re.sub(r'/',r'\\\\',op.value()+ '\"')\n            cp.setValue(args)\n    else:\n        cp.setValue('')"
-autolabel "(nuke.thisNode().name() + '\\n' + nuke.thisNode()\['outPreview'].value() )"
-tile_color 0xff9b00ff
-selected true
-xpos -74
-ypos 9827
-addUserKnob {20 writeTab l Write}
-addUserKnob {2 inFile l "Input file"}
-addUserKnob {2 outFile l "Output Folder"}
-addUserKnob {26 div1 l "Name Options"}
-addUserKnob {1 prefix l Prefix}
-addUserKnob {1 suffix l Suffix -STARTLINE}
-addUserKnob {1 fileName l Filename}
-addUserKnob {26 div2 l Options}
-addUserKnob {4 fileType l "file type" M {mov mp4}}
-fileType mp4
-addUserKnob {4 codec -STARTLINE M {H.264 H.265 ""}}
-addUserKnob {22 clear l Clear -STARTLINE T "n = nuke.thisNode()\nfor k in (n\['inFile'], n\['outFile'], n\['prefix'], n\['suffix'], n\['fileName'], n\['audio'], n\['outPreview']):\n    k.setValue('')"}
-addUserKnob {4 colorspace +INVISIBLE M {Gamma2.2 Linear ""}}
-addUserKnob {3 fps}
-fps 24
-addUserKnob {3 crf -STARTLINE}
-crf 18
-addUserKnob {3 start l startframe}
-start 1001
-addUserKnob {2 audio l "audio file"}
-addUserKnob {26 div3 l Render}
-addUserKnob {6 env l "Custom FFmpeg path" +STARTLINE}
-addUserKnob {2 envPath l "FFmpeg path" +HIDDEN}
-addUserKnob {26 div4 l "" +STARTLINE}
-addUserKnob {26 outPreview l "Output preview" T "File not found"}
-addUserKnob {26 cmdPreview l "Command preview" T ""}
-addUserKnob {22 previewPop l Preview T "n = nuke.thisNode()\nop = n\['outPreview'].value()\ncp = n\['cmdPreview'].value()\n\nif op or cp:\n    nuke.message(\"Output: \" + op + '\\n \\n' + \"Command: \" + cp)\nelse:\n    pass" +STARTLINE}
-addUserKnob {22 execute l Render T "import os\nimport subprocess\n\nn = nuke.thisNode()\nargs = n\['cmdPreview'].value()\n\nif not os.path.isdir(n\['outFile'].value()):\n    os.mkdir(n\['outFile'].value())\nstart = args\nprint args\nif args:\n    subprocess.Popen(start, creationflags=subprocess.CREATE_NEW_CONSOLE)\nelse:\n    nuke.message('Settings incomplete!')" +STARTLINE}
-addUserKnob {20 info l Info}
-addUserKnob {26 installation l "Install FFmpeg"}
-addUserKnob {22 installFFmpeg l "Install FFmpeg" T "import platform\nimport webbrowser\nif platform.system() == \"Windows\":\n    webbrowser.open(\"https://www.ffmpeg.org/download.html#build-windows\")\nif platform.system() == \"Linux\":\n    webbrowser.open(\"https://www.ffmpeg.org/download.html#build-linux\")" +STARTLINE}
-addUserKnob {26 updateFFmpeg l "Compile/Update FFmpeg"}
-addUserKnob {22 ffmpegUpdate l "Update FFmpeg" t "For some ffmpeg option you need the latest ffmpeg. If the launched terminal tells you there's unrecognized option, try follow this guide to update your ffmpeg." T "import webbrowser; webbrowser.open('https://trac.ffmpeg.org/wiki/CompilationGuide/Centos')" +STARTLINE}
-addUserKnob {26 ffmpegInfo l "Encode/H.264 - FFmpeg"}
-addUserKnob {22 ffmpeg264 l H.264 T "import webbrowser; webbrowser.open('https://trac.ffmpeg.org/wiki/Encode/H.264/')" +STARTLINE}
-addUserKnob {22 ffmpeg265 l H.265 -STARTLINE T "import webbrowser; webbrowser.open('https://trac.ffmpeg.org/wiki/Encode/H.265')"}
-addUserKnob {26 created l "Created By"}
-addUserKnob {22 creator l jeangjenq.com T "import webbrowser; webbrowser.open('http://www.jeangjenq.com/')" +STARTLINE}
+ name ffmpeg_write
+ onCreate "n = nuke.thisNode()\n#Set fps on create\nn\['fps'].setValue(nuke.root().fps())\n\n"
+ knobChanged "import os\nimport re\nimport nukescripts\n\nn = nuke.thisNode()\nk = nuke.thisKnob()\n\nif not k.name() in \['xpos','ypos']:\n\n    i = n\['inFile']\n    o = n\['outFile']\n    p = n\['prefix']\n    f = n\['fileName']\n    s = n\['suffix']\n    e = n\['env']\n    st = n\['start']\n    ep = n\['envPath']\n    op = n\['outPreview']\n    cp = n\['cmdPreview']\n    c = \['.mov', '.mp4']\n    co = \['libx264', 'libx265', 'prores_ks']\n\n    #Set values when input gets connected\n    if n.input(0):\n        if os.path.isfile(n.input(0)\['file'].evaluate()):\n    \n            i.setValue(nukescripts.replaceHashes(nuke.filename(n.input(0))))\n        \n            outVal = os.path.dirname(i.value()).split('/')\[:-1]\n            outVal.append(c\[int(n\['fileType'].getValue())]\[1:])\n            o.setValue('/'.join(outVal)+'/')\n            if n.input(0).Class() == 'Read':\n                st.setValue(n.input(0)\['first'].value())\n            else:\n                st.setValue(nuke.root()\['first_frame'].value())\n        \n            f.setValue(re.sub(r'.%.*d.\\w*', \"\", os.path.basename(nukescripts.replaceHashes(i.value()))))\n        else:\n            f.setValue('')\n            o.setValue('')\n            \n    \n    #Custom ffmpeg path\n    if e.value():\n        ep.setVisible(True)\n    else:\n        ep.setFlag(0x40000)\n    \n    #Set output preview\n    if i.value() and o.value():\n        if i.value() or o.value():\n            name = ''.join((o.value()+p.value(), f.value(), s.value())) + c\[int(n\['fileType'].getValue())]\n        else:\n            name = o.value()+f.value() + c\[n\['fileType'].getValue()]\n        op.setValue(name)\n    else:\n        op.setValue('File not found')\n    \n    #Set command preview\n    if i.value() and o.value() and f.value():\n        if e.value() and not os.path.isfile(ep.value()):\n            cp.setValue('')\n        elif not e.value():\n            if e.value():\n                args = ep.value() + ' '\n            else:\n                args = 'ffmpeg '\n                \n            if n\['audio'].value():\n                args += '-i ' + re.escape(n\['audio'].evaluate())\n                \n            if int(n\['codec'].getValue()) < 2:\n            \n            \n    #        args+=  ' -apply_trc ' + cs\[int(n\['colorspace'].getValue())] \\\n                args+=  ' -framerate ' + str(int(n\['fps'].value())) \\\n                    +   ' -start_number '       + str(int(st.value())) \\\n                    +   ' -i \"'         + re.sub(r'/',r'\\\\',i.value()) + '\"' \\\n                    +   ' -c:v '       + co\[int(n\['codec'].getValue())] \\\n                    +   ' -crf '       + str(int(n\['crf'].value())) \\\n                    +   ' -preset veryslow' \\\n                    +   ' -pix_fmt yuv420p' \\\n                    +   ' \"'            + re.sub(r'/',r'\\\\',op.value()+ '\"')\n            else:\n                args+=  ' -i \"'         + re.sub(r'/',r'\\\\',i.value()) + '\"' \\\n                    +   ' -c:v '       + co\[int(n\['codec'].getValue())] \\\n                    +   ' -vendor apl0' \\\n                    +   ' -profile:v 2' \\\n                    +   ' -pix_fmt yuv422p10le' \\\n                    +   ' \"'            + re.sub(r'/',r'\\\\',op.value()+ '\"')\n                \n                \n                \n            cp.setValue(args)\n    else:\n        cp.setValue('')"
+ autolabel "(nuke.thisNode().name() + '\\n' + nuke.thisNode()\['outPreview'].value() )"
+ tile_color 0xff9b00ff
+ selected true
+ xpos 1511
+ ypos -152
+ addUserKnob {20 writeTab l Write}
+ addUserKnob {2 inFile l "Input file"}
+ addUserKnob {2 outFile l "Output Folder"}
+ addUserKnob {26 div1 l "Name Options"}
+ addUserKnob {1 prefix l Prefix}
+ addUserKnob {1 suffix l Suffix -STARTLINE}
+ addUserKnob {1 fileName l Filename}
+ addUserKnob {26 div2 l Options}
+ addUserKnob {4 fileType l "file type" M {mov mp4}}
+ fileType mp4
+ addUserKnob {4 codec -STARTLINE M {H.264 H.265 ProRes422 ""}}
+ addUserKnob {22 clear l Clear -STARTLINE T "n = nuke.thisNode()\nfor k in (n\['inFile'], n\['outFile'], n\['prefix'], n\['suffix'], n\['fileName'], n\['audio'], n\['outPreview']):\n    k.setValue('')"}
+ addUserKnob {4 colorspace +INVISIBLE M {Gamma2.2 Linear ""}}
+ addUserKnob {3 fps}
+ fps 25
+ addUserKnob {3 crf -STARTLINE}
+ crf 18
+ addUserKnob {3 start l startframe}
+ start 1001
+ addUserKnob {2 audio l "audio file"}
+ addUserKnob {26 div3 l Render}
+ addUserKnob {6 env l "Custom FFmpeg path" +STARTLINE}
+ addUserKnob {2 envPath l "FFmpeg path" +HIDDEN}
+ addUserKnob {26 div4 l "" +STARTLINE}
+ addUserKnob {26 outPreview l "Output preview" T "File not found"}
+ addUserKnob {26 cmdPreview l "Command preview" T ""}
+ addUserKnob {22 previewPop l Preview T "n = nuke.thisNode()\nop = n\['outPreview'].value()\ncp = n\['cmdPreview'].value()\n\nif op or cp:\n    nuke.message(\"Output: \" + op + '\\n \\n' + \"Command: \" + cp)\nelse:\n    pass" +STARTLINE}
+ addUserKnob {22 execute l Render T "import os\nimport subprocess\n\nn = nuke.thisNode()\nargs = n\['cmdPreview'].value()\n\nif not os.path.isdir(n\['outFile'].value()):\n    os.mkdir(n\['outFile'].value())\nstart = args\nprint args\nif args:\n    subprocess.Popen(start, creationflags=subprocess.CREATE_NEW_CONSOLE)\nelse:\n    nuke.message('Settings incomplete!')" +STARTLINE}
+ addUserKnob {20 info l Info}
+ addUserKnob {26 installation l "Install FFmpeg"}
+ addUserKnob {22 installFFmpeg l "Install FFmpeg" T "import platform\nimport webbrowser\nif platform.system() == \"Windows\":\n    webbrowser.open(\"https://www.ffmpeg.org/download.html#build-windows\")\nif platform.system() == \"Linux\":\n    webbrowser.open(\"https://www.ffmpeg.org/download.html#build-linux\")" +STARTLINE}
+ addUserKnob {26 updateFFmpeg l "Compile/Update FFmpeg"}
+ addUserKnob {22 ffmpegUpdate l "Update FFmpeg" t "For some ffmpeg option you need the latest ffmpeg. If the launched terminal tells you there's unrecognized option, try follow this guide to update your ffmpeg." T "import webbrowser; webbrowser.open('https://trac.ffmpeg.org/wiki/CompilationGuide/Centos')" +STARTLINE}
+ addUserKnob {26 ffmpegInfo l "Encode/H.264 - FFmpeg"}
+ addUserKnob {22 ffmpeg264 l H.264 T "import webbrowser; webbrowser.open('https://trac.ffmpeg.org/wiki/Encode/H.264/')" +STARTLINE}
+ addUserKnob {22 ffmpeg265 l H.265 -STARTLINE T "import webbrowser; webbrowser.open('https://trac.ffmpeg.org/wiki/Encode/H.265')"}
+ addUserKnob {26 created l "Created By"}
+ addUserKnob {22 creator l jeangjenq.com T "import webbrowser; webbrowser.open('http://www.jeangjenq.com/')" +STARTLINE}
 }
