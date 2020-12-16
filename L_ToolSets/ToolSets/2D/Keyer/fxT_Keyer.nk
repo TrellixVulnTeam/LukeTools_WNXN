@@ -6,8 +6,8 @@ name fxT_Keyer
 help "Nukes default keyer with added functionality of masking off the key and keying on different colorspaces for a better keying result.\n\nThe colorspace dropdown lets you choose between different colorspaces, or choose a custom colorspace which is basicly all colorspaces available in the colorspace node\n\nDevloped by Tor Andreassen - fxtor.net"
 tile_color 0xf8ff00ff
 selected true
-xpos 265
-ypos -3704
+xpos -638
+ypos -3464
 addUserKnob {20 fxT_Keyer}
 addUserKnob {41 output T Keyer1.output}
 addUserKnob {41 input T Keyer1.input}
@@ -19,7 +19,6 @@ addUserKnob {41 invert T Keyer1.invert}
 addUserKnob {4 colorspace l colorspace: t "choose what colorspace you want to key on.\nPS: linear is the same as nuke's default keyer" M {log HSV linear custom "" ""}}
 addUserKnob {4 clampedkeyer l "clamped keyer?" M {yes no ""}}
 addUserKnob {4 shuffleOutput l "Channel Output:" t "choose what channels you want to output from the Keyer" M {rgba alpha "" "" "" ""}}
-shuffleOutput alpha
 addUserKnob {26 ""}
 addUserKnob {20 advancedGROUP l "custom colorspace" n 1}
 addUserKnob {41 colorspace_out l "custom colorSpace" t "pick a costom colorspace to key on. This will override the above colorspace dropdown\n\n_________________________________________\nThis is an additional future in case any of the above colorspaces is not working for keying the plate." T ColorspaceCUSTOM.colorspace_out}
@@ -43,7 +42,7 @@ note_font_size 50
 xpos -696
 ypos -472
 }
-set Na2e31c00 [stack 0]
+set N4f963000 [stack 0]
 Dot {
 name Dot6
 note_font_size 50
@@ -56,7 +55,7 @@ name ColorspaceCUSTOM
 xpos -1018
 ypos -378
 }
-set Na2e31400 [stack 0]
+set N4f963800 [stack 0]
 Shuffle {
 red blue
 green blue
@@ -67,7 +66,7 @@ label blueOnly
 xpos -929
 ypos -233
 }
-push $Na2e31400
+push $N4f963800
 Shuffle {
 red green
 blue green
@@ -78,7 +77,7 @@ label greenOnly
 xpos -1018
 ypos -234
 }
-push $Na2e31400
+push $N4f963800
 Shuffle {
 green red
 blue red
@@ -89,7 +88,7 @@ label redOnly
 xpos -1105
 ypos -232
 }
-push $Na2e31400
+push $N4f963800
 Dot {
 name Dot7
 note_font_size 50
@@ -115,7 +114,7 @@ note_font_size 50
 xpos -993
 ypos -90
 }
-set N8a49d800 [stack 0]
+set N3d14000 [stack 0]
 Dot {
 name Dot11
 note_font_size 50
@@ -135,7 +134,7 @@ xpos -836
 ypos 459
 number 1
 }
-set N8a49cc00 [stack 0]
+set Nc03b4000 [stack 0]
 Shuffle {
 alpha white
 name Shuffle1
@@ -144,7 +143,7 @@ label "solid alpha"
 xpos -973
 ypos 577
 }
-push $N8a49cc00
+push $Nc03b4000
 Switch {
 inputs 2
 which {{!parent.autoAlphaCheck2.a}}
@@ -159,7 +158,7 @@ note_font_size 50
 xpos -811
 ypos 696
 }
-push $N8a49d800
+push $N3d14000
 Keyer {
 input {{{Keyer1.input}}}
 output {{{Keyer1.output}}}
@@ -179,16 +178,16 @@ xpos -1018
 ypos 37
 disable {{Clamp1.disable}}
 }
-set N828df800 [stack 0]
-push $N828df800
-push $Na2e31c00
+set N60e4400 [stack 0]
+push $N60e4400
+push $N4f963000
 Dot {
 name Dot2
 note_font_size 50
 xpos -553
 ypos -472
 }
-set N828df400 [stack 0]
+set N7fb0fc00 [stack 0]
 Dot {
 name Dot4
 label "linear (no colorspace applied)"
@@ -215,7 +214,7 @@ xpos -447
 ypos -104
 disable {{Clamp1.disable}}
 }
-push $N828df400
+push $N7fb0fc00
 Colorspace {
 colorspace_out HSV
 name Colorspace2
@@ -252,7 +251,7 @@ xpos -587
 ypos -107
 disable {{Clamp1.disable}}
 }
-push $Na2e31c00
+push $N4f963000
 Log2Lin {
 operation lin2log
 black 0
@@ -300,7 +299,7 @@ note_font_size 50
 xpos -553
 ypos 187
 }
-set N27b6bc00 [stack 0]
+set N496b400 [stack 0]
 Shuffle {
 red alpha
 green alpha
@@ -311,7 +310,7 @@ label alphaOnly
 xpos -427
 ypos 282
 }
-push $N27b6bc00
+push $N496b400
 Switch {
 inputs 2
 which {{parent.shuffleOutput}}
@@ -339,7 +338,7 @@ name Output1
 xpos -587
 ypos 1009
 }
-push $N8a49cc00
+push $Nc03b4000
 NoOp {
 name autoAlphaCheck2
 xpos -676

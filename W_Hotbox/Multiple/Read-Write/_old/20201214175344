@@ -2,10 +2,10 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: RV this
+# NAME: DJV this
 # COLOR: #1d7577
 #
 #----------------------------------------------------------------------------------------------------------
 
-import L_RVThis
-L_RVThis.RVThis(nuke.selectedNodes())
+import L_djvViewThis
+L_djvViewThis.djvViewThis(nuke.selectedNodes())

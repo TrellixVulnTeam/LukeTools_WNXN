@@ -29,12 +29,9 @@ def openRV(args, colorspace):
 
     env = os.environ.copy()
 
-    env["OCIO"] = "K:/git/LukeTools/aces/aces_1.0.3_L/config.ocio"
-    env["RV_SUPPORT_PATH"] ='K:/git/LukeTools/RV'
     env["COLORSPACE"] = colorspace
 
-
-    call = 'rv %s' %(args)
+    call = 'rv.bat %s' %(args)
     print call
     print colorspace
     subprocess.Popen(call, env=env)
