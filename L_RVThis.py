@@ -3,26 +3,23 @@ import nukescripts
 import subprocess
 import os
 import sys
+import re
 
 def RVThis(selectedNodes):
     args = ''
     args += '-fps "%s" ' %(str(int(nuke.root().knob('fps').value())))
 
-
     for n in selectedNodes:
         name = n.knob('file').value()
-        # if "%0" in name:
-        #     name = nukescripts.replaceHashes(name) % n.knob('first').value()
+        name = re.sub(r"%",r"%%",name)
         
         colorspace = n.knob('colorspace').value()
 
         if 'default (' in colorspace:
             colorspace = colorspace[9:-1]
 
-        # args += '"%s" -ocio_image "%s" ' %(name, colorspace)
-        args += name + " "
+        args += '%s ' %(name)
 
-    # args += ' -frame "%s"' %(str(nuke.frame()))
     openRV(args, colorspace)
 
 def openRV(args, colorspace):
@@ -31,7 +28,7 @@ def openRV(args, colorspace):
 
     env["COLORSPACE"] = colorspace
 
-    call = 'rv.bat %s' %(args)
+    call = 'RV.bat %s' %(args)
     print call
     print colorspace
     subprocess.Popen(call, env=env)
