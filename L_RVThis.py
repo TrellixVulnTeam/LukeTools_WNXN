@@ -18,6 +18,12 @@ def RVThis(selectedNodes):
         if 'default (' in colorspace:
             colorspace = colorspace[9:-1]
 
+        if colorspace == 'rec709':
+            colorspace = 'Output - rec.709'
+
+        if colorspace == 'sRGB':
+            colorspace = 'Output - sRGB'
+
         args += '%s ' %(name)
 
     openRV(args, colorspace)

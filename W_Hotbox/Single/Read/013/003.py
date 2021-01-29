@@ -2,11 +2,9 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Render
-# COLOR: #b2701e
-# TEXTCOLOR: #ffffff
+# NAME: set out_srgb
 #
 #----------------------------------------------------------------------------------------------------------
 
 for n in nuke.selectedNodes():
-    n['execute'].execute()
+    n.knob('colorspace').setValue("Output - sRGB")

@@ -5,7 +5,7 @@ def L_newProject():
 
     pnode = False
 
-    proot = 'K:/_VFX/'
+    proot = 'E:/_VFX/'
     pproject = 'L'
     pshot = 'sh0100'
     ptask = 'comp'

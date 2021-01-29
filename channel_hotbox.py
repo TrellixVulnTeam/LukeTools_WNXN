@@ -1,11 +1,15 @@
 """
 This module provides an Interface class to toggle and shuffle layer.
 
-Channel Hotbox v1.6 for Nuke
-by Falk Hofmann, London, 2013, last updated  may,2018
->> Updated with suggestion from Mitchell Kehn to better handle window focus.
+Channel Hotbox v1.8 for Nuke
+by Falk Hofmann, London, 2013, last updated  may, 2020
+>>Updated to clear shuffle list properly to avoid storing layer in list after closing Hotbox.
 
-This script allows you to switch, shuffle out or grade channels.
+Updated to choose the creation of the new shuffle node.
+
+Updated with suggestion from Mitchell Kehn to better handle window focus.
+
+This script allows you to switch the viewer channel or create shuffle and grade nodes.
 
 regular click:
 Change the viewer to the selected channel.
@@ -44,16 +48,22 @@ except ImportError:
     import PySide2.QtGui as QtGui
     import PySide2.QtWidgets as QtGuiWidgets
 
-
 HOTBOX = None
 
 COLORS = {'regular': "background-color:#282828; font: 13px",
           'orange': "background-color:#C26828; font: 13px",
           'green': "background-color: #1EB028; font: 13px"}
 
+# To create the new introduced Shuffle2 nodes in Nuke 12, set SHUFFLE_TYPE value to 1.
+# SHUFFLE_TYPE = 0  old shuffle node
+# SHUFFLE_TYPE = 1 new shuffle node
+
+SHUFFLE_TYPE = 1
+
 
 class LayerButton(QtGuiWidgets.QPushButton):
     """Custom QPushButton to change colors when hovering above."""
+
     def __init__(self, name, button_width, parent=None):
         super(LayerButton, self).__init__(parent)
         self.setMouseTracking(True)
@@ -76,6 +86,7 @@ class LayerButton(QtGuiWidgets.QPushButton):
 
 class LineEdit(QtGuiWidgets.QLineEdit):
     """Custom QLineEdit with combined auto completion."""
+
     def __init__(self, parent, layer_list):
         super(LineEdit, self).__init__(parent)
         self.parent = parent
@@ -89,11 +100,11 @@ class LineEdit(QtGuiWidgets.QLineEdit):
 
 class HotBox(QtGuiWidgets.QWidget):
     """User Interface class to provide buttons for each channel layer."""
-    shuffle_list = []
 
     def __init__(self):
         super(HotBox, self).__init__()
         self.shuffle_list = []
+
         self.active_viewer = nuke.activeViewer().node()
         viewer = self.active_viewer.input(nuke.activeViewer().activeInput())
 
@@ -179,16 +190,43 @@ class HotBox(QtGuiWidgets.QWidget):
 
                 node = self.active_viewer.input(nuke.activeViewer().activeInput())
                 for layer in self.shuffle_list:
-                    shuffle = nuke.nodes.Shuffle(xpos=(node.xpos() + 100),
-                                                 ypos=(node.ypos() + 50),
-                                                 label='[value in]')
-                    shuffle['in'].setValue(layer)
-                    shuffle['selected'].setValue(True)
-                    shuffle.setInput(0, node)
+
+                    if nuke.env.get("NukeVersionMajor") >= 12 and\
+                            nuke.env.get("NukeVersionMinor") >= 1 and \
+                            SHUFFLE_TYPE:
+                        shuffle = self.create_new_shuffle(layer, node)
+                    else:
+                        shuffle = self.create_old_shuffle(layer, node)
+
                     shuffle.autoplace()
 
                 self.close()
             self.shuffle_list = []
+
+    @staticmethod
+    def create_old_shuffle(layer, node):
+        shuffle = nuke.nodes.Shuffle(xpos=(node.xpos() + 100),
+                                     ypos=(node.ypos() + 50),
+                                     label='[value in]',
+                                     inputs=[node],
+                                     selected=True,
+                                     out="rgba")
+        shuffle["in"].setValue(layer)
+        return shuffle
+
+    @staticmethod
+    def create_new_shuffle(target, node):
+        shuffle = nuke.nodes.Shuffle2(xpos=(node.xpos() + 100),
+                                      ypos=(node.ypos() + 50),
+                                      label='[value in1]',
+                                      inputs=[node],
+                                      selected=True,
+                                      in1=target,
+                                      out1="rgba")
+
+        layers = [layer for layer in node.channels() if layer.split(".")[0] == target]
+        shuffle.knob("mappings").setValue(zip(layers, ('rgba.red', 'rgba.green', 'rgba.blue', 'rgba.alpha')))
+        return shuffle
 
     def clicked(self):
         """Route click events based on key modifier."""

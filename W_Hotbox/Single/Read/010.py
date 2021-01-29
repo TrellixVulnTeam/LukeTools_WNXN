@@ -2,10 +2,11 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Reload all Reads
-# COLOR: #2c522c
+# NAME: Set Project Format
+# COLOR: #52462c
 #
 #----------------------------------------------------------------------------------------------------------
 
-for read in nuke.allNodes("Read"):
-        read.knob('reload').execute()
+node = nuke.selectedNode()
+format = node.knob('format').value()
+nuke.Root().knob('format').setValue(format)

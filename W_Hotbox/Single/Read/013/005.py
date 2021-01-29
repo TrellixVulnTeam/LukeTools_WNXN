@@ -2,9 +2,9 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: set out_srgb
+# NAME: set lin_srgb
 #
 #----------------------------------------------------------------------------------------------------------
 
 for n in nuke.selectedNodes():
-    n.knob('colorspace').setValue(3)
+    n.knob('colorspace').setValue("Utility - Linear - sRGB")

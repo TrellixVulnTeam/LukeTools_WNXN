@@ -1,0 +1,44 @@
+set cut_paste_input [stack 0]
+version 12.0 v3
+push $cut_paste_input
+Group {
+ name Lens_Distort
+ label "\[value mm]mm \[value distortion]"
+ selected true
+ xpos 919
+ ypos -107
+ mapsize {0.15 0.15}
+ addUserKnob {20 stockDistort}
+ addUserKnob {4 distortion l "" +STARTLINE M {undistort distort}}
+ distortion distort
+ addUserKnob {7 mm R 15 100}
+ mm 24
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 840
+  ypos 439
+ }
+ LensDistortion1_0 {
+  serializeKnob ""
+  serialiseKnob "22 serialization::archive 16 0 0 0 0 0 0 0 0 0 0 0 0"
+  distortion1 {{curve(parent.mm) x15 -0.09884198 x16.5 -0.07057617 x17 -0.06341936 x20 -0.03235092 x21 -0.01872684 x25 -0.00230317 x28 -0.03042078 x30 -0.02034245 x35 0.00071026 0.01259282 0.02003998 0.02342225 0.02704883 0.02959565 x90 0.02971685 x100 0.0297948}}
+  distortion2 {{curve(parent.mm) x15 0.03909656 x16.5 0.02785985 x17 0.02619424 x20 0.01767709 x21 0.01404154 x25 0.01500218 x28 0.01464992 x30 0.01421826 x35 0.01068773 0.00875135 0.00711155 0.0054941 0.00386452 0.0022818 x90 0.00095025 x100 0.00087479}}
+  distortionCenter {{curve(parent.mm) x15 0.0250846 x16.5 -0.00978611 x17 -0.0348018 x20 -0.12324031 x21 -0.14255056 x25 0.05204082 x28 0.10075942 x30 0.05412027 x35 0.05291772 -9.601e-05 0.00102719 -0.02637681 -0.04164772 -0.02169428 x90 -0.0245376 x100 -0.02884957} {curve(parent.mm) x15 -0.00952944 x16.5 -0.0086313 x17 -0.01258133 x20 0.01892564 x21 0.00797157 x25 -0.00284868 x28 -0.00479455 x30 -0.01475764 x35 0.00134091 0.00441227 0.00560912 0.00488522 0.01005293 0.01080772 x90 0.00879188 x100 0.0074204}}
+  invertDistortion {{!parent.distortion}}
+  cardScale {0.9430405498 0.9430405498 1}
+  a -0.06511896849
+  b 0.1005514786
+  c 0.03741188347
+  name LensDistortion2
+  selected true
+  xpos 840
+  ypos 504
+ }
+ Output {
+  name Output1
+  xpos 840
+  ypos 579
+ }
+end_group

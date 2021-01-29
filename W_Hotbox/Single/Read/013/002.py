@@ -9,4 +9,4 @@
 #----------------------------------------------------------------------------------------------------------
 
 for n in nuke.selectedNodes():
-    n.knob('colorspace').setValue(15)
+    n.knob('colorspace').setValue("Input - ARRI - V3 LogC (EI800) - Wide Gamut")

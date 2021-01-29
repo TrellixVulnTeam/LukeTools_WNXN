@@ -2,9 +2,9 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: set lin_srgb
+# NAME: set out_rec709
 #
 #----------------------------------------------------------------------------------------------------------
 
 for n in nuke.selectedNodes():
-    n.knob('colorspace').setValue(6)
+    n.knob('colorspace').setValue("Output - Rec.709")

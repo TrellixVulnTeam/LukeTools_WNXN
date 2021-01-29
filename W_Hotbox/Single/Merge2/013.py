@@ -31,7 +31,7 @@ for i in selection:
     rotoNode.setXpos(postion[0]+200-rotoNode.screenWidth()/2)
     rotoNode.setYpos(postion[1]-110+rotoNode.screenHeight()/2)
 
-    i.setInput(1,dotNode)
+    i.setInput(2,dotNode)
     nuke.show(blurNode)
     nuke.show(rotoNode)
     emptySelection(selection)
