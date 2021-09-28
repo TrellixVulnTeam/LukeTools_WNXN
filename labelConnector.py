@@ -1,4 +1,4 @@
-# labelConnector v0.07
+# labelConnector v0.08
 # Johannes Hezer & Lukas Schwabe
 # UI based on ChannelHotbox - Falk Hofmann
 
@@ -80,8 +80,8 @@ class labelConnector(QtGuiWidgets.QWidget):
     def __init__(self, node, dots):
         super(labelConnector, self).__init__()
 
-        length = math.ceil(math.sqrt(len(dots)))
-        width, height = length * 200, 100
+        length = math.ceil(math.sqrt(len(dots) + 1))
+        width, height = length * 200, length * 50
         self.setFixedSize(width, height)
         offset = QtCore.QPoint(width * 0.5, height * 0.5)
         self.move(QtGui.QCursor.pos() - offset)
@@ -112,8 +112,11 @@ class labelConnector(QtGuiWidgets.QWidget):
 
     def set_window_properties(self):
         """Set window falgs and focused widget."""
-        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+
         self.setWindowFlags(QtCore.Qt.FramelessWindowHint |  QtCore.Qt.WindowStaysOnTopHint)
+
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
+        self.setAttribute(QtCore.Qt.WA_NoSystemBackground)
 
         # make sure the widgets closes when it loses focus
         self.installEventFilter(self)
