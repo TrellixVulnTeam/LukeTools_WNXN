@@ -11,10 +11,10 @@ n = nuke.selectedNode()
 
 txtold = n['label'].getValue()
 txtnew = nuke.getInput('Change label', txtold)
-txtnew = txtnew.upper()
 
 if txtnew:
+    txtnew = txtnew.upper()
     n['label'].setValue(txtnew)
-    for x in n.dependent():
+    for x in n.dependent(nuke.INPUTS | nuke.HIDDEN_INPUTS, forceEvaluate = False):
         if x['label'].getValue() == txtold:
             x['label'].setValue(txtnew)

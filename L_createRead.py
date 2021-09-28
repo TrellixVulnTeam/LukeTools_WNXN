@@ -1,6 +1,6 @@
 import nuke
 import nukescripts
-import pythonlibrary.L_pyseq as L_pyseq
+# import pythonlibrary.L_pyseq as L_pyseq
 
 def createReadFromWrite():
     for node  in nuke.selectedNodes():
@@ -33,19 +33,28 @@ def createReadFromWrite():
                 read.knob('localizationPolicy').setValue(3)
 
             else:
-                seq = L_pyseq.img2pyseq(file)
+                # seq = L_pyseq.img2pyseq(file)
 
-                if seq:
+                # if seq:
+                #     read = nuke.nodes.Read(file=file, 
+                #                                 xpos=node.xpos()+0,
+                #                                 ypos=node.ypos()+100,
+                #                                 first=seq.start(),
+                #                                 last=seq.end(),
+                #                                 origfirst = seq.start(),
+                #                                 origlast= seq.end())
+                                                
+                #     read.knob('colorspace').setValue(int(node.knob('colorspace').getValue()))
+                #     read.knob('localizationPolicy').setValue(3)
+
+                # else:
                     read = nuke.nodes.Read(file=file, 
                                                 xpos=node.xpos()+0,
                                                 ypos=node.ypos()+100,
-                                                first=seq.start(),
-                                                last=seq.end(),
-                                                origfirst = seq.start(),
-                                                origlast= seq.end())
+                                                first=nuke.root().knob('first_frame').getValue(),
+                                                last=nuke.root().knob('last_frame').getValue(),
+                                                origfirst = nuke.root().knob('first_frame').getValue(),
+                                                origlast= nuke.root().knob('last_frame').getValue())
                                                 
                     read.knob('colorspace').setValue(int(node.knob('colorspace').getValue()))
-                    read.knob('localizationPolicy').setValue(3)
-
-                else:
-                    nuke.message(node.name() + ': No files found')    
+                    read.knob('localizationPolicy').setValue(3)  

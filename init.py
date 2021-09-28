@@ -15,8 +15,8 @@ if __lukescripts_local__:
     import L_callbacks
     nuke.addBeforeRender(L_callbacks.updateAllWriteNames)
     nuke.addBeforeRender(L_callbacks.enableOnRender)
-    nuke.addKnobChanged(L_callbacks.updateWriteName, nodeClass="Write")
-    nuke.addOnCreate(L_callbacks.writeNodeFields, nodeClass= "Write")
+    # nuke.addKnobChanged(L_callbacks.updateWriteName, nodeClass="Write")
+    # nuke.addOnCreate(L_callbacks.writeNodeFields, nodeClass= "Write")
 
 
     import sr_rollingAutoSave
@@ -30,21 +30,24 @@ else:
 # Higx
 nuke.pluginAddPath('./higx/PointRender')
 
+#pgBokeh
+nuke.pluginAddPath('pgBokeh')
+
 # Gizmos
 nuke.pluginAddPath('gizmos')
 nuke.pluginAddPath('pixelfudger')
-nuke.pluginAddPath( './gizmos/bm_NukeTools' )
-nuke.pluginAddPath( 'cryptomatte' )
+# nuke.pluginAddPath( './gizmos/bm_NukeTools' )
+# nuke.pluginAddPath( 'cryptomatte' )
 
 # Icons
 nuke.pluginAddPath('icons')
 
 # Gradient Editor
-nuke.pluginAddPath('./GradientEditor')
-nuke.pluginAddPath('./GradientEditor/icons')
-nuke.pluginAddPath('./GradientEditor/tools')
-nuke.pluginAddPath('./GradientEditor/grapichs')
-nuke.pluginAddPath('./GradientEditor/python')
+# nuke.pluginAddPath('./GradientEditor')
+# nuke.pluginAddPath('./GradientEditor/icons')
+# nuke.pluginAddPath('./GradientEditor/tools')
+# nuke.pluginAddPath('./GradientEditor/grapichs')
+# nuke.pluginAddPath('./GradientEditor/python')
 
 # AutoFlare
 nuke.pluginAddPath('AutoFlare')
@@ -52,5 +55,5 @@ nuke.pluginAddPath('./AutoFlare/BOKEHS')
 nuke.pluginAddPath('./AutoFlare/BOKEHS/polygons')
 
 
-nuke.pluginAddPath('rv_ocio')
+# nuke.pluginAddPath('rv_ocio')
 

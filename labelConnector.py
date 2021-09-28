@@ -1,4 +1,6 @@
-# labelConnector v0.05
+# labelConnector v0.07
+# Johannes Hezer & Lukas Schwabe
+# UI based on ChannelHotbox - Falk Hofmann
 
 import math
 import logging
@@ -78,8 +80,8 @@ class labelConnector(QtGuiWidgets.QWidget):
     def __init__(self, node, dots):
         super(labelConnector, self).__init__()
 
-        length = math.ceil(math.sqrt(len(dots) + 1))
-        width, height = length * 200, length * 50
+        length = math.ceil(math.sqrt(len(dots)))
+        width, height = length * 200, 100
         self.setFixedSize(width, height)
         offset = QtCore.QPoint(width * 0.5, height * 0.5)
         self.move(QtGui.QCursor.pos() - offset)
@@ -102,21 +104,20 @@ class labelConnector(QtGuiWidgets.QWidget):
             else:
                 column_counter += 1
 
-        self.input = LineEdit(self, dots, node)
-        grid.addWidget(self.input, row_counter, column_counter)
-        self.input.returnPressed.connect(self.line_enter)
+        # self.input = LineEdit(self, dots, node)
+        # grid.addWidget(self.input, row_counter, column_counter)
+        # self.input.returnPressed.connect(self.line_enter)
 
         self.set_window_properties()
 
     def set_window_properties(self):
         """Set window falgs and focused widget."""
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
-        self.setWindowFlags(QtCore.Qt.Tool)
-        self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
+        self.setWindowFlags(QtCore.Qt.FramelessWindowHint |  QtCore.Qt.WindowStaysOnTopHint)
+
         # make sure the widgets closes when it loses focus
         self.installEventFilter(self)
-        self.input.setFocus()
+        # self.input.setFocus()
 
     def keyPressEvent(self, event):  # pylint: disable=invalid-name
         if event.key() == QtCore.Qt.Key_Escape:
@@ -180,10 +181,10 @@ def getAllDots():
                         dots.append(dot)
                         compareList.append(dot["label"].value())
                     else:
-                        log.info("Double Label Entry found on Connector Dots skipping dot %s" % dot.name())
+                        log.error("Double Label Entry found on Connector Dots skipping dot: %s \"%s\" " % (dot.name(), dot["label"].value()))
                         doubleEntries = True
     if doubleEntries:
-        nuke.message('Double Connectors found. Check Log for full list!')
+        nuke.message('Double Connectors found with same Label. Check Log for full list!')
 
     #dots.sort()
     dots.sort(key=lambda dot: dot.knob('label').value())
@@ -242,7 +243,7 @@ def getTileColor(node = None):
 
     interfaceColor = node.knob('tile_color').value()
 
-    if interfaceColor == 0 or interfaceColor == nuke.defaultNodeColor(node.Class()) or interfaceColor == 3435973632L:
+    if interfaceColor == 0 or interfaceColor == nuke.defaultNodeColor(node.Class()) or interfaceColor == 3435973632:
         interfaceColor = button_regular_color;
 
     return interfaceColor
@@ -254,7 +255,7 @@ def rgb2hex(rgbaValues):
     '''
     if len(rgbaValues) < 3:
         return
-    return '#%02x%02x%02x' % (rgbaValues[0]*255,rgbaValues[1]*255,rgbaValues[2]*255)
+    return '#%02x%02x%02x' % (int(rgbaValues[0]*255),int(rgbaValues[1]*255),int(rgbaValues[2]*255))
 
 def hex2rgb(hexColor):
     '''

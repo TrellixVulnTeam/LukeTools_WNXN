@@ -8,7 +8,7 @@
 
 def convert_cam(cam):
     import math
-    print "converting " + cam.name()
+    print("converting " + cam.name())
     
     mResult = nuke.math.Matrix4()   
     

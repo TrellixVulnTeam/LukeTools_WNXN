@@ -31,8 +31,8 @@ for node in nuke.selectedNodes():
             frame = seq.start()+e
             fields["frame"] = frame
             outPath = namingApi.apply_fields(fields,templ)
-            print image
-            print outPath
+            print(image)
+            print(outPath)
             mvNamingApi.utils.copyfile(image.path,outPath)#
             task.setMessage( 'processing frame %s' % frame )
             task.setProgress( int( float(e+1) / len(seq) *100) )

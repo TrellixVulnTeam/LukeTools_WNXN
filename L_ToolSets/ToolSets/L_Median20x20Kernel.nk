@@ -1,0 +1,85 @@
+set cut_paste_input [stack 0]
+version 13.0 v4
+push $cut_paste_input
+Group {
+name Median20x20Kernel
+selected true
+xpos -547
+ypos -4782
+addUserKnob {20 Median8x8Kernel}
+addUserKnob {41 "Local GPU: " T BlinkScript2.gpuName}
+addUserKnob {41 "Use GPU if Available" T BlinkScript2.useGPUIfAvailable}
+addUserKnob {26 ""}
+addUserKnob {7 size l Size R 0 20}
+size 4
+addUserKnob {7 mix}
+mix 1
+}
+Input {
+inputs 0
+name Inputmask
+xpos 3690
+ypos 1001
+number 1
+}
+Invert {
+name Invert1
+xpos 3690
+ypos 1072
+}
+Dot {
+name Dot2
+xpos 3724
+ypos 1157
+}
+Input {
+inputs 0
+name InputRGBA
+xpos 3565
+ypos 999
+}
+set N72625000 [stack 0]
+Dot {
+name Dot1
+xpos 3487
+ypos 1093
+}
+set N72624c00 [stack 0]
+push $N72625000
+BlinkScript {
+kernelSourceFile //data/HAM-1406-00249-MVH/_LukeS/median/Median.cpp
+recompileCount 18
+ProgramGroup 1
+KernelDescription "2 \"Median9x9Kernel\" iterate componentWise 6ecbc2c1abf16b981a47b7a6ec828dc320095952956b6af5f0306687f4415fd6 2 \"imageIn\" Read Ranged2D \"imageOut\" Write Point 1 \"Size\" Float 1 AACAPw== 1 \"size\" 1 1 4 \"imageInrangeMin\" Int 2 1 AAAAAAAAAAA= \"imageInrangeMax\" Int 2 1 AAAAAAAAAAA= \"s\" Int 1 1 AAAAAA== \"s_array\" Int 1 1 AAAAAA=="
+kernelSource "kernel Median9x9Kernel : public ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> imageIn;\n  Image<eWrite, eAccessPoint> imageOut;\n\n  local:\n  int s;\n  int s_array;\n\n  param:\n\n  float size;\n\n\n  void define() \{\n\n      defineParam(size, \"Size\", 1.0f);\n\n  \}\n\n\n  void init()\n  \{\n\n    s = ceil(fabs(size));\n    if (s>20) s=20;\n    s_array = (s+s+1)*(s+s+1);\n    imageIn.setRange(-s, -s, s, s);\n  \}\n\n  void process(int2 pos)\n  \{\n    float vals\[1081];\n\n    for (int j = -s, index = 0; j <= s; j++) \{\n      for (int i = -s; i <= s; i++, index++) \{\n        vals\[index] = imageIn(i, j);\n      \}\n    \}\n\n    //The median function takes an array of floating-point values and an array length.\n    imageOut() = median(vals, s_array);\n\n  \}\n\};\n"
+rebuild ""
+Median9x9Kernel_Size {{parent.size}}
+rebuild_finalise ""
+name BlinkScript2
+xpos 3565
+ypos 1073
+}
+Merge2 {
+inputs 2+1
+operation copy
+bbox B
+name Merge1
+xpos 3565
+ypos 1153
+disable {{"!\[exists parent.input1]"}}
+}
+push $N72624c00
+Dissolve {
+inputs 2
+channels rgba
+which {{parent.mix}}
+name Dissolve1
+xpos 3565
+ypos 1210
+}
+Output {
+name Output1
+xpos 3565
+ypos 1270
+}
+end_group

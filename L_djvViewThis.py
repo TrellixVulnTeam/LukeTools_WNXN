@@ -23,5 +23,5 @@ def djvViewThis(selectedNodes):
 def openDjvView(args):
 
     call = 'djv %s' %(args)
-    print call
+    print(call)
     subprocess.Popen(call)

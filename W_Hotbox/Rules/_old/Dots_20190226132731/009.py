@@ -23,7 +23,7 @@ if len(nodes) == 2:
         
     dependent = False
     try:
-        if lower == upper.dependent()[0]:
+        if lower == upper.dependent(nuke.INPUTS | nuke.HIDDEN_INPUTS, forceEvaluate = False)[0]:
             dependent = True
     except:
         pass

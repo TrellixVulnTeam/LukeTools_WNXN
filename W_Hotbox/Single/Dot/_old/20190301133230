@@ -19,6 +19,6 @@ if len(selection) == 1:
 
         if txtnew:
             n['label'].setValue(txtnew)
-            for x in n.dependent():
+            for x in n.dependent(nuke.INPUTS | nuke.HIDDEN_INPUTS, forceEvaluate = False):
                 if x['label'].getValue() == txtold:
                     x['label'].setValue(txtnew)

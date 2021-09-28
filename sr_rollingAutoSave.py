@@ -79,9 +79,8 @@ def addIncrementalFolder(filename):
     fileList = list(os.path.split(filename))
     fileList.insert(1,'.nukeAutoSave')
     filename = os.path.join(*fileList)
-    if not os.path.exists(os.path.dirname(filename)):
-        try:
-            os.makedirs(os.path.dirname(filename))
-        except Exception,e:
-              nuke.tprint(e)
+    try:
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
+    except OSError as e:
+            nuke.tprint(e)
     return filename

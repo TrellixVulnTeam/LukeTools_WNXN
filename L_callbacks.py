@@ -6,21 +6,32 @@ import os
 def updateAllWriteNames():
     if nuke.toNode("L_PROJECT"):
         for n in nuke.allNodes("Write"):
-            updateWriteName(n)
+            updateWriteNameCallback(n)
 
-def updateWriteName(n = ""):
+
+def updateWriteNameCallback(n = ""):
+    if not n:
+        n = nuke.thisNode()
+    
+    if 'override_all' in n.knobs():
+        if n['override_all'].getValue():
+            return
+
     kname = ''
     if nuke.thisKnob():
         kname = nuke.thisKnob().name()
-    if not n:
-            n = nuke.thisNode()
-        
-    if nuke.toNode("L_PROJECT") and not kname in ['xpos','ypos','inputChange'] and not n['disable'] == 1:
 
-        if 'override_all' in n.knobs():
-            if n['override_all'].getValue():
-                return
+    if nuke.toNode("L_PROJECT") and kname in ['selected', 'pre', 'preLabel', 'versionOverride'] and n['disable'] == 0:
+        updateWriteName(n)
+
+
+def updateWriteName(n = ""):
+
+    if not n:
+        n = nuke.thisNode()
         
+    if nuke.toNode("L_PROJECT"):
+       
 
         pn = nuke.toNode("L_PROJECT")
 
@@ -77,6 +88,9 @@ def updateWriteName(n = ""):
 
         n.knob('file').setValue(pwrite + pwritename)
 
+    else:
+        nuke.message("No L_PROJECT found")
+
 def enableOnRender():
     for n in nuke.allNodes():
         if "enableOnRender" in n.knob('label').getValue():
@@ -100,6 +114,10 @@ def writeNodeFields():
         k = nuke.String_Knob("versionOverride","Render Version Override")
         n.addKnob(k)
 
-        k = nuke.Boolean_Knob("override_all","Disable write node callback")
+        k = nuke.PyScript_Knob("applyNaming","Apply","L_callbacks.updateWriteName(nuke.thisNode())")
+        k.setFlag(nuke.STARTLINE)
+        n.addKnob(k)
+
+        k = nuke.Boolean_Knob("override_all","Disable write node naming callback")
         k.setFlag(nuke.STARTLINE)
         n.addKnob(k)

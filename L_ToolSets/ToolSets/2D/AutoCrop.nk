@@ -1,0 +1,36 @@
+set cut_paste_input [stack 0]
+version 13.0 v4
+push $cut_paste_input
+Group {
+ name AutoCrop
+ tile_color 0xa34795ff
+ selected true
+ xpos -1419
+ ypos -3551
+ addUserKnob {20 User}
+ addUserKnob {41 preset T Crop8.preset}
+ addUserKnob {41 reset l Reset -STARTLINE T Crop8.reset}
+ addUserKnob {14 keepbbox l "add BBox" R 0 100}
+ addUserKnob {41 softness T Crop8.softness}
+ addUserKnob {41 reformat T Crop8.reformat}
+ addUserKnob {41 intersect -STARTLINE T Crop8.intersect}
+ addUserKnob {41 crop l "black outside" -STARTLINE T Crop8.crop}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -884
+  ypos -589
+ }
+ Crop {
+  box {{-parent.keepbbox.w} {-parent.keepbbox.h} {width+parent.keepbbox.w} {height+parent.keepbbox.h}}
+  name Crop8
+  xpos -884
+  ypos -549
+ }
+ Output {
+  name Output1
+  xpos -884
+  ypos -449
+ }
+end_group

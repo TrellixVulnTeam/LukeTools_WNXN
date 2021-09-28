@@ -7,5 +7,8 @@
     "python.autoComplete.extraPaths": [
         "C:/Program Files/Nuke12.0v3/pythonextensions"
     ],
-    "editor.formatOnSave": false
+    "editor.formatOnSave": false,
+    "python.analysis.extraPaths": [
+        "C:/Program Files/Nuke12.0v3/pythonextensions"
+    ]
 }

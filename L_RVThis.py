@@ -35,6 +35,6 @@ def openRV(args, colorspace):
     env["COLORSPACE"] = colorspace
 
     call = 'RV.bat %s' %(args)
-    print call
-    print colorspace
+    print(call)
+    print(colorspace)
     subprocess.Popen(call, env=env)

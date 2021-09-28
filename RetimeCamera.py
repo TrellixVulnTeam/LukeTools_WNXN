@@ -161,8 +161,8 @@ class RetimeCamera(nukescripts.PythonPanel):
         copied = nuke.nodePaste('%clipboard%')
         copied.setInput(0, None)
         # remove dependencies
-        if len(copied.dependent()) > 0:
-            copied.dependent()[0].setInput(0, None)
+        if len(copied.dependent(nuke.INPUTS | nuke.HIDDEN_INPUTS, forceEvaluate = False)) > 0:
+            copied.dependent(nuke.INPUTS | nuke.HIDDEN_INPUTS, forceEvaluate = False)[0].setInput(0, None)
         return copied
     # end copyNode()
 

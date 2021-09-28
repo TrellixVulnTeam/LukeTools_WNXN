@@ -22,14 +22,14 @@ for i in selection:
     dotNode = nuke.createNode('Dot', inpanel = False)
     postion = [i.xpos()-i.screenWidth()/2,i.ypos()+i.screenHeight()/2]
 
-    dotNode.setXpos(postion[0]+200-dotNode.screenWidth()/2)
-    dotNode.setYpos(postion[1]-dotNode.screenHeight()/2)
+    dotNode.setXpos(int(postion[0]+200-dotNode.screenWidth()/2))
+    dotNode.setYpos(int(postion[1]-dotNode.screenHeight()/2))
     
-    blurNode.setXpos(postion[0]+200-blurNode.screenWidth()/2)
-    blurNode.setYpos(postion[1]-70+blurNode.screenHeight()/2)
+    blurNode.setXpos(int(postion[0]+200-blurNode.screenWidth()/2))
+    blurNode.setYpos(int(postion[1]-70+blurNode.screenHeight()/2))
 
-    rotoNode.setXpos(postion[0]+200-rotoNode.screenWidth()/2)
-    rotoNode.setYpos(postion[1]-110+rotoNode.screenHeight()/2)
+    rotoNode.setXpos(int(postion[0]+200-rotoNode.screenWidth()/2))
+    rotoNode.setYpos(int(postion[1]-110+rotoNode.screenHeight()/2))
 
     i.setInput(1,dotNode)
     nuke.show(blurNode)

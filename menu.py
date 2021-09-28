@@ -8,6 +8,12 @@ if __lukescripts_local__:
     import L_newProject
     nuke.menu( 'Nuke' ).addCommand( 'Luke/new Project', "L_newProject.L_newProject()")
 
+    import L_callbacks
+    # nuke.addBeforeRender(L_callbacks.updateAllWriteNames)
+    # nuke.addBeforeRender(L_callbacks.enableOnRender)
+    nuke.addKnobChanged(L_callbacks.updateWriteNameCallback, nodeClass="Write")
+    nuke.addOnCreate(L_callbacks.writeNodeFields, nodeClass= "Write")
+
     # knobDefaults local
     nuke.knobDefault('Root.workingSpaceLUT', "acescg")
     nuke.knobDefault('Root.int8Lut', "out_srgb")
@@ -19,6 +25,7 @@ if __lukescripts_local__:
     nuke.knobDefault('Root.fps', "25")
     nuke.knobDefault('Root.first_frame', "1001")
     nuke.knobDefault('Root.last_frame', "1100")
+    nuke.knobDefault('Root.lock_range', "1")
 
     nuke.knobDefault('Write.create_directories', "1")
     nuke.knobDefault('Write.file_type', "exr")
@@ -69,6 +76,8 @@ lukeGizmosMenu.addCommand("EdgeExtend/L_KeyEdgeExtend", "nuke.createNode('L_KeyE
 lukeGizmosMenu.addCommand("EdgeExtend/L_FillSampler", "nuke.createNode('L_FillSampler')", '')
 lukeGizmosMenu.addCommand("EdgeExtend/L_Pixelspread", "nuke.createNode('L_Pixelspread')", '')
 
+lukeGizmosMenu.addCommand("P_Matte", "nuke.createNode('P_Matte')", '')
+
 lukeGizmosMenu.addCommand("X_Tools/L_X_Aton", "nuke.createNode('L_X_Aton')", '')
 lukeGizmosMenu.addCommand("X_Tools/L_X_Distort", "nuke.createNode('L_X_Distort')", '')
 lukeGizmosMenu.addCommand("X_Tools/L_X_Tesla", "nuke.createNode('L_X_Tesla')", '')
@@ -82,8 +91,6 @@ lukeGizmosMenu.addCommand('bm/L_bm_EdgeMatte', 'nuke.createNode("L_bm_EdgeMatte"
 lukeGizmosMenu.addCommand('bm/L_bm_MatteCheck', 'nuke.createNode("L_bm_MatteCheck")', icon="bm_MatteCheck_icon.png")
 
 lukeGizmosMenu.addCommand('L_AutoFlare', 'nuke.createNode("AutoFlare2")')
-
-lukeGizmosMenu.addCommand("L_aeBrokenEdges", "nuke.createNode(\"L_aeBrokenEdges\")", icon="BrokenEdges_icon.png")
 
 import pixelfudger
 
@@ -109,30 +116,20 @@ def addSRPanel():
 nuke.menu('Pane').addCommand('SearchReplace', addSRPanel)
 nukescripts.registerPanel('com.ohufx.SearchReplace', addSRPanel)
 
-import knob_scripter
+# currently no Nuke 13 support
+# import knob_scripter
 
 import RetimeCamera
 nuke.menu( 'Nuke' ).addCommand( 'Luke/Retime Camera', 'RetimeCamera.create_RCPanel()')
 
-import ColorGradientUi
-
 import L_ToolSets
 L_ToolSets.createToolsetsMenu(nuke.menu("Nodes"))
-
-# Kiss
-from kiss import connection_handler
-from kiss.constants import KISS_HOTKEY
-
-def add_to_ui():
-    """Initialize commands."""
-    nuke.menu("Nuke").findItem("Edit").addCommand(
-        "kiss", connection_handler.launch_kiss, KISS_HOTKEY)
-
-add_to_ui()
-# Kiss end
 
 nuke.menu('Nuke').findItem('Edit').findItem('Extract').setShortcut('e')
 
 # drag n drop handler
 import L_dragDropHandler
 nukescripts.drop.addDropDataCallback(L_dragDropHandler.dropHandler)
+
+import AlignDots
+nuke.menu('Nuke').addCommand('Extra/Align Dots', "AlignDots.AlignDots()", "alt+.", shortcutContext=2)
