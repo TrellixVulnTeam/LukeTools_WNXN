@@ -1,4 +1,4 @@
-# labelConnector v0.08
+# labelConnector v0.09
 # Johannes Hezer & Lukas Schwabe
 # UI based on ChannelHotbox - Falk Hofmann
 
@@ -77,8 +77,16 @@ class LineEdit(QtGuiWidgets.QLineEdit):
 class labelConnector(QtGuiWidgets.QWidget):
     """User Interface class to provide buttons for each channel layer."""
 
-    def __init__(self, node, dots):
+    nodeCreated = False
+
+    node = ""
+
+    def __init__(self, node, dots, nodeCreated = False):
+
         super(labelConnector, self).__init__()
+
+        self.nodeCreated = nodeCreated
+        self.node = node
 
         length = math.ceil(math.sqrt(len(dots) + 1))
         width, height = length * 200, length * 50
@@ -124,6 +132,10 @@ class labelConnector(QtGuiWidgets.QWidget):
 
     def keyPressEvent(self, event):  # pylint: disable=invalid-name
         if event.key() == QtCore.Qt.Key_Escape:
+            if self.nodeCreated:
+                nuke.delete(self.node)
+                self.nodeCreated = False
+                
             self.close()
 
     def clicked(self):
@@ -146,6 +158,10 @@ class labelConnector(QtGuiWidgets.QWidget):
 
     def eventFilter(self, object, event):
         if event.type() in [QtCore.QEvent.WindowDeactivate, QtCore.QEvent.FocusOut]:
+            if self.nodeCreated:
+                nuke.delete(self.node)
+                self.nodeCreated = False
+                
             self.close()
             return True
         return False
@@ -196,6 +212,7 @@ def getAllDots():
 def runLabelMatch():
 
     uiCheck = False
+    labelConnectorNodeCreated = False
     dots = getAllDots()
     nodes = nuke.selectedNodes()
     for node in nodes:
@@ -209,10 +226,17 @@ def runLabelMatch():
         else:
             uiCheck = True
 
+    
+    global labelConnectorUi  # pylint: disable=global-statement
+
     # if the label is empty or not match could be found and the selection is just one node
     if uiCheck and len(nodes) == 1 and dots:
-        global labelConnectorUi  # pylint: disable=global-statement
         labelConnectorUi = labelConnector(node, dots)
+        labelConnectorUi.show()
+
+    if len(nodes) == 0 and dots:
+        node = nuke.createNode("PostageStamp", inpanel = False)
+        labelConnectorUi = labelConnector(node, dots, nodeCreated=True)
         labelConnectorUi.show()
 
 
