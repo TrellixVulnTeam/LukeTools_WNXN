@@ -1,4 +1,4 @@
-# labelConnector v0.09
+# labelConnector v0.11
 # Johannes Hezer & Lukas Schwabe
 # UI based on ChannelHotbox - Falk Hofmann
 
@@ -69,7 +69,8 @@ class LineEdit(QtGuiWidgets.QLineEdit):
         self.setSizePolicy(QtGuiWidgets.QSizePolicy.Preferred,
                            QtGuiWidgets.QSizePolicy.Expanding)
         self.completer = QtGuiWidgets.QCompleter(dot_list, self)
-        self.completer.setCompletionMode(QtGuiWidgets.QCompleter.InlineCompletion)  # pylint: disable=line-too-long
+        # self.completer.setCompletionMode(QtGuiWidgets.QCompleter.InlineCompletion)
+        self.completer.setCaseSensitivity(QtCore.Qt.CaseSensitivity.CaseInsensitive)
         self.setCompleter(self.completer)
         self.completer.activated.connect(self.returnPressed)
 
@@ -77,16 +78,11 @@ class LineEdit(QtGuiWidgets.QLineEdit):
 class labelConnector(QtGuiWidgets.QWidget):
     """User Interface class to provide buttons for each channel layer."""
 
-    nodeCreated = False
+    def __init__(self, node, dots):
 
-    node = ""
-
-    def __init__(self, node, dots, nodeCreated = False):
+        self.node = node
 
         super(labelConnector, self).__init__()
-
-        self.nodeCreated = nodeCreated
-        self.node = node
 
         length = math.ceil(math.sqrt(len(dots) + 1))
         width, height = length * 200, length * 50
@@ -112,9 +108,9 @@ class labelConnector(QtGuiWidgets.QWidget):
             else:
                 column_counter += 1
 
-        # self.input = LineEdit(self, dots, node)
-        # grid.addWidget(self.input, row_counter, column_counter)
-        # self.input.returnPressed.connect(self.line_enter)
+        self.input = LineEdit(self, dots, node)
+        grid.addWidget(self.input, row_counter, column_counter)
+        self.input.returnPressed.connect(self.line_enter)
 
         self.set_window_properties()
 
@@ -128,40 +124,42 @@ class labelConnector(QtGuiWidgets.QWidget):
 
         # make sure the widgets closes when it loses focus
         self.installEventFilter(self)
-        # self.input.setFocus()
+        self.input.setFocus()
 
     def keyPressEvent(self, event):  # pylint: disable=invalid-name
-        if event.key() == QtCore.Qt.Key_Escape:
-            if self.nodeCreated:
-                nuke.delete(self.node)
-                self.nodeCreated = False
-                
+        if event.key() == QtCore.Qt.Key_Escape:                
             self.close()
 
     def clicked(self):
         undo.begin(undoEventText)
-        self.sender().node["label"].setValue( self.sender().text())
-        connectNodeToDot(self.sender().node,self.sender().dot)
+        if self.node == "":
+            connectNodeToDot(nuke.createNode("PostageStamp","label \"%s\"" % (self.sender().text()),  inpanel = False), self.sender().dot)
+        else:
+            self.node["label"].setValue( self.sender().text())
+            connectNodeToDot(self.node, self.sender().dot)
         undo.end()
         self.close()
 
 
     def line_enter(self):
         undo.begin(undoEventText)
-        self.sender().node["label"].setValue( self.input.text())
+
         for dot in self.sender().dots:
             if self.input.text() == dot.knob('label').getValue():
-                connectNodeToDot(self.sender().node,dot)
+
+                if self.node == "":
+                    connectNodeToDot(nuke.createNode("PostageStamp","label \"%s\"" % (self.sender().text()),  inpanel = False), dot)
+                else:
+                    self.node["label"].setValue( self.sender().text())
+                    connectNodeToDot(self.node, dot)
+
                 undo.end()
                 self.close()
+
         undo.end()
 
     def eventFilter(self, object, event):
         if event.type() in [QtCore.QEvent.WindowDeactivate, QtCore.QEvent.FocusOut]:
-            if self.nodeCreated:
-                nuke.delete(self.node)
-                self.nodeCreated = False
-                
             self.close()
             return True
         return False
@@ -171,6 +169,7 @@ class labelConnector(QtGuiWidgets.QWidget):
 
 def connectNodeToDot(node,dot):
     undo.begin(undoEventText)
+
     labelNode = node["label"].value()
     labelDot = dot["label"].value()
     if labelNode == labelDot:
@@ -178,8 +177,8 @@ def connectNodeToDot(node,dot):
 
             node.setInput(0,dot)
             node["hide_input"].setValue(True)
-            undo.end()
 
+        undo.end()
         return True
 
     undo.end()
@@ -235,8 +234,8 @@ def runLabelMatch():
         labelConnectorUi.show()
 
     if len(nodes) == 0 and dots:
-        node = nuke.createNode("PostageStamp", inpanel = False)
-        labelConnectorUi = labelConnector(node, dots, nodeCreated=True)
+        node = ""
+        labelConnectorUi = labelConnector(node, dots)
         labelConnectorUi.show()
 
 
