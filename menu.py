@@ -9,8 +9,7 @@ if __lukescripts_local__:
     nuke.menu( 'Nuke' ).addCommand( 'Luke/new Project', "L_newProject.L_newProject()")
 
     import L_callbacks
-    # nuke.addBeforeRender(L_callbacks.updateAllWriteNames)
-    # nuke.addBeforeRender(L_callbacks.enableOnRender)
+    
     nuke.addKnobChanged(L_callbacks.updateWriteNameCallback, nodeClass="Write")
     nuke.addOnCreate(L_callbacks.writeNodeFields, nodeClass= "Write")
 
