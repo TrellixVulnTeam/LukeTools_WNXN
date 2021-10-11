@@ -81,7 +81,6 @@ def pathHandler(dropped_data, recursive=True):
 
 
 def dropHandler(droptype, dropped_data):
-    nuke.allNodes().setSelected(False)
     if dropped_data.startswith("file://"):
         dropped_data = dropped_data[7:]
     if os.path.isfile(dropped_data) or os.path.isdir(dropped_data):
