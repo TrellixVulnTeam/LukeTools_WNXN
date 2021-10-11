@@ -1,0 +1,34 @@
+set cut_paste_input [stack 0]
+version 13.0 v5
+push $cut_paste_input
+Group {
+ name BinaryAlpha
+ selected true
+ xpos -382
+ ypos -190
+ addUserKnob {20 binaryalpha l "Binary Alpha"}
+ addUserKnob {41 threshold T Expression1.threshold}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -319
+  ypos -216
+ }
+ Expression {
+  channel0 alpha
+  expr0 alpha<threshold?0:1
+  name Expression1
+  selected true
+  xpos -319
+  ypos -176
+  addUserKnob {20 User}
+  addUserKnob {7 threshold R 1e-06 1}
+  threshold 1e-06
+ }
+ Output {
+  name Output1
+  xpos -319
+  ypos -76
+ }
+end_group

@@ -1,7 +1,8 @@
-#! /software/apps/nuke/8.0v5/cent6.x86_64/libnuke-8.0.v5.so -nx
-version 8.0 v5
+#! /data/studio/upipe/apps/nuke/11.1v1/bin/linux/centos7/libnuke-11.1.1.so -nx
+version 11.1 v1
 Group {
 name bm_EdgeMatte
+ help "Created to \"edgeDetect\" mattes. Probably better gizmos out there that do the same thngSimple gizmo to get a clean, controllable outline (like Edge Detect) from any matte. Useful for isolating edgeExtends and the like."
  tile_color 0x212121ff
  addUserKnob {20 Options}
  addUserKnob {26 ""}
@@ -23,6 +24,10 @@ name bm_EdgeMatte
  edgeScale 1
  addUserKnob {12 edgeCentre l INVISIBLE +INVISIBLE}
  edgeCentre {1024 778}
+ addUserKnob {20 infoTab l Info}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 versionInfo l "" +STARTLINE T "\nCreated by Ben McEwan\nwww.benmcewan.com\n\nVersion 1.1\nLast Updated: January 23rd, 2018\n"}
+ addUserKnob {26 "" +STARTLINE}
 }
  Input {
   inputs 0
@@ -38,11 +43,11 @@ name bm_EdgeMatte
   xpos 576
   ypos 523
  }
-set N64b3d10 [stack 0]
+set Nbbe7900 [stack 0]
  FilterErode {
   channels alpha
   size {{innerEdge} {innerEdge}}
-  filter {{bm_EdgeMatte.filterType}}
+  filter {{filterType}}
   name FilterErode2
   xpos 487
   ypos 584
@@ -54,11 +59,11 @@ set N64b3d10 [stack 0]
   xpos 487
   ypos 622
  }
-push $N64b3d10
+push $Nbbe7900
  FilterErode {
   channels alpha
   size {{-outerEdge} {-outerEdge}}
-  filter {{bm_EdgeMatte.filterType}}
+  filter {{filterType}}
   name FilterErode1
   xpos 608
   ypos 585

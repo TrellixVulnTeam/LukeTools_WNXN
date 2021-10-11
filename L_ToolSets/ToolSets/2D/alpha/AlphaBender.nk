@@ -1,0 +1,271 @@
+set cut_paste_input [stack 0]
+version 13.0 v5
+push $cut_paste_input
+Group {
+ name AlphaBender
+ help "A lightweight, handy tool for growing and shrinking the alpha channel"
+ tile_color 0xcc804eff
+ note_font Verdana
+ selected true
+ xpos -383
+ ypos -86
+ addUserKnob {20 User}
+ addUserKnob {26 normalizeText l "<b style=\"color: rgb(50, 160, 80)\">Prep Input" t "Creates a hard edge from the input so that all values are either 0 or 1. This is necessary to smoothen the edge properly and predictably."}
+ addUserKnob {14 preBlur l smooth R 0 100}
+ addUserKnob {41 filter -STARTLINE T PREBLUR.filter}
+ addUserKnob {7 preHard l hardness}
+ preHard 1
+ addUserKnob {7 preW l weight t "\"Leans\" toward black when < 0 and toward white when > 0" R -1 1}
+ addUserKnob {26 bendText l "<b style=\"color: rgb(40, 100, 200)\">Bend"}
+ addUserKnob {14 size R 0 100}
+ addUserKnob {41 filter_1 l filter -STARTLINE T SIZE.filter}
+ addUserKnob {7 hardness}
+ addUserKnob {7 weight R -0.999 1}
+ addUserKnob {26 ""}
+ addUserKnob {14 postBlur l "post blur" R 0 100}
+ addUserKnob {41 filter_2 l filter -STARTLINE T POSTBLUR.filter}
+ addUserKnob {6 cropToFormat l "crop to format" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 creditText l "" +STARTLINE T "AlphaBender v1.0 - Fynn Laue 2021"}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  label "<left>Ensures that values are either 0 or 1 (no values in between). This makes for easier manipulation of edges and prevents weird \"glowing\" edges. Should only be enabled when hardness is 1"
+  note_font Verdana
+  xpos -324
+  ypos 572
+  bookmark false
+  bdwidth 209
+  bdheight 199
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  label "<left>Ensures that values are either 0 or 1 (no values in between). This makes for easier manipulation of edges and prevents weird \"glowing\" edges. Should only be enabled when hardness is 1"
+  note_font Verdana
+  xpos -330
+  ypos 1222
+  bookmark false
+  bdwidth 220
+  bdheight 196
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos -260
+  ypos 63
+ }
+ Blur {
+  channels alpha
+  size {{parent.preBlur}}
+  name PREBLUR
+  xpos -260
+  ypos 201
+ }
+ Grade {
+  channels alpha
+  blackpoint {{"clamp((hardness / 2) - 0.5 * (weight * hardness), 0, clampB)"}}
+  whitepoint {{"1 - (hardness / 2) - 0.5 * (weight * hardness)"}}
+  white_clamp true
+  enable_mix_luminance false
+  name Grade58
+  label "\[value knob.whitepoint] \[value knob.blackpoint]"
+  note_font Verdana
+  xpos -260
+  ypos 267
+  addUserKnob {20 User}
+  addUserKnob {7 hardness}
+  hardness {{parent.preHard}}
+  addUserKnob {7 weight R -1 1}
+  weight {{parent.preW}}
+  addUserKnob {7 clampB l "clamp black"}
+  clampB 0.999999
+ }
+ Dot {
+  name Dot4
+  xpos -226
+  ypos 426
+ }
+set N45791400 [stack 0]
+ Dot {
+  name Dot2
+  xpos -6
+  ypos 426
+ }
+set N45791000 [stack 0]
+ Dot {
+  name Dot1
+  xpos 214
+  ypos 426
+ }
+ Clamp {
+  channels alpha
+  maximum 0
+  MinClampTo_enable true
+  MaxClampTo_enable true
+  name Clamp3
+  xpos 180
+  ypos 513
+ }
+push $N45791000
+ Clamp {
+  channels alpha
+  minimum 1
+  MinClampTo_enable true
+  MaxClampTo_enable true
+  name Clamp4
+  xpos -40
+  ypos 513
+ }
+ Switch {
+  inputs 2
+  which {{(parent.preW+1)}}
+  name Switch1
+  xpos 70
+  ypos 567
+ }
+ Dot {
+  name Dot3
+  xpos 104
+  ypos 690
+ }
+push $N45791400
+ Switch {
+  inputs 2
+  which {{parent.preHard==1}}
+  name Switch2
+  label clip
+  xpos -260
+  ypos 681
+ }
+ Blur {
+  channels alpha
+  size {{parent.size}}
+  name SIZE
+  xpos -260
+  ypos 849
+ }
+ Grade {
+  channels alpha
+  blackpoint {{"clamp((hardness / 2) - 0.5 * (weight * hardness), 0, clampB)"}}
+  whitepoint {{"1 - (hardness / 2) - 0.5 * (weight * hardness)"}}
+  white_clamp true
+  enable_mix_luminance false
+  name Grade1
+  label "\[value knob.whitepoint] \[value knob.blackpoint]"
+  note_font Verdana
+  xpos -260
+  ypos 915
+  addUserKnob {20 User}
+  addUserKnob {7 hardness}
+  hardness {{parent.hardness}}
+  addUserKnob {7 weight R -1 1}
+  weight {{parent.weight}}
+  addUserKnob {7 clampB l "clamp black"}
+  clampB 0.999999
+ }
+ Dot {
+  name Dot5
+  xpos -226
+  ypos 1074
+ }
+set N15716800 [stack 0]
+ Dot {
+  name Dot6
+  xpos -6
+  ypos 1074
+ }
+set N15716400 [stack 0]
+ Dot {
+  name Dot7
+  xpos 214
+  ypos 1074
+ }
+ Clamp {
+  channels alpha
+  maximum 0
+  MinClampTo_enable true
+  MaxClampTo_enable true
+  name Clamp6
+  xpos 180
+  ypos 1161
+ }
+push $N15716400
+ Clamp {
+  channels alpha
+  minimum 1
+  MinClampTo_enable true
+  MaxClampTo_enable true
+  name Clamp5
+  xpos -40
+  ypos 1161
+ }
+ Switch {
+  inputs 2
+  which {{(parent.weight+1)}}
+  name Switch3
+  xpos 70
+  ypos 1215
+ }
+ Dot {
+  name Dot8
+  xpos 104
+  ypos 1338
+ }
+push $N15716800
+ Switch {
+  inputs 2
+  which {{parent.hardness==1}}
+  name Switch4
+  label clip
+  xpos -260
+  ypos 1329
+ }
+ Blur {
+  channels alpha
+  size {{parent.postBlur}}
+  name POSTBLUR
+  xpos -260
+  ypos 1521
+ }
+ Dot {
+  name Dot9
+  xpos -226
+  ypos 1650
+  addUserKnob {20 User +INVISIBLE}
+  addUserKnob {1 reconnectNodeInput_parentNode_0 l parentNode_0 +INVISIBLE}
+  addUserKnob {1 reconnectNodeInput_parentComp l parentComp +INVISIBLE}
+ }
+set N15714400 [stack 0]
+ Dot {
+  name Dot10
+  xpos -116
+  ypos 1650
+  addUserKnob {20 User +INVISIBLE}
+  addUserKnob {1 reconnectNodeInput_parentNode_0 l parentNode_0 +INVISIBLE}
+  addUserKnob {1 reconnectNodeInput_parentComp l parentComp +INVISIBLE}
+ }
+ Crop {
+  box {0 0 {width} {height}}
+  intersect true
+  crop false
+  name Crop1
+  xpos -150
+  ypos 1719
+ }
+push $N15714400
+ Switch {
+  inputs 2
+  which {{parent.cropToFormat}}
+  name Switch5
+  label "crop to format"
+  xpos -260
+  ypos 1713
+ }
+ Output {
+  name Output1
+  xpos -260
+  ypos 1815
+ }
+end_group

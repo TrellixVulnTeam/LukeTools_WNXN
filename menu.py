@@ -51,56 +51,56 @@ nuke.menu( 'Nuke' ).addCommand( 'Luke/create Read', "L_createRead.createReadFrom
 import L_openInFileBrowser
 nuke.menu( 'Nuke' ).addCommand( 'Luke/Open in File Browser', "L_openInFileBrowser.openInFileBrowser()", "ctrl+shift+e")
 
-import L_djvViewThis
-nuke.menu( 'Nuke' ).addCommand( 'Luke/DJV this', "L_djvViewThis.djvViewThis(nuke.selectedNodes())", "ctrl+shift+d")
+# import L_djvViewThis
+# nuke.menu( 'Nuke' ).addCommand( 'Luke/DJV this', "L_djvViewThis.djvViewThis(nuke.selectedNodes())", "ctrl+shift+d")
 
 
 #Menues
 lukeGizmosMenu = nuke.toolbar("Nodes").addMenu( "Luke" )
 
 #Gizmos
-lukeGizmosMenu.addCommand("L_AdvancedGrain", "nuke.createNode('L_AdvancedGrain')", '')
-lukeGizmosMenu.addCommand("L_expoglow", "nuke.createNode('L_expoglow')", '')
-lukeGizmosMenu.addCommand("L_UnsharpMask", "nuke.createNode('L_UnsharpMask')", '')
-lukeGizmosMenu.addCommand("L_GradMagic", "nuke.createNode('L_gradmagic')", '')
-lukeGizmosMenu.addCommand("L_DespillMadness", "nuke.createNode('L_DespillMadness')", '')
-lukeGizmosMenu.addCommand("L_LUE4NUKE", "nuke.createNode('L_LUE4NUKE')", '')
-lukeGizmosMenu.addCommand("L_GradientEditor", "nuke.createNode('h_gradienteditor')", '')
-lukeGizmosMenu.addCommand("L_Deflicker_Velocity", "nuke.createNode('L_Deflicker_Velocity')", '')
-lukeGizmosMenu.addCommand("L_LensKernel", "nuke.createNode('L_LensKernel')", '')
-lukeGizmosMenu.addCommand("L_OpticalZDefocus", "nuke.createNode('L_OpticalZDefocus')", '')
-lukeGizmosMenu.addCommand("L_aPMatte", "nuke.createNode('L_aPMatte')", '')
+# lukeGizmosMenu.addCommand("L_AdvancedGrain", "nuke.createNode('L_AdvancedGrain')", '')
+# lukeGizmosMenu.addCommand("L_expoglow", "nuke.createNode('L_expoglow')", '')
+# lukeGizmosMenu.addCommand("L_UnsharpMask", "nuke.createNode('L_UnsharpMask')", '')
+# lukeGizmosMenu.addCommand("L_GradMagic", "nuke.createNode('L_gradmagic')", '')
+# lukeGizmosMenu.addCommand("L_DespillMadness", "nuke.createNode('L_DespillMadness')", '')
+# lukeGizmosMenu.addCommand("L_LUE4NUKE", "nuke.createNode('L_LUE4NUKE')", '')
+# lukeGizmosMenu.addCommand("L_GradientEditor", "nuke.createNode('h_gradienteditor')", '')
+# lukeGizmosMenu.addCommand("L_Deflicker_Velocity", "nuke.createNode('L_Deflicker_Velocity')", '')
+# lukeGizmosMenu.addCommand("L_LensKernel", "nuke.createNode('L_LensKernel')", '')
+# lukeGizmosMenu.addCommand("L_OpticalZDefocus", "nuke.createNode('L_OpticalZDefocus')", '')
+# lukeGizmosMenu.addCommand("L_aPMatte", "nuke.createNode('L_aPMatte')", '')
 
-lukeGizmosMenu.addCommand("EdgeExtend/L_KeyEdgeExtend", "nuke.createNode('L_KeyEdgeExtend')", '')
-lukeGizmosMenu.addCommand("EdgeExtend/L_FillSampler", "nuke.createNode('L_FillSampler')", '')
-lukeGizmosMenu.addCommand("EdgeExtend/L_Pixelspread", "nuke.createNode('L_Pixelspread')", '')
+# lukeGizmosMenu.addCommand("EdgeExtend/L_KeyEdgeExtend", "nuke.createNode('L_KeyEdgeExtend')", '')
+# lukeGizmosMenu.addCommand("EdgeExtend/L_FillSampler", "nuke.createNode('L_FillSampler')", '')
+# lukeGizmosMenu.addCommand("EdgeExtend/L_Pixelspread", "nuke.createNode('L_Pixelspread')", '')
 
-lukeGizmosMenu.addCommand("P_Matte", "nuke.createNode('P_Matte')", '')
+# lukeGizmosMenu.addCommand("P_Matte", "nuke.createNode('P_Matte')", '')
 
-lukeGizmosMenu.addCommand("X_Tools/L_X_Aton", "nuke.createNode('L_X_Aton')", '')
-lukeGizmosMenu.addCommand("X_Tools/L_X_Distort", "nuke.createNode('L_X_Distort')", '')
-lukeGizmosMenu.addCommand("X_Tools/L_X_Tesla", "nuke.createNode('L_X_Tesla')", '')
+# lukeGizmosMenu.addCommand("X_Tools/L_X_Aton", "nuke.createNode('L_X_Aton')", '')
+# lukeGizmosMenu.addCommand("X_Tools/L_X_Distort", "nuke.createNode('L_X_Distort')", '')
+# lukeGizmosMenu.addCommand("X_Tools/L_X_Tesla", "nuke.createNode('L_X_Tesla')", '')
 
-lukeGizmosMenu.addCommand('bm/L_bm_OpticalGlow', 'nuke.createNode("L_bm_OpticalGlow")', icon="bm_OpticalGlow_icon.png")
-lukeGizmosMenu.addCommand('bm/L_bm_Lightwrap', 'nuke.createNode("L_bm_Lightwrap")', icon="bm_Lightwrap_icon.png")
-lukeGizmosMenu.addCommand('bm/L_bm_NoiseGen', 'nuke.createNode("L_bm_NoiseGen")', icon="bm_NoiseGen_icon.png")
-lukeGizmosMenu.addCommand('bm/L_bm_CurveRemapper', 'nuke.createNode("L_bm_CurveRemapper")', icon="bm_CurveRemapper_icon.png")
-lukeGizmosMenu.addCommand('bm/L_bm_CameraShake', 'nuke.createNode("L_bm_CameraShake")', icon="bm_CameraShake_icon.png")
-lukeGizmosMenu.addCommand('bm/L_bm_EdgeMatte', 'nuke.createNode("L_bm_EdgeMatte")', icon="BlackOutside.png")
-lukeGizmosMenu.addCommand('bm/L_bm_MatteCheck', 'nuke.createNode("L_bm_MatteCheck")', icon="bm_MatteCheck_icon.png")
+# lukeGizmosMenu.addCommand('bm/L_bm_OpticalGlow', 'nuke.createNode("L_bm_OpticalGlow")', icon="bm_OpticalGlow_icon.png")
+# lukeGizmosMenu.addCommand('bm/L_bm_Lightwrap', 'nuke.createNode("L_bm_Lightwrap")', icon="bm_Lightwrap_icon.png")
+# lukeGizmosMenu.addCommand('bm/L_bm_NoiseGen', 'nuke.createNode("L_bm_NoiseGen")', icon="bm_NoiseGen_icon.png")
+# lukeGizmosMenu.addCommand('bm/L_bm_CurveRemapper', 'nuke.createNode("L_bm_CurveRemapper")', icon="bm_CurveRemapper_icon.png")
+# lukeGizmosMenu.addCommand('bm/L_bm_CameraShake', 'nuke.createNode("L_bm_CameraShake")', icon="bm_CameraShake_icon.png")
+# lukeGizmosMenu.addCommand('bm/L_bm_EdgeMatte', 'nuke.createNode("L_bm_EdgeMatte")', icon="BlackOutside.png")
+# lukeGizmosMenu.addCommand('bm/L_bm_MatteCheck', 'nuke.createNode("L_bm_MatteCheck")', icon="bm_MatteCheck_icon.png")
 
-lukeGizmosMenu.addCommand('L_AutoFlare', 'nuke.createNode("AutoFlare2")')
+# lukeGizmosMenu.addCommand('L_AutoFlare', 'nuke.createNode("AutoFlare2")')
 
 import pixelfudger
 
 import sb_backdrop
-lukeGizmosMenu.addCommand("sb Backdrop", 'sb_backdrop.sb_backdrop()', '')
+lukeGizmosMenu.addCommand("sb Backdrop", 'sb_backdrop.sb_backdrop()', 'alt+b')
 
 import channel_hotbox
 nuke.menu('Nuke').findItem('Edit').addCommand('HotBox', 'channel_hotbox.start()', 'alt+v')
 
 import labelConnector
-nuke.menu( 'Nuke' ).addCommand( 'Luke/Label connector', "labelConnector.runLabelMatch()", 'ctrl+shift+y' )
+lukeGizmosMenu.addCommand( 'Label connector', "labelConnector.runLabelMatch()", 'ctrl+shift+y' )
 
 import AnimationMaker  
 
@@ -119,7 +119,7 @@ nukescripts.registerPanel('com.ohufx.SearchReplace', addSRPanel)
 # import knob_scripter
 
 import RetimeCamera
-nuke.menu( 'Nuke' ).addCommand( 'Luke/Retime Camera', 'RetimeCamera.create_RCPanel()')
+lukeGizmosMenu.addCommand( 'Retime Camera', 'RetimeCamera.create_RCPanel()')
 
 import L_ToolSets
 L_ToolSets.createToolsetsMenu(nuke.menu("Nodes"))
@@ -131,4 +131,4 @@ import L_dragDropHandler
 nukescripts.drop.addDropDataCallback(L_dragDropHandler.dropHandler)
 
 import AlignDots
-nuke.menu('Nuke').addCommand('Extra/Align Dots', "AlignDots.AlignDots()", "alt+.", shortcutContext=2)
+lukeGizmosMenu.addCommand('Align Dots', "AlignDots.AlignDots()", "alt+.", shortcutContext=2)

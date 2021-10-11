@@ -62,6 +62,9 @@ def fileHandler(dropped_data):
         read_node["selected"].setValue(0)
         return True
 
+    elif file_ext.lower() == '.nk':
+        return False
+
     else:
         read_node = nuke.createNode("Read", inpanel=False)
         read_node["file"].fromUserText(dropped_data)
@@ -78,6 +81,7 @@ def pathHandler(dropped_data, recursive=True):
 
 
 def dropHandler(droptype, dropped_data):
+    nuke.allNodes().setSelected(False)
     if dropped_data.startswith("file://"):
         dropped_data = dropped_data[7:]
     if os.path.isfile(dropped_data) or os.path.isdir(dropped_data):
