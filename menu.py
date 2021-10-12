@@ -12,6 +12,8 @@ if __lukescripts_local__:
     
     nuke.addKnobChanged(L_callbacks.updateWriteNameCallback, nodeClass="Write")
     nuke.addOnCreate(L_callbacks.writeNodeFields, nodeClass= "Write")
+    nuke.addOnScriptSave(L_callbacks.updateAllWriteNames)
+
 
     # knobDefaults local
     nuke.knobDefault('Root.workingSpaceLUT', "acescg")

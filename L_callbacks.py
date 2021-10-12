@@ -6,22 +6,18 @@ import os
 def updateAllWriteNames():
     if nuke.toNode("L_PROJECT"):
         for n in nuke.allNodes("Write"):
-            updateWriteNameCallback(n)
+            updateWriteName(n)
 
 
 def updateWriteNameCallback(n = ""):
     if not n:
         n = nuke.thisNode()
     
-    if 'override_all' in n.knobs():
-        if n['override_all'].getValue():
-            return
-
     kname = ''
     if nuke.thisKnob():
         kname = nuke.thisKnob().name()
 
-    if nuke.toNode("L_PROJECT") and kname in ['selected', 'pre', 'preLabel', 'versionOverride'] and n['disable'] == 0:
+    if nuke.toNode("L_PROJECT") and kname in ['selected', 'pre', 'preLabel', 'versionOverride']:
         updateWriteName(n)
 
 
@@ -29,6 +25,13 @@ def updateWriteName(n = ""):
 
     if not n:
         n = nuke.thisNode()
+
+    if 'override_all' in n.knobs():
+        if n['override_all'].getValue():
+            return
+
+    if n['disable'].getValue():
+        return
         
     if nuke.toNode("L_PROJECT"):
        
@@ -61,24 +64,19 @@ def updateWriteName(n = ""):
             versionnumber = re.search("v\d+", os.path.basename(nuke.root().name())).group()[1:]
 
         pwrite += 'v' + versionnumber + '/'
-        pwritename += 'v' + versionnumber
 
         if n['file_type'].value() == 'mov':
-            metacodec = {
-                "apcn" : "prores422", 
-                "apch" : "prores422hq", 
-                "apcs" : "prores422LT", 
-                "apco" : "prores422PR", 
-                "ap4h" : "prores444", 
-                "ap4x" : "prores444XQ"
-                }
+            if "mov64_codec" in n.knobs():
+                if n.knob("mov64_codec").value() == "appr":
+                    prorescodec = ["prores444XQ", "prores444", "prores422HQ", "prores422", "prores422LT", "prores422proxy"]
+                    pwritename += prorescodec[int(n.knob("mov_prores_codec_profile").getValue())] + '_'
 
-            if n['meta_codec'].value() in metacodec:
-                pwritename += '_' + metacodec[n['meta_codec'].value()]
-
-            
+                elif n.knob("mov64_codec").value() == "h264":
+                    pwritename += 'h264_'
+            pwritename += 'v' + versionnumber
 
         else:
+            pwritename += 'v' + versionnumber
             pwritename += '.####'
             
         pwritename += '.'

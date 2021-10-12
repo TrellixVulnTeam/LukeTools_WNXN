@@ -77,7 +77,8 @@ def sb_backdrop():
     #     bd_order = 0
 
     # Expand the bounds to leave a little border. Elements are offsets for left, top, right and bottom edges respectively
-    left, top, right, bottom = (-50, -100, 50 , 50)
+    expand = 150
+    left, top, right, bottom = (-expand, -expand, expand , expand)
     bdX += left
     bdY += top
     bdW += (right - left)
