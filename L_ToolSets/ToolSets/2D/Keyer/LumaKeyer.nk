@@ -1,0 +1,230 @@
+set cut_paste_input [stack 0]
+version 13.0 v5
+push $cut_paste_input
+Group {
+ name LumaKeyer
+ tile_color 0x1fff00ff
+ selected true
+ xpos -25
+ ypos -408
+ addUserKnob {20 LumaKeyer l "Luma Keyer"}
+ addUserKnob {41 lut l "" -STARTLINE T ColorLookup1.lut}
+ addUserKnob {26 ""}
+ addUserKnob {4 which_channel l Channels M {RGB R G B ""}}
+ which_channel B
+ addUserKnob {6 invalpha l "Invert alpha" -STARTLINE}
+ addUserKnob {6 invmask l "Invert mask" -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {41 size_1 l Erode T FilterErode1.size}
+ addUserKnob {41 filter T FilterErode1.filter}
+ addUserKnob {41 size l Blur T Blur1.size}
+ addUserKnob {26 ""}
+ addUserKnob {6 premult l Premultiply +STARTLINE}
+ addUserKnob {6 alpha_to_all l "a -> rgba" -STARTLINE}
+}
+ Input {
+  inputs 0
+  name mask
+  xpos -1074
+  ypos 724
+  number 1
+ }
+ Constant {
+  inputs 0
+  channels alpha
+  color 1
+  name Constant1
+  xpos -865
+  ypos 522
+ }
+ Reformat {
+  type "to box"
+  box_width {{img.width}}
+  box_height {{img.height}}
+  box_fixed true
+  name Reformat1
+  xpos -865
+  ypos 608
+ }
+ ChannelMerge {
+  inputs 2
+  operation in
+  name ChannelMerge2
+  xpos -865
+  ypos 711
+ }
+ Invert {
+  channels alpha
+  mix {{invmask}}
+  name Invert1
+  xpos -865
+  ypos 773
+ }
+ Dot {
+  name Dot1
+  note_font_size 30
+  xpos -831
+  ypos 824
+ }
+ Input {
+  inputs 0
+  name img
+  xpos -542
+  ypos -438
+ }
+ Dot {
+  name Dot21
+  note_font_size 20
+  xpos -508
+  ypos -113
+ }
+set N8bd80800 [stack 0]
+ Dot {
+  name Dot23
+  note_font_size 20
+  xpos -1183
+  ypos 113
+ }
+push $N8bd80800
+ ColorLookup {
+  lut {master {curve C x0.01155234128 0 s0 x0.7879060507 1 s0}
+    red {}
+    green {}
+    blue {}
+    alpha {}}
+  name ColorLookup1
+  xpos -542
+  ypos -52
+ }
+set Nd8bd3c00 [stack 0]
+ Shuffle {
+  red blue
+  green blue
+  alpha blue
+  name B
+  xpos -964
+  ypos 122
+ }
+push $Nd8bd3c00
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name G
+  xpos -860
+  ypos 125
+ }
+push $Nd8bd3c00
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name R
+  xpos -748
+  ypos 128
+ }
+push $Nd8bd3c00
+ Saturation {
+  saturation 0
+  mode Maximum
+  name Saturation2
+  xpos -542
+  ypos 111
+ }
+ Shuffle {
+  green red
+  blue red
+  alpha red
+  name RGB
+  xpos -542
+  ypos 137
+ }
+ Switch {
+  inputs 4
+  which {{which_channel}}
+  name Switch8
+  xpos -542
+  ypos 367
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.red
+  from1 rgba.green
+  to1 rgba.green
+  from2 rgba.blue
+  to2 rgba.blue
+  name Copy1
+  xpos -542
+  ypos 467
+ }
+ Invert {
+  channels alpha
+  mix {{invalpha}}
+  name Invert_alpha
+  xpos -542
+  ypos 652
+ }
+ ChannelMerge {
+  inputs 2
+  operation multiply
+  name ChannelMerge1
+  xpos -542
+  ypos 807
+ }
+ Clamp {
+  channels alpha
+  name lum_key_clamp
+  xpos -542
+  ypos 973
+ }
+ FilterErode {
+  channels alpha
+  size 0
+  name FilterErode1
+  xpos -542
+  ypos 1100
+ }
+ Blur {
+  channels alpha
+  name Blur1
+  xpos -542
+  ypos 1181
+ }
+set Nd8bd0c00 [stack 0]
+ Premult {
+  name Premult1
+  xpos -682
+  ypos 1289
+ }
+push $Nd8bd0c00
+ Switch {
+  inputs 2
+  which {{parent.premult}}
+  name Switch3
+  xpos -542
+  ypos 1289
+ }
+set Nd8bd0400 [stack 0]
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  xpos -696
+  ypos 1420
+ }
+push $Nd8bd0400
+ Switch {
+  inputs 2
+  which {{alpha_to_all}}
+  name Switch9
+  xpos -542
+  ypos 1420
+ }
+ Output {
+  name Output1
+  xpos -542
+  ypos 1529
+ }
+end_group

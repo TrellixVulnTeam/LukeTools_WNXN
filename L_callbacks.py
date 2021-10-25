@@ -17,8 +17,9 @@ def updateWriteNameCallback(n = ""):
     if nuke.thisKnob():
         kname = nuke.thisKnob().name()
 
-    if nuke.toNode("L_PROJECT") and kname in ['selected', 'pre', 'preLabel', 'versionOverride']:
-        updateWriteName(n)
+    if kname in ['selected', 'pre', 'preLabel', 'versionOverride']:
+        if nuke.toNode("L_PROJECT"):
+            updateWriteName(n)
 
 
 def updateWriteName(n = ""):

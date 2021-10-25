@@ -67,6 +67,8 @@ def fileHandler(dropped_data):
 
     else:
         read_node = nuke.createNode("Read", inpanel=False)
+        if file_ext.lower() in ['.mov', '.mp4']:
+            read_node["colorspace"].setValue("Output - sRGB")
         read_node["file"].fromUserText(dropped_data)
         return True
 

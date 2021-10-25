@@ -298,3 +298,6 @@ def rgb2interface(rgb):
         rgb = rgb + (255,)
 
     return int('%02x%02x%02x%02x'%rgb,16)
+
+
+# TODO Connector for Camera/Deep/3D - all non-postagestamp stuff
