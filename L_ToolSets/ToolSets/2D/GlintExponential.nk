@@ -1,0 +1,496 @@
+set cut_paste_input [stack 0]
+version 13.0 v5
+push $cut_paste_input
+Group {
+name GlintExponential
+selected true
+xpos -306
+ypos -138
+addUserKnob {20 User}
+addUserKnob {41 channels T Glint_Master.channels}
+addUserKnob {41 repeat l "no. of rays" T Glint_Master.repeat}
+addUserKnob {41 length T Glint_Master.length}
+addUserKnob {41 aspect l "aspect ratio" T Glint_Master.aspect}
+addUserKnob {41 oddlen l "odd ray length" T Glint_Master.oddlen}
+addUserKnob {41 rotation T Glint_Master.rotation}
+addUserKnob {41 from_color l "from color" T Glint_Master.from_color}
+addUserKnob {41 to_color l "to color" T Glint_Master.to_color}
+addUserKnob {41 steps T Glint_Master.steps}
+addUserKnob {41 max -STARTLINE T Glint_Master.max}
+addUserKnob {41 size l "Blur Rays" T Blur1.size}
+addUserKnob {26 ""}
+addUserKnob {41 w_channel l w T Glint_Master.w_channel}
+addUserKnob {41 tolerance T Glint_Master.tolerance}
+addUserKnob {41 gamma T Grade1.gamma}
+addUserKnob {6 boolean l "Effect only" +STARTLINE}
+boolean true
+addUserKnob {41 maskChannel l "mask " T Keymix1.maskChannel}
+addUserKnob {6 boolean_1 l invert -STARTLINE}
+addUserKnob {41 which l Mix T Dissolve1.which}
+addUserKnob {26 ""}
+addUserKnob {6 boolean_2 l "crop result" +STARTLINE}
+boolean_2 true
+addUserKnob {6 boolean_3 l "black outside" -STARTLINE}
+boolean_3 true
+addUserKnob {41 which_1 l Quality T SwitchQuality.which}
+addUserKnob {26 ""}
+addUserKnob {26 text l "" +STARTLINE T "Glint Exponential v1.0\nby Lukas Fabian - March 2019"}
+}
+Input {
+inputs 0
+name mask
+xpos 120
+ypos 724
+number 1
+}
+Invert {
+name Invert1
+xpos 120
+ypos 764
+disable {{parent.boolean_1}}
+}
+Dot {
+name Dot16
+xpos 154
+ypos 828
+}
+Input {
+inputs 0
+name Input1
+xpos 169
+ypos -512
+}
+Dot {
+name Dot1
+xpos 203
+ypos -428
+}
+set Ndb949000 [stack 0]
+Dot {
+name Dot18
+xpos 725
+ypos -428
+}
+Shuffle {
+red black
+green black
+blue black
+alpha black
+name Shuffle1
+label "\[value in]"
+xpos 691
+ypos -381
+disable {{1-parent.boolean}}
+}
+Dot {
+name Dot11
+xpos 725
+ypos 710
+}
+set Ndb948400 [stack 0]
+Dot {
+name Dot19
+xpos 725
+ypos 828
+}
+set N1910fc00 [stack 0]
+push $Ndb948400
+push $Ndb949000
+Dot {
+name Dot2
+xpos -263
+ypos -428
+}
+Dot {
+name Dot3
+xpos -263
+ypos -284
+}
+set N1910c400 [stack 0]
+Dot {
+name Dot4
+xpos -263
+ypos -174
+}
+set N1910c800 [stack 0]
+Dot {
+name Dot5
+xpos -263
+ypos -72
+}
+set N1910d000 [stack 0]
+Dot {
+name Dot6
+xpos -263
+ypos 16
+}
+set N99060400 [stack 0]
+Dot {
+name Dot7
+xpos -263
+ypos 104
+}
+set N99060800 [stack 0]
+Dot {
+name Dot8
+xpos -263
+ypos 192
+}
+set N99060c00 [stack 0]
+Dot {
+name Dot9
+xpos -263
+ypos 285
+}
+set N99061000 [stack 0]
+Dot {
+name Dot10
+xpos -263
+ypos 394
+}
+set N99061400 [stack 0]
+Dot {
+name Dot12
+xpos -263
+ypos 508
+}
+Glint {
+channels {{{parent.Glint_Master.channels}}}
+repeat {{parent.Glint_Master.repeat}}
+length {{"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"}}
+aspect {{parent.Glint_Master.aspect}}
+oddlen {{parent.Glint_Master.oddlen}}
+rotation {{parent.Glint_Master.rotation}}
+from_color {{parent.Glint_Master.from_color}}
+to_color {{parent.Glint_Master.to_color}}
+steps {{parent.Glint_Master.steps}}
+max {{parent.Glint_Master.max}}
+effect_only {{parent.Glint_Master.effect_only}}
+w_channel {{{parent.Glint1.w_channel}}}
+tolerance {{parent.Glint_Master.tolerance}}
+gamma {{parent.Glint_Master.gamma}}
+mix {{parent.Glint_Master.mix}}
+name Glint_8
+xpos -111
+ypos 498
+}
+push $N99061400
+Glint {
+channels {{{parent.Glint_Master.channels}}}
+repeat {{parent.Glint_Master.repeat}}
+length {{"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"}}
+aspect {{parent.Glint_Master.aspect}}
+oddlen {{parent.Glint_Master.oddlen}}
+rotation {{parent.Glint_Master.rotation}}
+from_color {{parent.Glint_Master.from_color}}
+to_color {{parent.Glint_Master.to_color}}
+steps {{parent.Glint_Master.steps}}
+max {{parent.Glint_Master.max}}
+effect_only {{parent.Glint_Master.effect_only}}
+w_channel {{{parent.Glint1.w_channel}}}
+tolerance {{parent.Glint_Master.tolerance}}
+gamma {{parent.Glint_Master.gamma}}
+mix {{parent.Glint_Master.mix}}
+name Glint_7
+xpos -117
+ypos 384
+}
+push $N99061000
+Glint {
+channels {{{parent.Glint_Master.channels}}}
+repeat {{parent.Glint_Master.repeat}}
+length {{"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"}}
+aspect {{parent.Glint_Master.aspect}}
+oddlen {{parent.Glint_Master.oddlen}}
+rotation {{parent.Glint_Master.rotation}}
+from_color {{parent.Glint_Master.from_color}}
+to_color {{parent.Glint_Master.to_color}}
+steps {{parent.Glint_Master.steps}}
+max {{parent.Glint_Master.max}}
+effect_only {{parent.Glint_Master.effect_only}}
+w_channel {{{parent.Glint1.w_channel}}}
+tolerance {{parent.Glint_Master.tolerance}}
+gamma {{parent.Glint_Master.gamma}}
+mix {{parent.Glint_Master.mix}}
+name Glint_6
+xpos -117
+ypos 275
+}
+push $N99060c00
+Glint {
+channels {{{parent.Glint_Master.channels}}}
+repeat {{parent.Glint_Master.repeat}}
+length {{"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"}}
+aspect {{parent.Glint_Master.aspect}}
+oddlen {{parent.Glint_Master.oddlen}}
+rotation {{parent.Glint_Master.rotation}}
+from_color {{parent.Glint_Master.from_color}}
+to_color {{parent.Glint_Master.to_color}}
+steps {{parent.Glint_Master.steps}}
+max {{parent.Glint_Master.max}}
+effect_only {{parent.Glint_Master.effect_only}}
+w_channel {{{parent.Glint1.w_channel}}}
+tolerance {{parent.Glint_Master.tolerance}}
+gamma {{parent.Glint_Master.gamma}}
+mix {{parent.Glint_Master.mix}}
+name Glint_5
+xpos -106
+ypos 182
+}
+push $N99060800
+Glint {
+channels {{{parent.Glint_Master.channels}}}
+repeat {{parent.Glint_Master.repeat}}
+length {{"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"}}
+aspect {{parent.Glint_Master.aspect}}
+oddlen {{parent.Glint_Master.oddlen}}
+rotation {{parent.Glint_Master.rotation}}
+from_color {{parent.Glint_Master.from_color}}
+to_color {{parent.Glint_Master.to_color}}
+steps {{parent.Glint_Master.steps}}
+max {{parent.Glint_Master.max}}
+effect_only {{parent.Glint_Master.effect_only}}
+w_channel {{{parent.Glint1.w_channel}}}
+tolerance {{parent.Glint_Master.tolerance}}
+gamma {{parent.Glint_Master.gamma}}
+mix {{parent.Glint_Master.mix}}
+name Glint_4
+xpos -107
+ypos 94
+}
+push $N99060400
+Glint {
+channels {{{parent.Glint_Master.channels}}}
+repeat {{parent.Glint_Master.repeat}}
+length {{"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"}}
+aspect {{parent.Glint_Master.aspect}}
+oddlen {{parent.Glint_Master.oddlen}}
+rotation {{parent.Glint_Master.rotation}}
+from_color {{parent.Glint_Master.from_color}}
+to_color {{parent.Glint_Master.to_color}}
+steps {{parent.Glint_Master.steps}}
+max {{parent.Glint_Master.max}}
+effect_only {{parent.Glint_Master.effect_only}}
+w_channel {{{parent.Glint1.w_channel}}}
+tolerance {{parent.Glint_Master.tolerance}}
+gamma {{parent.Glint_Master.gamma}}
+mix {{parent.Glint_Master.mix}}
+name Glint_3
+xpos -113
+ypos 6
+}
+push $N1910d000
+Glint {
+channels {{{parent.Glint_Master.channels}}}
+repeat {{parent.Glint_Master.repeat}}
+length {{"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"}}
+aspect {{parent.Glint_Master.aspect}}
+oddlen {{parent.Glint_Master.oddlen}}
+rotation {{parent.Glint_Master.rotation}}
+from_color {{parent.Glint_Master.from_color}}
+to_color {{parent.Glint_Master.to_color}}
+steps {{parent.Glint_Master.steps}}
+max {{parent.Glint_Master.max}}
+effect_only {{parent.Glint_Master.effect_only}}
+w_channel {{{parent.Glint1.w_channel}}}
+tolerance {{parent.Glint_Master.tolerance}}
+gamma {{parent.Glint_Master.gamma}}
+mix {{parent.Glint_Master.mix}}
+name Glint_2
+xpos -125
+ypos -82
+}
+push $N1910c800
+Glint {
+channels {{{parent.Glint_Master.channels}}}
+repeat {{parent.Glint_Master.repeat}}
+length {{"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"} {"parent.Glint_Master.length*pow(2,int(\[string range \[value name] 6 end]))"}}
+aspect {{parent.Glint_Master.aspect}}
+oddlen {{parent.Glint_Master.oddlen}}
+rotation {{parent.Glint_Master.rotation}}
+from_color {{parent.Glint_Master.from_color}}
+to_color {{parent.Glint_Master.to_color}}
+steps {{parent.Glint_Master.steps}}
+max {{parent.Glint_Master.max}}
+effect_only {{parent.Glint_Master.effect_only}}
+w_channel {{{parent.Glint1.w_channel}}}
+tolerance {{parent.Glint_Master.tolerance}}
+gamma {{parent.Glint_Master.gamma}}
+mix {{parent.Glint_Master.mix}}
+name Glint_1
+xpos -116
+ypos -184
+}
+push $N1910c400
+Glint {
+repeat 6
+length 5
+rotation 90
+steps 10
+effect_only true
+tolerance 1.5
+name Glint_Master
+xpos -117
+ypos -294
+}
+push $Ndb949000
+Shuffle {
+red black
+green black
+blue black
+alpha black
+name Shuffle2
+label "\[value in]"
+xpos 169
+ypos -384
+}
+Dot {
+name Dot15
+xpos 203
+ypos -315
+}
+Merge2 {
+inputs 2
+operation plus
+name Merge3
+xpos 169
+ypos -288
+}
+set Ne68fb000 [stack 0]
+Merge2 {
+inputs 2
+operation plus
+name Merge2
+xpos 169
+ypos -178
+}
+set Ne68fb400 [stack 0]
+Merge2 {
+inputs 2
+operation plus
+name Merge1
+xpos 169
+ypos -76
+}
+set Ne68fac00 [stack 0]
+Merge2 {
+inputs 2
+operation plus
+name Merge4
+xpos 169
+ypos 12
+}
+set Ne68fa000 [stack 0]
+Merge2 {
+inputs 2
+operation plus
+name Merge5
+xpos 169
+ypos 100
+}
+set Ne68fa400 [stack 0]
+Merge2 {
+inputs 2
+operation plus
+name Merge6
+xpos 169
+ypos 188
+}
+set N3651bc00 [stack 0]
+Merge2 {
+inputs 2
+operation plus
+name Merge7
+xpos 169
+ypos 281
+}
+set N3651b800 [stack 0]
+Merge2 {
+inputs 2
+operation plus
+name Merge8
+xpos 169
+ypos 390
+}
+set N3651b400 [stack 0]
+Merge2 {
+inputs 2
+operation plus
+name Merge9
+xpos 169
+ypos 504
+}
+push $N3651b400
+push $N3651b800
+push $N3651bc00
+push $Ne68fa400
+push $Ne68fa000
+push $Ne68fac00
+push $Ne68fb400
+push $Ne68fb000
+Switch {
+inputs 9
+which 6
+name SwitchQuality
+xpos 374
+ypos 504
+}
+Grade {
+multiply {{"parent.SwitchQuality.which<8 ?  1/(parent.SwitchQuality.which+1) : 1/9"}}
+black_clamp false
+name Grade1
+xpos 374
+ypos 551
+}
+Blur {
+channels rgba
+name Blur1
+xpos 374
+ypos 614
+}
+Merge2 {
+inputs 2
+operation plus
+name Merge10
+xpos 374
+ypos 706
+}
+Keymix {
+inputs 3
+name Keymix1
+xpos 374
+ypos 818
+}
+push $N1910fc00
+Dot {
+name Dot17
+xpos 725
+ypos 981
+}
+Dissolve {
+inputs 2
+which 1
+name Dissolve1
+xpos 374
+ypos 971
+}
+Crop {
+box {0 0 {input.width} {input.height}}
+crop false
+name Crop1
+xpos 374
+ypos 1032
+disable {{1-parent.boolean_2}}
+}
+BlackOutside {
+name BlackOutside1
+xpos 374
+ypos 1075
+disable {{1-parent.boolean_3}}
+}
+Output {
+name Output1
+xpos 374
+ypos 1155
+}
+end_group
