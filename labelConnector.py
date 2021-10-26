@@ -1,5 +1,5 @@
-# labelConnector v0.11
-# Johannes Hezer & Lukas Schwabe
+# labelConnector v0.13
+# Lukas Schwabe & Johannes Hezer
 # UI based on ChannelHotbox - Falk Hofmann
 
 import math
@@ -27,6 +27,45 @@ BUTTON = "border-radius: 8px; font: 13px;"
 button_regular_color = 673720575
 button_highlight_color = 3261606143
 
+threeD_deep_nodes = [   "DeepColorCorrect",
+                        "DeepColorCorrect2",
+                        "DeepCrop",
+                        "DeepExpression",
+                        "DeepFromFrames",
+                        "DeepFromImage",
+                        "DeepMerge",
+                        "DeepRead",
+                        "DeepRecolor",
+                        "DeepReformat",
+                        "DeepTransform",
+                        "DeepWrite",
+                        "ApplyMaterial"
+                        "Axis2",
+                        "Axis3",
+                        "Card2",
+                        "Camera",
+                        "Camera2",
+                        "Camera3",
+                        "Cube",
+                        "Cylinder",
+                        "EditGeo",
+                        "DisplaceGeo",
+                        "Light",
+                        "Light2",
+                        "Light3",
+                        "DirectLight",
+                        "Spotlight",
+                        "Environment",
+                        "MergeGeo",
+                        "Normals",
+                        "Project3D",
+                        "Project3D2",
+                        "ReadGeo",
+                        "Scene",
+                        "Sphere",
+                        "TransformGeo",
+                        "WriteGeo" ]
+ignore_nodes = ['Dot', 'NoOp', 'TimeOffset', 'TimeWarp', 'Retime', 'FrameHold']
 
 class LayerButton(QtGuiWidgets.QPushButton):
     """Custom QPushButton to change colors when hovering above."""
@@ -133,10 +172,9 @@ class labelConnector(QtGuiWidgets.QWidget):
     def clicked(self):
         undo.begin(undoEventText)
         if self.node == "":
-            connectNodeToDot(nuke.createNode("PostageStamp","label \"%s\"" % (self.sender().text()),  inpanel = False), self.sender().dot)
-        else:
-            self.node["label"].setValue( self.sender().text())
-            connectNodeToDot(self.node, self.sender().dot)
+            self.node = createConnectingNode(self.sender().dot)
+
+        connectNodeToDot(self.node, self.sender().dot)
         undo.end()
         self.close()
 
@@ -148,10 +186,9 @@ class labelConnector(QtGuiWidgets.QWidget):
             if self.input.text() == dot.knob('label').getValue():
 
                 if self.node == "":
-                    connectNodeToDot(nuke.createNode("PostageStamp","label \"%s\"" % (self.sender().text()),  inpanel = False), dot)
-                else:
-                    self.node["label"].setValue( self.sender().text())
-                    connectNodeToDot(self.node, dot)
+                    self.node = createConnectingNode(dot)
+
+                connectNodeToDot(self.node, dot)
 
                 undo.end()
                 self.close()
@@ -164,22 +201,46 @@ class labelConnector(QtGuiWidgets.QWidget):
             return True
         return False
 
+def isPreviousNodeDeepOrThreeD(node):
 
+    dependencies = node.dependencies(nuke.INPUTS | nuke.HIDDEN_INPUTS)
 
+    if dependencies:
+        previousNode = dependencies[0]
+
+        if previousNode.Class() in ignore_nodes:
+            return isPreviousNodeDeepOrThreeD(previousNode)
+        elif previousNode.Class() in threeD_deep_nodes:
+            return True
+
+    return False
+
+def createConnectingNode(dot):
+
+    node = ""
+
+    if isPreviousNodeDeepOrThreeD(dot):
+        node = nuke.createNode("NoOp", inpanel = False)
+    else:
+        node = nuke.createNode("PostageStamp", inpanel = False)
+
+    node.knob('tile_color').setValue(rgb2interface((80,80,80)))
+    node.setName("Connected")
+
+    return node
 
 def connectNodeToDot(node,dot):
     undo.begin(undoEventText)
 
-    labelNode = node["label"].value()
-    labelDot = dot["label"].value()
-    if labelNode == labelDot:
-        if not node.name().startswith("Connector"):
+    
+    if not node.name().startswith("Connector"):
 
-            node.setInput(0,dot)
+        if node.setInput(0,dot):
+            node['label'].setValue(dot['label'].getValue())
             node["hide_input"].setValue(True)
 
-        undo.end()
-        return True
+            undo.end()
+            return True
 
     undo.end()
     return False
@@ -298,6 +359,3 @@ def rgb2interface(rgb):
         rgb = rgb + (255,)
 
     return int('%02x%02x%02x%02x'%rgb,16)
-
-
-# TODO Connector for Camera/Deep/3D - all non-postagestamp stuff

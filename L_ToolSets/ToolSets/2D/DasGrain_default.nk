@@ -1,77 +1,49 @@
 set cut_paste_input [stack 0]
-version 11.3 v3
-push $cut_paste_input
-Group {
- name DegrainHelper
- help "The degrained plate has to be completely degrained.\n\nThe slider controls how much luminance grain will be present in the output."
- tile_color 0x7f7f7fff
- xpos -260
- ypos -154
- addUserKnob {20 User}
- addUserKnob {7 luma_mix l "luminance degrain amount"}
- luma_mix 0.8
+version 13.0 v5
+BackdropNode {
+ inputs 0
+ name BackdropNode3
+ tile_color 0x474747ff
+ label regrain
+ note_font_size 44
+ selected true
+ xpos -422
+ ypos -225
+ bdwidth 722
+ bdheight 378
 }
- Input {
-  inputs 0
-  name PLATE
-  xpos -590
-  ypos -250
-  number 1
- }
- Colorspace {
-  colorspace_out YCbCr
-  name Colorspace2
-  xpos -590
-  ypos -178
- }
- Dot {
-  name Dot25
-  xpos -556
-  ypos -126
- }
- Input {
-  inputs 0
-  name DEGRAINED_PLATE
-  xpos -700
-  ypos -250
- }
- Colorspace {
-  colorspace_out YCbCr
-  name Colorspace1
-  xpos -700
-  ypos -178
- }
- Copy {
-  inputs 2
-  from0 rgba.red
-  to0 rgba.red
-  mix {{1-parent.luma_mix}}
-  name Copy1
-  xpos -700
-  ypos -136
- }
- Colorspace {
-  colorspace_in YCbCr
-  name Colorspace3
-  xpos -700
-  ypos -82
- }
- Output {
-  name Output1
-  xpos -700
-  ypos -10
- }
-end_group
+push 0
+PostageStamp {
+ name PostageStamp2
+ label "PLATE DN"
+ selected true
+ xpos -275
+ ypos -75
+ hide_input true
+ postage_stamp true
+}
 push $cut_paste_input
+PostageStamp {
+ name PostageStamp1
+ label PLATE
+ selected true
+ xpos 66
+ ypos -75
+ hide_input true
+ postage_stamp true
+}
+push 0
 Group {
- name DasGrain
+ inputs 3
+ name DasGrain2
  help "DasGrain makes regraining as simple as clicking a few buttons.\n\nFollow the steps in the Help tab and you'll have a perfect regrain in no time!"
  onCreate "import random\n\ntestimonials = \[\n    \"Such an elegant solution, love it!\",\n    \"Your gizmo is beyond expectation\",\n    \"Totally awesome!\",\n    \"DasGrain is officially the best thing ever\",\n    \"It's really working!\",\n    \"Das bringt Tr&auml;nen in meine Augen\",\n    \"DasGrain is the salvation we waited for\",\n    \"I save a lot of time, and definitely my nerves :)\",\n    \"It's alright\",\n    \"My new favourite node, thanks!<br>Having said that, ...\"\n    ]\n\nnode = nuke.thisNode()\nnode\['testimonial'].setValue('<br><br><br><i>&laquo;%s&raquo;</i><br>&mdash; anonymous<br><br>' % random.choice(testimonials))\nnode\['box'].setFlag(nuke.NO_ANIMATION)"
  knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() == 'box':\n    this_frame = nuke.frame()\n    n\['sample_frame'].setValue(this_frame)\n\nif k.name() == 'scatter':\n    n\['divider04'].setVisible(k.value() == False)\n    n\['divider05'].setVisible(k.value() == True)"
  tile_color 0x7f7f7fff
  label "v1.8 | 2021-03-07"
- xpos -260
- ypos -71
+ selected true
+ xpos -111
+ ypos -57
  addUserKnob {20 DasGrain_tab l DasGrain}
  addUserKnob {41 output t "<strong>regrained comp</strong> it is what it sais\n<strong>plate grain</strong> plate minus degrained plate\n<strong>normalised grain</strong> check if the normalization worked. It should be as even as possible. This is what you want to output if you want to prerender a grain plate. Later you can plug it into the <i>external grain</i> input of another DasGrain\n<strong>adapted grain</strong> check if the adaptation worked. Output this if you want to further manipulate the grain (who knows what the sup is gonna come up with...). After, simply plus it to your comp (at that point the comp has to be in the <i>camera</i> colorspace, as set in the <i>Analyze</i> tab).\n<strong>grain QC</strong> check if voronoi seams are visible (&#8594; edgeblend), or the scattered grain looks different to the original plate grain (&#8594; maybe bad sample area or wrong luminance degrain amount)" T Output.output}
  addUserKnob {4 meta l "metadata from" t "Chances are you want to use the metadata from the plate, but who am I to assume :)" M {COMP PLATE}}
@@ -149,7 +121,7 @@ Group {
  addUserKnob {26 info l "" +STARTLINE T "Last change: 2021-03-07\n\n"}
  addUserKnob {26 name_1 l "" +STARTLINE T "Fabian Holtz"}
  addUserKnob {26 mail l "" +STARTLINE T "<a href=\"mailto:holtzf+nuke@gmail.com?subject=Help with DasGrain v1.7.8\"><span style=\"color:#C8C8C8;\">holtzf+nuke@gmail.com</a>"}
- addUserKnob {26 testimonial l "" +STARTLINE T "<br><br><br><i>&laquo;It's alright&raquo;</i><br>&mdash; anonymous<br><br>"}
+ addUserKnob {26 testimonial l "" +STARTLINE T "<br><br><br><i>&laquo;Das bringt Tr&auml;nen in meine Augen&raquo;</i><br>&mdash; anonymous<br><br>"}
  addUserKnob {26 ""}
  addUserKnob {26 credit l "" +STARTLINE T "<br>VoronoiScatter based on <a href=\"http://www.nukepedia.com/blink/image/voronoi/\"><span style=\"color:#C8C8C8;\">Ivan Busquets' implementation</a> of<br> libNoise's\nVoronoi generator"}
  addUserKnob {26 thanks l "" +STARTLINE T "<br>Special thanks to Ben Dickson for bearing with my questions and<br>problems and RSP comp for the valuable feedback."}
@@ -307,20 +279,20 @@ Group {
   xpos 764
   ypos -390
  }
-set N919ebc00 [stack 0]
+set N369c7400 [stack 0]
  Dot {
   name Dot28
   xpos 764
   ypos -198
  }
-set N919eb800 [stack 0]
+set N369c7000 [stack 0]
  Dot {
   name Dot32
   xpos 764
   ypos 234
  }
-set N919eb400 [stack 0]
-push $N919eb800
+set N369c6c00 [stack 0]
+push $N369c7000
  Dot {
   name Dot27
   xpos 624
@@ -337,7 +309,7 @@ push $N919eb800
   xpos 624
   ypos -54
  }
-set N919ea800 [stack 0]
+set N369c6000 [stack 0]
  Input {
   inputs 0
   name PLATE
@@ -352,8 +324,10 @@ set N919ea800 [stack 0]
   xpos 324
   ypos -726
  }
-set N919ea000 [stack 0]
+set N369c5800 [stack 0]
  OCIOColorSpace {
+  in_colorspace scene_linear
+  out_colorspace scene_linear
   name OCIOColorSpace1
   xpos 290
   ypos -490
@@ -363,7 +337,7 @@ set N919ea000 [stack 0]
   xpos 324
   ypos -198
  }
-set N91a07800 [stack 0]
+set N369c4c00 [stack 0]
  Dot {
   name Dot6
   xpos 464
@@ -398,7 +372,7 @@ set N91a07800 [stack 0]
   xpos 464
   ypos 90
  }
-push $N919ea800
+push $N369c6000
  Merge2 {
   inputs 2
   operation plus
@@ -432,8 +406,8 @@ push $N919ea800
   xpos 624
   ypos 306
  }
-set N91a35400 [stack 0]
-push $N919eb400
+set N3697e400 [stack 0]
+push $N369c6c00
  Merge2 {
   inputs 2
   operation from
@@ -451,19 +425,19 @@ push $N919eb400
   xpos 764
   ypos 522
  }
-set N91a34c00 [stack 0]
+set N3697dc00 [stack 0]
  Dot {
   name Dot30
   xpos 764
   ypos 690
  }
-set N91a34800 [stack 0]
+set N3697d800 [stack 0]
  Dot {
   name Dot55
   xpos 764
   ypos 1170
  }
-set N91a34400 [stack 0]
+set N3697d400 [stack 0]
  Input {
   inputs 0
   name mask
@@ -478,21 +452,21 @@ set N91a34400 [stack 0]
   xpos 1204
   ypos 258
  }
-set N91a5bc00 [stack 0]
+set N3697cc00 [stack 0]
  Dot {
   name Dot26
   xpos 1204
   ypos 1074
  }
-set N91a5b800 [stack 0]
+set N3697c800 [stack 0]
  Invert {
   name Invert2
   xpos 180
   ypos 1064
   disable {{!parent.invert_1}}
  }
-push $N91a34800
-push $N91a07800
+push $N3697d800
+push $N369c4c00
  Merge2 {
   inputs 2
   operation from
@@ -509,14 +483,14 @@ push $N91a07800
   xpos 324
   ypos 786
  }
-set N91a5ac00 [stack 0]
+set N3693b800 [stack 0]
  Dot {
   name Dot5
   xpos 104
   ypos 786
  }
-set N91a5a800 [stack 0]
-push $N91a5a800
+set N3693b400 [stack 0]
+push $N3693b400
  Copy {
   inputs 2
   from0 {{{parent.Copy2.from0}}}
@@ -535,8 +509,8 @@ push $N91a5a800
   xpos 70
   ypos 926
  }
-set N91a5a000 [stack 0]
-push $N91a34c00
+set N3693ac00 [stack 0]
+push $N3697dc00
  Colorspace {
   colorspace_out AlexaV3LogC
   name Colorspace5
@@ -554,14 +528,14 @@ push $N91a34c00
   xpos -116
   ypos 522
  }
-set N91a83400 [stack 0]
+set N3693a000 [stack 0]
  Dot {
   name Dot48
   xpos -116
   ypos 786
  }
-set N91a83000 [stack 0]
-push $N91a83000
+set N36939c00 [stack 0]
+push $N36939c00
  Copy {
   inputs 2
   from0 rgba.blue
@@ -594,7 +568,7 @@ push $N91a83000
   xpos -40
   ypos 985
  }
-push $N91a5a000
+push $N3693ac00
  Copy {
   inputs 2
   from0 rgba.alpha
@@ -653,7 +627,7 @@ push $N91a5a000
   xpos 70
   ypos 1424
  }
-push $N91a83400
+push $N3693a000
  Dot {
   name Dot16
   xpos -336
@@ -678,7 +652,7 @@ push $N91a83400
   xpos 840
   ypos 1502
  }
-push $N919ea000
+push $N369c5800
  Dot {
   name Dot51
   xpos 115
@@ -697,7 +671,7 @@ push $N919ea000
   xpos 984
   ypos -605
  }
-set N8e1f2c00 [stack 0]
+set N368bd400 [stack 0]
  Switch {
   inputs 2
   which {{parent.meta}}
@@ -720,13 +694,13 @@ set N8e1f2c00 [stack 0]
   xpos -685
   ypos 3762
  }
-push $N91a5bc00
+push $N3697cc00
  Dot {
   name Dot40
   xpos 874
   ypos 258
  }
-push $N91a35400
+push $N3697e400
  Dot {
   name Dot34
   xpos 624
@@ -741,7 +715,7 @@ push $N91a35400
   xpos 840
   ypos 374
  }
-push $N8e1f2c00
+push $N368bd400
  OCIOColorSpace {
   in_colorspace {{OCIOColorSpace1.in_colorspace}}
   out_colorspace {{OCIOColorSpace1.out_colorspace}}
@@ -754,7 +728,7 @@ push $N8e1f2c00
   xpos 984
   ypos -390
  }
-set N8e220800 [stack 0]
+set N36882800 [stack 0]
  Merge2 {
   inputs 2
   operation from
@@ -772,7 +746,7 @@ set N8e220800 [stack 0]
   xpos 984
   ypos 2658
  }
-set N8e220000 [stack 0]
+set N36882000 [stack 0]
  ColorLookup {
   lut {master {}
     red {curve}
@@ -783,7 +757,7 @@ set N8e220000 [stack 0]
   xpos 730
   ypos 2654
  }
-push $N91a5b800
+push $N3697c800
  Dot {
   name Dot38
   xpos 1204
@@ -799,19 +773,19 @@ push $N91a5b800
   xpos 544
   ypos 2271
  }
-set N8e245000 [stack 0]
+set N36881000 [stack 0]
  Dot {
   name Dot20
   xpos 544
   ypos 2391
  }
-push $N8e245000
+push $N36881000
  Dot {
   name Dot17
   xpos 434
   ypos 2271
  }
-set N8e244800 [stack 0]
+set N36880800 [stack 0]
  Dot {
   name Dot13
   xpos 214
@@ -831,7 +805,7 @@ set N8e244800 [stack 0]
   xpos -116
   ypos 1938
  }
-push $N91a34400
+push $N3697d400
  ColorLookup {
   channels rgb
   lut {master {}
@@ -848,7 +822,7 @@ push $N91a34400
   xpos 764
   ypos 1746
  }
-push $N91a5ac00
+push $N3693b800
  Dot {
   name Dot33
   xpos 324
@@ -871,7 +845,7 @@ push $N91a5ac00
   xpos 324
   ypos 1842
  }
-set N8e25c800 [stack 0]
+set N3682e400 [stack 0]
  Dot {
   name Dot25
   xpos 104
@@ -919,7 +893,7 @@ set N8e25c800 [stack 0]
    xpos 214
    ypos -750
   }
-set N8e285800 [stack 0]
+set N3682d400 [stack 0]
   Dot {
    name Dot16
    xpos 434
@@ -935,13 +909,13 @@ set N8e285800 [stack 0]
    xpos 434
    ypos -606
   }
-set N8e284c00 [stack 0]
+set N3682c800 [stack 0]
   Dot {
    name Dot15
    xpos 654
    ypos -606
   }
-set N8e284800 [stack 0]
+set N3682c400 [stack 0]
   Dot {
    name Dot7
    xpos 874
@@ -977,7 +951,7 @@ set N8e284800 [stack 0]
    xpos 874
    ypos -366
   }
-push $N8e284800
+push $N3682c400
   BlinkScript {
    ProgramGroup 1
    KernelDescription "2 \"VoroNoise\" iterate pixelWise c117be128a07c11b6d82fd34148d66b3bcac41976ec9c2082affe38e890c2c0f 2 \"src\" Read Point \"dst\" Write Point 6 \"Frequency\" Float 1 AABIQg== \"Seed\" Int 1 AAAAAA== \"aspect ratio\" Float 1 AACAPw== \"width\" Int 1 AAAAAA== \"height\" Int 1 AAAAAA== \"Randomness\" Float 1 AAAAPw== 6 \"frequency\" 1 1 \"seed\" 1 1 \"aspect_ratio\" 1 1 \"width\" 1 1 \"height\" 1 1 \"randomness\" 1 1 0"
@@ -1008,7 +982,7 @@ push $N8e284800
    uv forward
    uv_offset 0.5
    uv_scale {{parent.amplitude} {"uv_scale.w * pixel_aspect"}}
-   filter Impulse
+   filter impulse
    name IDistort1
    xpos 620
    ypos -280
@@ -1027,7 +1001,7 @@ push $N8e284800
   }
   Transform {
    translate {{"floor((x * size) % 1 * (size)) - int(size / 2)"} {"floor(x % 1 * (size)) - int(size/2)"}}
-   filter Impulse
+   filter impulse
    black_outside false
    name Transform1
    xpos 620
@@ -1042,8 +1016,8 @@ push $N8e284800
    xpos 654
    ypos 42
   }
-set N8e2d9800 [stack 0]
-push $N8e284c00
+set N367f9000 [stack 0]
+push $N3682c800
   Expression {
    expr0 "(x + .5) / width"
    expr1 "(y + .5) / height"
@@ -1073,7 +1047,7 @@ push $N8e284c00
    xpos 434
    ypos 210
   }
-push $N8e2d9800
+push $N367f9000
   Expression {
    temp_name0 view_index
    temp_expr0 "parent.parent.stereo == 1 ? \[lsearch \[value root.views] \[view]] / 2 : 0"
@@ -1134,13 +1108,13 @@ push $N8e2d9800
    xpos 654
    ypos 354
   }
-set N8e30b800 [stack 0]
+set N3677ec00 [stack 0]
   Dot {
    name Dot13
    xpos 654
    ypos 546
   }
-push $N8e30b800
+push $N3677ec00
   Dot {
    name Dot8
    xpos 874
@@ -1184,10 +1158,10 @@ push $N8e30b800
    xpos 874
    ypos 762
   }
-push $N8e30b800
-push $N8e285800
+push $N3677ec00
+push $N3682d400
   FrameHold {
-   first_frame {{parent.sample_frame}}
+   firstFrame {{parent.sample_frame}}
    name FrameHold1
    xpos 180
    ypos -256
@@ -1202,12 +1176,12 @@ push $N8e285800
    inputs 2
    channels rgb
    uv rgb
-   filter Impulse
+   filter impulse
    name STMap1
    xpos 180
    ypos 350
   }
-set N8e33d400 [stack 0]
+set N3677c800 [stack 0]
   TimeBlur {
    divisions {{"max(Transform1.size == 1 ? 2 : pow2(Transform1.size), 1)"}}
    shutter 1
@@ -1217,8 +1191,8 @@ set N8e33d400 [stack 0]
    ypos 446
    disable {{"parent.edge_blend_size < 1"}}
   }
-set N8e33d000 [stack 0]
-push $N8e33d400
+set N3677c400 [stack 0]
+push $N3677c800
   Dot {
    name Dot1
    xpos -6
@@ -1260,7 +1234,7 @@ push $N8e33d400
    xpos -6
    ypos 666
   }
-push $N8e33d000
+push $N3677c400
   Grade {
    inputs 1+1
    white 1.4
@@ -1309,8 +1283,8 @@ push $N8e33d000
   xpos 104
   ypos 2391
  }
-push $N8e244800
-push $N8e25c800
+push $N36880800
+push $N3682e400
  Multiply {
   inputs 1+1
   channels rgb
@@ -1339,7 +1313,7 @@ push $N8e25c800
   xpos 324
   ypos 2490
  }
-set N8e395400 [stack 0]
+set N36714400 [stack 0]
  MergeExpression {
   inputs 2
   temp_name0 reverse
@@ -1356,7 +1330,7 @@ set N8e395400 [stack 0]
   xpos 324
   ypos 2850
  }
-push $N8e220000
+push $N36882000
  Merge2 {
   inputs 2
   operation plus
@@ -1373,7 +1347,7 @@ push $N8e220000
   xpos 984
   ypos 3018
  }
-set N8e394400 [stack 0]
+set N366bf000 [stack 0]
  OCIOColorSpace {
   in_colorspace {{OCIOColorSpace1.out_colorspace}}
   out_colorspace {{OCIOColorSpace1.in_colorspace}}
@@ -1386,13 +1360,13 @@ set N8e394400 [stack 0]
   xpos 984
   ypos 3162
  }
-set N8e3c5c00 [stack 0]
+set N366be400 [stack 0]
  Dot {
   name Dot41
   xpos 1204
   ypos 3162
  }
-set N8e3c5800 [stack 0]
+set N366be000 [stack 0]
  Dot {
   name Dot36
   xpos 1314
@@ -1405,7 +1379,7 @@ set N8e3c5800 [stack 0]
   xpos 1280
   ypos 3254
  }
-push $N8e3c5800
+push $N366be000
  Merge2 {
   inputs 2
   operation difference
@@ -1429,13 +1403,13 @@ push $N8e3c5800
   xpos 1204
   ypos 3402
  }
-push $N8e220800
+push $N36882800
  Dot {
   name Dot45
   xpos 1424
   ypos -390
  }
-push $N8e394400
+push $N366bf000
  Merge2 {
   inputs 2
   operation from
@@ -1451,7 +1425,7 @@ push $N8e394400
   xpos 1424
   ypos 3522
  }
-push $N8e395400
+push $N36714400
  Dot {
   name Dot14
   xpos 104
@@ -1462,13 +1436,13 @@ push $N8e395400
   xpos 104
   ypos 3402
  }
-push $N919ebc00
+push $N369c7400
  Dot {
   name Dot47
   xpos -556
   ypos -390
  }
-push $N91a07800
+push $N369c4c00
  Merge2 {
   inputs 2
   operation from
@@ -1484,7 +1458,7 @@ push $N91a07800
   xpos -556
   ypos 3522
  }
-push $N8e3c5c00
+push $N366be400
  Switch {
   inputs 5
   which {{output}}
