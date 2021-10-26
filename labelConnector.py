@@ -65,7 +65,13 @@ threeD_deep_nodes = [   "DeepColorCorrect",
                         "Sphere",
                         "TransformGeo",
                         "WriteGeo" ]
-ignore_nodes = ['Dot', 'NoOp', 'TimeOffset', 'TimeWarp', 'Retime', 'FrameHold']
+                        
+ignore_nodes = [        "Dot", 
+                        "NoOp", 
+                        "TimeOffset", 
+                        "TimeWarp", 
+                        "Retime", 
+                        "FrameHold" ]
 
 class LayerButton(QtGuiWidgets.QPushButton):
     """Custom QPushButton to change colors when hovering above."""
@@ -232,15 +238,12 @@ def createConnectingNode(dot):
 def connectNodeToDot(node,dot):
     undo.begin(undoEventText)
 
-    
-    if not node.name().startswith("Connector"):
+    if node.setInput(0,dot):
+        node['label'].setValue(dot['label'].getValue())
+        node["hide_input"].setValue(True)
 
-        if node.setInput(0,dot):
-            node['label'].setValue(dot['label'].getValue())
-            node["hide_input"].setValue(True)
-
-            undo.end()
-            return True
+        undo.end()
+        return True
 
     undo.end()
     return False
@@ -253,6 +256,7 @@ def getAllDots():
     dots = list()
     compareList = list()
     doubleEntries = False
+    doubleEntriesList = list()
     for dot in nuke.allNodes("Dot"):
         if dot.name().startswith("Connector"):
                 if dot["label"].value():
@@ -260,29 +264,32 @@ def getAllDots():
                         dots.append(dot)
                         compareList.append(dot["label"].value())
                     else:
-                        log.error("Double Label Entry found on Connector Dots skipping dot: %s \"%s\" " % (dot.name(), dot["label"].value()))
+                        log.error("Double Label Entry found on Connector Dots, skipping dot: %s \"%s\" " % (dot.name(), dot["label"].value()))
                         doubleEntries = True
+                        doubleEntriesList.append(dot)
     if doubleEntries:
-        nuke.message('Double Connectors found with same Label. Check Log for full list!')
+        message = 'Skipped following Connector Dots (Label already used): \n \n'
+        for doubleDot in doubleEntriesList:
+            message += "%s \"%s\"\n" % (doubleDot.name(), doubleDot["label"].value())
+        nuke.message(message)
 
     #dots.sort()
     dots.sort(key=lambda dot: dot.knob('label').value())
     return dots
 
-def runLabelMatch():
+def runLabelMatch(forceShowUi = False):
 
     uiCheck = False
     labelConnectorNodeCreated = False
-    dots = getAllDots()
     nodes = nuke.selectedNodes()
+    dots = getAllDots()
     for node in nodes:
         if node["label"].value():
-            count = 0
-            for dot in dots:
-                if not connectNodeToDot(node,dot):
-                    count += 1
-            if count == len(dots):
-                uiCheck = True
+
+            if not node.name().startswith("Connector"):                   
+                for dot in dots:
+                    if not connectNodeToDot(node,dot):  
+                        uiCheck = True
         else:
             uiCheck = True
 
@@ -290,15 +297,64 @@ def runLabelMatch():
     global labelConnectorUi  # pylint: disable=global-statement
 
     # if the label is empty or not match could be found and the selection is just one node
-    if uiCheck and len(nodes) == 1 and dots:
+    if (uiCheck or forceShowUi) and len(nodes) == 1 and dots:
         labelConnectorUi = labelConnector(node, dots)
         labelConnectorUi.show()
 
+    # this will run and create a new node context based
     if len(nodes) == 0 and dots:
         node = ""
         labelConnectorUi = labelConnector(node, dots)
         labelConnectorUi.show()
 
+def setConnectorDot(dot, txt):
+    dot.setName("Connector")
+    dot.knob('note_font_size').setValue(22)
+    dot.knob('label').setValue(txt.upper())
+
+def makeConnector():
+    undo.begin(undoEventText)
+
+
+    nodes = nuke.selectedNodes()
+    if len(nodes) == 1:
+        for n in nodes:
+            if n.Class() == "Dot":        
+                if "Connector" in n.name():
+                    txtold = n['label'].getValue()
+                    txtnew = nuke.getInput('Change label', txtold)
+
+                    if txtnew:
+                        txtnew = txtnew.upper()
+                        n['label'].setValue(txtnew)
+                        for x in n.dependent(nuke.INPUTS | nuke.HIDDEN_INPUTS, forceEvaluate = False):
+                            if x['label'].getValue() == txtold:
+                                x['label'].setValue(txtnew)
+
+                else:
+                    txt = nuke.getInput('Change label', 'new label')
+
+                    if txt:
+                        setConnectorDot(n, txt)
+                    
+            else:
+                txt = nuke.getInput('Change label', 'new label')
+
+                if txt:
+                    n = nuke.createNode("Dot", inpanel = False)
+                    setConnectorDot(n, txt)
+
+                    n.setYpos(n.ypos()+50)
+
+    if len(nodes) == 0:
+        txt = nuke.getInput('Change label', 'new label')
+
+        if txt:
+            n = nuke.createNode("Dot", inpanel = False)
+            setConnectorDot(n, txt)
+
+    undo.end()
+    
 
 
 
