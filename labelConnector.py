@@ -1,4 +1,4 @@
-# labelConnector v0.13
+# labelConnector v0.16
 # Lukas Schwabe & Johannes Hezer
 # UI based on ChannelHotbox - Falk Hofmann
 
@@ -288,8 +288,12 @@ def runLabelMatch(forceShowUi = False):
 
             if not node.name().startswith("Connector"):                   
                 for dot in dots:
-                    if not connectNodeToDot(node,dot):  
+                    if node["label"].value() == dot["label"].value():
+                        if not connectNodeToDot(node,dot):  
+                            uiCheck = True
+                    else:
                         uiCheck = True
+
         else:
             uiCheck = True
 
@@ -322,7 +326,7 @@ def makeConnector():
             if n.Class() == "Dot":        
                 if "Connector" in n.name():
                     txtold = n['label'].getValue()
-                    txtnew = nuke.getInput('Change label', txtold)
+                    txtnew = nuke.getInput('Rename Label', txtold)
 
                     if txtnew:
                         txtnew = txtnew.upper()
@@ -332,13 +336,13 @@ def makeConnector():
                                 x['label'].setValue(txtnew)
 
                 else:
-                    txt = nuke.getInput('Change label', 'new label')
+                    txt = nuke.getInput('Set label', 'new label')
 
                     if txt:
                         setConnectorDot(n, txt)
                     
             else:
-                txt = nuke.getInput('Change label', 'new label')
+                txt = nuke.getInput('Set label', 'new label')
 
                 if txt:
                     n = nuke.createNode("Dot", inpanel = False)
@@ -347,7 +351,7 @@ def makeConnector():
                     n.setYpos(n.ypos()+50)
 
     if len(nodes) == 0:
-        txt = nuke.getInput('Change label', 'new label')
+        txt = nuke.getInput('Set label', 'new label')
 
         if txt:
             n = nuke.createNode("Dot", inpanel = False)
