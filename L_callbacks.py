@@ -30,9 +30,6 @@ def updateWriteName(n = ""):
     if 'override_all' in n.knobs():
         if n['override_all'].getValue():
             return
-
-    if n['disable'].getValue():
-        return
         
     if nuke.toNode("L_PROJECT"):
        

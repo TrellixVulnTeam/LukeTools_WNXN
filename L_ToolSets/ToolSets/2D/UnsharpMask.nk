@@ -1,7 +1,12 @@
+set cut_paste_input [stack 0]
+version 13.0 v5
+push $cut_paste_input
 Group {
  name UnsharpMask
- inputs 2
  note_font Verdana
+ selected true
+ xpos -360
+ ypos -508
  addUserKnob {20 UnsharpMask}
  addUserKnob {7 Contrast l Sharpness}
  Contrast 0.25
@@ -18,7 +23,6 @@ Group {
   ypos 119
   number 1
  }
-add_layer {alpha alpha.mask}
  Constant {
   inputs 0
   channels alpha
@@ -43,7 +47,7 @@ add_layer {alpha alpha.mask}
   xpos -390
   ypos 108
  }
-set N1450f4a0 [stack 0]
+set Na739f800 [stack 0]
  Log2Lin {
   operation lin2log
   name Log2Lin1
@@ -51,7 +55,7 @@ set N1450f4a0 [stack 0]
   xpos -544
   ypos 204
  }
-set N14495ee0 [stack 0]
+set Na739f400 [stack 0]
  Multiply {
   value {{Contrast+1 i}}
   name Multiply4
@@ -59,7 +63,7 @@ set N14495ee0 [stack 0]
   xpos -670
   ypos 316
  }
-push $N14495ee0
+push $Na739f400
  Blur {
   size {{Blur i}}
   name Blur4
@@ -89,8 +93,8 @@ push $N14495ee0
   xpos -544
   ypos 444
  }
-set N1558efd0 [stack 0]
-push $N1450f4a0
+set Na739e000 [stack 0]
+push $Na739f800
  Keymix {
   inputs 3
   bbox A
@@ -105,7 +109,7 @@ push $N1450f4a0
   xpos -377
   ypos 638
  }
-push $N1558efd0
+push $Na739e000
  Viewer {
   fps 25
   center_fstop 0

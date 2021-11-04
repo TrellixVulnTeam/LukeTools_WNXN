@@ -102,7 +102,7 @@ import channel_hotbox
 nuke.menu('Nuke').findItem('Edit').addCommand('HotBox', 'channel_hotbox.start()', 'alt+v')
 
 import labelConnector
-nuke.menu( 'Nuke' ).addCommand( 'Luke/Make connector', "labelConnector.makeConnector()", 'F7' ) # also renames an existing connector
+nuke.menu( 'Nuke' ).addCommand( 'Luke/Make connector', "labelConnector.makeConnector()", 'F9' ) # also renames an existing connector
 nuke.menu( 'Nuke' ).addCommand( 'Luke/Connect connectors', "labelConnector.runLabelMatch()", 'F8' ) # standard run to match labels, connect nodes, or make new connections
 nuke.menu( 'Nuke' ).addCommand( 'Luke/Force Connect connectors', "labelConnector.runLabelMatch(forceShowUi = True)", 'ctrl+F8' ) # force show UI to make new connection when a single Node is selected
 
