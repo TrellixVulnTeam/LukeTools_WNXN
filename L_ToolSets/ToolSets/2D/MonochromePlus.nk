@@ -1,0 +1,165 @@
+set cut_paste_input [stack 0]
+version 13.0 v1
+push $cut_paste_input
+Group {
+ name MonochromePlus
+ tile_color 0x7aa9ffff
+ note_font "Bitstream Vera Sans"
+ selected true
+ xpos 162
+ ypos 144
+ addUserKnob {20 User}
+ addUserKnob {41 weight T Expression1.weight}
+ addUserKnob {41 source T Expression1.source}
+ addUserKnob {41 target T Expression1.target}
+ addUserKnob {41 multiply T Expression1.multiply}
+ addUserKnob {41 sourceFromTarget l "use weighted target as source" T Expression1.sourceFromTarget}
+ addUserKnob {22 calculateWeights l "calculate weights from source and target" T "monochromeNode = nuke.thisNode()      \n        \ndef zeros_matrix(rows, cols):\n    A = \[]\n    for i in range(rows):\n        A.append(\[])\n        for j in range(cols):\n            A\[-1].append(0.0)\n\n    return A\n\ndef copy_matrix(M):\n    rows = len(M)\n    cols = len(M\[0])\n\n    MC = zeros_matrix(rows, cols)\n\n    for i in range(rows):\n        for j in range(cols):\n            MC\[i]\[j] = M\[i]\[j]\n\n    return MC\n\nA = \[monochromeNode\['source'].value(),monochromeNode\['target'].value(),\[1,1,1]]\nB = \[\[1],\[1],\[1]]\n\nAM = copy_matrix(A)\nn = len(A)\nBM = copy_matrix(B)\n\nindices = list(range(n)) # allow flexible row referencing ***\nfor fd in range(n): # fd stands for focus diagonal\n    fdScaler = 1.0 / AM\[fd]\[fd]\n    # FIRST: scale fd row with fd inverse. \n    for j in range(n): # Use j to indicate column looping.\n        AM\[fd]\[j] *= fdScaler\n    BM\[fd]\[0] *= fdScaler    \n\n    \n    # SECOND: operate on all rows except fd row.\n    for i in indices\[0:fd] + indices\[fd+1:]: # *** skip fd row.\n        crScaler = AM\[i]\[fd] # cr stands for \"current row\".\n        for j in range(n): # cr - crScaler*fdRow.\n            AM\[i]\[j] = AM\[i]\[j] - crScaler * AM\[fd]\[j]\n        BM\[i]\[0] = BM\[i]\[0] - crScaler * BM\[fd]\[0]       \n\nmonochromeNode\['weight'].setValue(\[float(BM\[0]\[0]),float(BM\[1]\[0]),float(BM\[2]\[0])])\nmonochromeNode\['source'].setValue(\[1,1,1])" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannelInput l mask -STARTLINE T Merge1.maskChannelInput}
+ addUserKnob {41 inject -STARTLINE T Merge1.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Merge1.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T Merge1.fringe}
+ addUserKnob {41 mix T Merge1.mix}
+ addUserKnob {26 ""}
+ addUserKnob {26 _1 l "" +STARTLINE T "Chris Fryer | 2019"}
+}
+ Input {
+  inputs 0
+  name Inputmask
+  xpos 506
+  ypos 454
+  number 1
+ }
+ Dot {
+  name Dot4
+  xpos 540
+  ypos 664
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos 359
+  ypos 452
+ }
+ Dot {
+  name Dot2
+  xpos 393
+  ypos 519
+ }
+set N37056c00 [stack 0]
+ Expression {
+  expr0 "(weight.r*r + weight.g*g + weight.b*b) * multiply"
+  name Expression1
+  note_font "Bitstream Vera Sans"
+  xpos 359
+  ypos 549
+  addUserKnob {20 User}
+  addUserKnob {6 sourceFromTarget l "use weighted target as source" +STARTLINE}
+  sourceFromTarget true
+  addUserKnob {6 source_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 weight}
+  weight {0.2126 0.7152 0.0722}
+  addUserKnob {6 weight_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  weight_panelDropped true
+  addUserKnob {6 weight_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 weight_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 weight_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 weight_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 weight_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 weight_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 weight_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 weight_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 weight_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 weight_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 weight_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 weight_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 source}
+  source {1 1 1}
+  addUserKnob {6 source_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 source_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 source_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 source_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 source_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 source_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 source_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 source_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 source_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 source_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 source_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 source_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 target}
+  target {1 1 1}
+  addUserKnob {6 target_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 target_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 target_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 target_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 target_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 target_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 target_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 target_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 target_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 target_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 target_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 target_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 target_panelDropped_1_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 multiply R 0 2}
+  multiply 1
+  addUserKnob {6 multiply_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 multiply_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 multiply_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 multiply_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 multiply_panelDropped_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 multiply_panelDropped_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 multiply_panelDropped_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 multiply_panelDropped_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 multiply_panelDropped_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 multiply_panelDropped_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 multiply_panelDropped_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 multiply_panelDropped_1_1_1_1_1_1_1_1_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Shuffle {
+  green red
+  blue red
+  name Shuffle1
+  tile_color 0xffffff00
+  label "\[value in]-->\[value out]"
+  note_font "Bitstream Vera Sans"
+  xpos 359
+  ypos 573
+ }
+ Grade {
+  whitepoint {{"Expression1.sourceFromTarget == 0 ? parent.Expression1.source : parent.Expression1.target.r*Expression1.weight.r+parent.Expression1.target.g*Expression1.weight.g+parent.Expression1.target.b*Expression1.weight.b"} {"Expression1.sourceFromTarget == 0 ? parent.Expression1.source : parent.Expression1.target.r*Expression1.weight.r+parent.Expression1.target.g*Expression1.weight.g+parent.Expression1.target.b*Expression1.weight.b"} {"Expression1.sourceFromTarget == 0 ? parent.Expression1.source : parent.Expression1.target.r*Expression1.weight.r+parent.Expression1.target.g*Expression1.weight.g+parent.Expression1.target.b*Expression1.weight.b"} {"Expression1.sourceFromTarget == 0 ? parent.Expression1.source : parent.Expression1.target.r*Expression1.weight.r+parent.Expression1.target.g*Expression1.weight.g+parent.Expression1.target.b*Expression1.weight.b"}}
+  white {{parent.Expression1.target} {parent.Expression1.target} {parent.Expression1.target} {parent.Expression1.target}}
+  multiply {{parent.Expression1.multiply} {parent.Expression1.multiply} {parent.Expression1.multiply} {parent.Expression1.multiply}}
+  black_clamp false
+  name Grade1
+  note_font "Bitstream Vera Sans"
+  xpos 359
+  ypos 609
+ }
+push $N37056c00
+ Dot {
+  name Dot1
+  xpos 294
+  ypos 519
+ }
+ Dot {
+  name Dot3
+  xpos 294
+  ypos 664
+ }
+ Merge2 {
+  inputs 2+1
+  operation copy
+  name Merge1
+  selected true
+  xpos 359
+  ypos 661
+ }
+ Output {
+  name Output1
+  xpos 359
+  ypos 709
+ }
+end_group

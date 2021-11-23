@@ -1,12 +1,12 @@
 set cut_paste_input [stack 0]
-version 13.0 v4
+version 13.0 v1
 push $cut_paste_input
 Group {
  name TrueExponentialBlur
  tile_color 0xcc804eff
  selected true
- xpos 1215
- ypos 184
+ xpos -690
+ ypos -463
  addUserKnob {20 BlankKernel}
  addUserKnob {41 "Local GPU: " T BlinkScript2.gpuName}
  addUserKnob {41 "Use GPU if Available" T BlinkScript2.useGPUIfAvailable}
@@ -54,7 +54,7 @@ Group {
   xpos 127
   ypos 315
  }
-set Nbe284c00 [stack 0]
+set Nb24c2c00 [stack 0]
  BlackOutside {
   name BlackOutside1
   xpos 12
@@ -68,13 +68,13 @@ set Nbe284c00 [stack 0]
   xpos -22
   ypos 315
  }
-set Nbe284400 [stack 0]
+set Nb24c2400 [stack 0]
  Dot {
   name Dot6
   xpos -153
   ypos 315
  }
-set Nb5663c00 [stack 0]
+set Nb24c2000 [stack 0]
  Dot {
   name Dot5
   xpos -153
@@ -132,7 +132,7 @@ set Nb5663c00 [stack 0]
   xpos -446
   ypos 511
  }
-push $Nb5663c00
+push $Nb24c2000
  Dot {
   name Dot8
   xpos -288
@@ -152,14 +152,14 @@ push $Nb5663c00
   xpos -288
   ypos 621
  }
-push $Nbe284400
+push $Nb24c2400
  AdjBBox {
   numpixels {{abs(parent.BlinkScript2.size)} {abs(parent.BlinkScript2.size)}}
   name AdjBBox1
   xpos -56
   ypos 379
  }
-set Nb5660c00 [stack 0]
+set Neeeb6c00 [stack 0]
  Reformat {
   type scale
   scale {{"abs(BlinkScript2.size.w) > BlinkScript2.quality.w ? BlinkScript2.quality.w/abs(BlinkScript2.size.w) : 1"} {"abs(BlinkScript2.size.h) > BlinkScript2.quality.h ? BlinkScript2.quality.h/abs(BlinkScript2.size.h) : 1"}}
@@ -232,7 +232,7 @@ set Nb5660c00 [stack 0]
   xpos -22
   ypos 695
  }
-push $Nbe284c00
+push $Nb24c2c00
  Merge2 {
   inputs 2+1
   operation copy
@@ -245,7 +245,7 @@ push $Nbe284c00
   xpos 93
   ypos 764
  }
-push $Nb5660c00
+push $Neeeb6c00
  Dot {
   name Dot10
   xpos 75

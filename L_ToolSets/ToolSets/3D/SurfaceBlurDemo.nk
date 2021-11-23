@@ -1,0 +1,609 @@
+set cut_paste_input [stack 0]
+version 13.0 v1
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x71c67100
+ label "DEFAULT TOOL"
+ note_font "Verdana Bold"
+ note_font_size 60
+ selected true
+ xpos -810
+ ypos -231
+ bdheight 108
+}
+CheckerBoard2 {
+ inputs 0
+ format "256 256 0 0 256 256 1 square_256"
+ name CheckerBoard2
+ selected true
+ xpos -183
+ ypos -27
+}
+RotoPaint {
+ curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x43000000 x43000000}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {cubiccurve Brush3 512 catmullrom
+     {cc
+      {f 2080}
+      {px 1
+       {x431d3333 x43190000 1}
+       {x431c6666 x431acccd 1}
+       {x431c0000 x431d3333 1}
+       {x431acccd x43210000 1}
+       {x431a0000 x432a999a 1}
+       {x431acccd x43300000 1}
+       {x431c0000 x43316666 1}
+       {x431fcccd x4334999a 1}
+       {x43210000 x4334cccd 1}
+       {x43226666 x4334cccd 1}
+       {x43233333 x43336666 1}
+       {x43240000 x43303333 1}
+       {x4323999a x432ccccd 1}
+       {x4320999a x432a3333 1}
+       {x431f6666 x4329cccd 1}
+       {x4320999a x4329cccd 1}
+       {x4322cccd x43296666 1}
+       {x4324cccd x43283333 1}
+       {x432a999a x43233333 1}
+       {x432c0000 x43223333 1}
+       {x43303333 x431d999a 1}
+       {x43316666 x431c6666 1}}}
+     {tx 1 x432229e4 x432884a7}
+     {a ro 0 go 0 bo 0 ao 0 bs x40c00000 bu 1 str 1 spx x43000000 spy x43000000 sb 1 ltt x40000000 tt x41880000}}
+    {cubiccurve Brush2 512 catmullrom
+     {cc
+      {f 2080}
+      {px 1
+       {x43030000 x432c0000 1}
+       {x43036666 x432d3333 1}
+       {x430b3333 x432f999a 1}
+       {x4310cccd x43303333 1}
+       {x431c0000 x4332999a 1}
+       {x431d999a x43330000 1}}}
+     {tx 1 x430f5555 x432fc445}
+     {a ro 0 go 0 bo 0 ao 0 bs x40c00000 bu 1 str 1 spx x43000000 spy x43000000 sb 1 ltt x40000000 tt x41880000}}
+    {cubiccurve Brush1 512 catmullrom
+     {cc
+      {f 2080}
+      {px 1
+       {x430b6666 x43300000 1}
+       {x430c999a x432e6666 1}
+       {x430d6666 x432ccccd 1}
+       {x4310cccd x43216666 1}
+       {x4313999a x43146666 1}
+       {x43140000 x43120000 1}
+       {x43146666 x4310cccd 1}}}
+     {tx 1 x43105076 x43208af9}
+     {a ro 0 go 0 bo 0 ao 0 bs x40c00000 bu 1 str 1 spx x43000000 spy x43000000 sb 1 ltt x40000000 tt x41880000}}}}}}
+ toolbox {brush {
+  { selectAll bs 6 str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush bs 6 str 1 ssx 1 ssy 1 sf 1 sb 1 tt 17 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+ toolbar_brush_size 6
+ toolbar_brush_hardness 0.200000003
+ toolbar_lifetime_type single
+ toolbar_source_transform_scale {1 1}
+ toolbar_source_transform_center {128 128}
+ colorOverlay {0 0 0 0}
+ brush_size 6
+ brush_spacing 0.05000000075
+ brush_hardness 0.200000003
+ source_black_outside true
+ name RotoPaint1
+ selected true
+ xpos -183
+ ypos 45
+}
+Dot {
+ name Dot4
+ selected true
+ xpos -149
+ ypos 87
+}
+Reformat {
+ inputs 0
+ format "256 256 0 0 256 256 1 square_256"
+ name Reformat4
+ selected true
+ xpos -375
+ ypos -31
+}
+Radial {
+ area {0 0 256 256}
+ softness 0
+ name Radial3
+ selected true
+ xpos -375
+ ypos 31
+}
+Merge2 {
+ inputs 2
+ operation multiply
+ name Merge1
+ selected true
+ xpos -375
+ ypos 84
+}
+Transform {
+ translate {{-center} {-center}}
+ center {128 128}
+ name Transform1
+ selected true
+ xpos -375
+ ypos 133
+}
+CornerPin2D {
+ to1 {0 0}
+ to2 {256 0}
+ to3 {256 256}
+ to4 {0 256}
+ "extra matrix" 1
+ transform_matrix {
+     {{wh.w*cos(theta)} {sin(theta)} 0 0}
+     {{-sin(theta)*wh.w} {cos(theta)} 0 0}
+     {0 0 1 0}
+     {0 0 0 1}
+   }
+ invert false
+ from1 {0 0}
+ from2 {256 0}
+ from3 {256 256}
+ from4 {0 256}
+ name CornerPin2D1
+ selected true
+ xpos -375
+ ypos 159
+ addUserKnob {20 User}
+ addUserKnob {14 wh R 0 100}
+ wh {{parent.Constant1.color.r} {parent.Constant1.color.g}}
+ addUserKnob {7 theta R 0 360}
+ theta {{parent.Constant1.color.b}}
+}
+Transform {
+ translate {{center} {center}}
+ center {128 128}
+ name Transform2
+ selected true
+ xpos -375
+ ypos 185
+}
+Reformat {
+ resize fit
+ name Reformat5
+ selected true
+ xpos -375
+ ypos 209
+}
+Camera2 {
+ inputs 0
+ translate {-4.5 2.54000006 8.920000076}
+ rotate {-14.77640905 -26.45588056 0}
+ name Camera1
+ selected true
+ xpos 202
+ ypos -480
+}
+push $cut_paste_input
+Noise {
+ size 3.6
+ gamma 0.1
+ center {960 540}
+ name Noise2
+ selected true
+ xpos 43
+ ypos -666
+}
+Shuffle {
+ alpha white
+ name Shuffle1
+ selected true
+ xpos 43
+ ypos -642
+}
+Sphere {
+ rows 100
+ columns 100
+ name Sphere1
+ selected true
+ xpos 43
+ ypos -556
+}
+ProcGeo {
+ Gain 0.8
+ name ProcGeo1
+ selected true
+ xpos 43
+ ypos -509
+}
+Normals {
+ name Normals1
+ selected true
+ xpos 43
+ ypos -485
+}
+push 0
+add_layer {N N.red N.green N.blue N.alpha}
+ScanlineRender {
+ inputs 3
+ conservative_shader_sampling false
+ antialiasing high
+ motion_vectors_type distance
+ output_shader_vectors true
+ N_channel N
+ name ScanlineRender1
+ selected true
+ xpos 43
+ ypos -374
+}
+Crop {
+ box {0 0 1920 1080}
+ crop false
+ name Crop2
+ selected true
+ xpos 43
+ ypos -294
+}
+set N8dd87400 [stack 0]
+Dot {
+ name Dot1
+ selected true
+ xpos 227
+ ypos -291
+}
+Shuffle {
+ in N
+ name Shuffle2
+ selected true
+ xpos 193
+ ypos -196
+}
+Dot {
+ name Dot2
+ selected true
+ xpos 227
+ ypos -122
+}
+set Na940a000 [stack 0]
+ColorMatrix {
+ matrix {
+     {{parent.Camera1.world_matrix.0} {parent.Camera1.world_matrix.1} {parent.Camera1.world_matrix.2}}
+     {{parent.Camera1.world_matrix.4} {parent.Camera1.world_matrix.5} {parent.Camera1.world_matrix.6}}
+     {{parent.Camera1.world_matrix.8} {parent.Camera1.world_matrix.9} {parent.Camera1.world_matrix.10}}
+   }
+ invert true
+ name ColorMatrix1
+ selected true
+ xpos 193
+ ypos 124
+}
+Dot {
+ name Dot5
+ selected true
+ xpos 227
+ ypos 173
+}
+set Na9409400 [stack 0]
+Dot {
+ name Dot7
+ selected true
+ xpos 130
+ ypos 173
+}
+Dot {
+ name Dot8
+ selected true
+ xpos 130
+ ypos 294
+}
+push $Na9409400
+push $Na9409400
+Dot {
+ name Dot9
+ selected true
+ xpos 343
+ ypos 173
+}
+Dot {
+ name Dot6
+ selected true
+ xpos 343
+ ypos 294
+}
+BlinkScript {
+ inputs 3
+ recompileCount 140
+ ProgramGroup 1
+ KernelDescription "2 \"BlankKernel\" iterate pixelWise efad1e4322c936eabe7fbc5fbf838b89f0db97c7c5f80f637690a0f3fa3bf17a 4 \"src\" Read Ranged2D \"normals\" Read Point \"filter\" Read Random \"dst\" Write Point 1 \"picker\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== 1 \"picker\" 4 1 10 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"filterconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"filterTransform\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"UV\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"tempOutput\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"output\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"normaliser\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"filterResolution\" Int 2 1 AAAAAAAAAAA= \"transformMatrix\" Float 16 1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="
+ kernelSource "inline float4 matrixTransform(float4 image, float4x4 matrix)\{\n\n    float4 matrixTransformsOutput;\n\n    matrixTransformsOutput.x = image.x * matrix\[0]\[0] + image.y * matrix\[0]\[1] + image.z * matrix\[0]\[2] + matrix\[0]\[3];\n    matrixTransformsOutput.y = image.x * matrix\[1]\[0] + image.y * matrix\[1]\[1] + image.z * matrix\[1]\[2] + matrix\[1]\[3];\n    matrixTransformsOutput.z = image.x * matrix\[2]\[0] + image.y * matrix\[2]\[1] + image.z * matrix\[2]\[2] + matrix\[2]\[3];\n    matrixTransformsOutput.w = image.x * matrix\[3]\[0] + image.y * matrix\[3]\[1] + image.z * matrix\[3]\[2] + matrix\[3]\[3];\n\n\n    return matrixTransformsOutput;\n\n\}\n\n\nkernel BlankKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src; // the input image\n  Image<eRead, eAccessPoint, eEdgeClamped> normals;\n  Image<eRead, eAccessRandom, eEdgeConstant> filter;\n  Image<eWrite> dst; // the output image\n\n  param:\n    // This parameter is made available to the user.\n    float4 picker;\n\n  local:\n    // This local variable is not exposed to the user.\n    float4 filterTransform;\n    float4 UV;\n    float4 tempOutput;\n    float4 output;\n    float4 normaliser;\n\n    int2 filterResolution;\n\n    float4x4 transformMatrix;\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    \n  \}\n\n  // The init() function is run before any calls to process().\n  // Local variables can be initialized here.\n  void init() \{\n    \n    filterResolution.x = filter.bounds.width();\n    filterResolution.y = filter.bounds.height();\n\n    output = 0;\n    normaliser = 0;\n    transformMatrix;\n\n  \}\n\n  void process(int2 pos) \{\n    \n    // Write the result to the output image\n\n\n    //angle of surface\n    filterTransform.x = 1.0f - normals().x;\n    filterTransform.y = 1.0f - normals().y;\n    filterTransform.z = normals().x >= 0 ? -(atan((normals().y)/normals().x)) : PI-(atan((normals().y)/normals().x));\n\n    UV.x = normals().z*cos(filterTransform.z)  + sin(filterTransform.z);\n    UV.y = normals().z*-sin(filterTransform.z) + cos(filterTransform.z);\n    UV.z = normals().z;\n\n    tempOutput.x = normals().z;\n    tempOutput.y = 1; // normals().y;\n    tempOutput.z = filterTransform.z;\n\n    \n\n    for(int X = 1; X <= filterResolution.x; X++)\{\n      for(int Y = 1; Y <= filterResolution.y; Y++)\{\n\n        UV.x = (X+filterResolution.x/2)*normals().z*cos(filterTransform.z)  + (Y-filterResolution.y/2)*sin(filterTransform.z);\n        UV.y = (X+filterResolution.x/2)*normals().z*-sin(filterTransform.z) + (Y-filterResolution.y/2)*cos(filterTransform.z);\n\n        output += src(X-filterResolution.x/2, Y-filterResolution.y/2) * bilinear(filter,UV.x,UV.y);\n        normaliser += bilinear(filter,UV.x,UV.y);\n\n      \}\n    \}    \n    \n\n    //output = output/normaliser;\n\n    filterTransform.z = picker.x >= 0 ? -(atan((picker.y)/picker.x)) : PI-(atan((picker.y)/picker.x));\n\n    //transformMatrix\[0]\[0] = picker.z*cos(-filterTransform.z);\n    //transformMatrix\[0]\[1] = sin(-filterTransform.z);\n\n    //transformMatrix\[1]\[0] = picker.z*-sin(-filterTransform.z);\n    //transformMatrix\[1]\[1] = cos(-filterTransform.z);\n\n    UV.x = pos.x - filterResolution.x/2;    \n    UV.y = pos.y - filterResolution.y/2;   \n\n    //matrixTransform(UV, transformMatrix);\n\n    UV.x = UV.x/(picker.z*cos(filterTransform.z)) + UV.y/(sin(filterTransform.z));\n    UV.y = UV.x/(picker.z*-sin(filterTransform.z)) + UV.y/(cos(filterTransform.z));\n\n    UV.x = UV.x + filterResolution.x/2;\n    UV.y = UV.y + filterResolution.y/2;\n    \n\n    dst() = tempOutput;\n  \}\n\};\n"
+ rebuild ""
+ BlankKernel_picker {0.7111703157 -0.245134756 0.6547238827 0}
+ rebuild_finalise ""
+ name BlinkScript1
+ selected true
+ xpos 193
+ ypos 285
+}
+ContactSheet {
+ inputs 2
+ width 3840
+ height 1080
+ rows 1
+ columns 2
+ name ContactSheet1
+ selected true
+ xpos -112
+ ypos 433
+}
+Constant {
+ inputs 0
+ channels rgb
+ color {0.5013022423 1 2.105293274 0}
+ name Constant1
+ selected true
+ xpos -128
+ ypos 133
+}
+Group {
+ inputs 0
+ name SurfaceBlur1
+ tile_color 0xcc804eff
+ selected true
+ xpos -799
+ ypos -147
+ addUserKnob {20 SurfaceBlur}
+ addUserKnob {41 "Local GPU: " T BlinkScript5.gpuName}
+ addUserKnob {41 "Use GPU if Available" T BlinkScript5.useGPUIfAvailable}
+ addUserKnob {26 ""}
+ addUserKnob {41 multichannelNormalise l "Use each channel for normalisation" T BlinkScript5.SurfaceBlurKernel_multichannelNormalise}
+ addUserKnob {20 cameraMatrix l "Camera Matrix" n 1}
+ cameraMatrix 0
+ addUserKnob {41 useCameraMatrix T BlinkScript5.SurfaceBlurKernel_useCameraMatrix}
+ addUserKnob {41 "" T BlinkScript5.SurfaceBlurKernel_cameraMatrix}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannelInput l mask -STARTLINE T Merge1.maskChannelInput}
+ addUserKnob {41 inject -STARTLINE T Merge1.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Merge1.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T Merge1.fringe}
+ addUserKnob {41 mix T Merge1.mix}
+}
+ Input {
+  inputs 0
+  name Inputmask
+  xpos -593
+  ypos 327
+  number 3
+ }
+ Dot {
+  name Dot6
+  xpos -559
+  ypos 529
+ }
+ Input {
+  inputs 0
+  name Inputfilter
+  xpos -708
+  ypos 327
+  number 2
+ }
+ Dot {
+  name Dot1
+  xpos -674
+  ypos 452
+ }
+ Input {
+  inputs 0
+  name Inputnormals
+  xpos -825
+  ypos 328
+  number 1
+ }
+ ColorMatrix {
+  matrix {
+      {{parent.BlinkScript5.SurfaceBlurKernel_cameraMatrix.0} {parent.BlinkScript5.SurfaceBlurKernel_cameraMatrix.1} {parent.BlinkScript5.SurfaceBlurKernel_cameraMatrix.2}}
+      {{parent.BlinkScript5.SurfaceBlurKernel_cameraMatrix.4} {parent.BlinkScript5.SurfaceBlurKernel_cameraMatrix.5} {parent.BlinkScript5.SurfaceBlurKernel_cameraMatrix.6}}
+      {{parent.BlinkScript5.SurfaceBlurKernel_cameraMatrix.8} {parent.BlinkScript5.SurfaceBlurKernel_cameraMatrix.9} {parent.BlinkScript5.SurfaceBlurKernel_cameraMatrix.10}}
+    }
+  invert true
+  name ColorMatrix1
+  xpos -825
+  ypos 378
+  disable {{1-parent.BlinkScript5.SurfaceBlurKernel_useCameraMatrix}}
+ }
+ Dot {
+  name Dot2
+  xpos -791
+  ypos 419
+ }
+ Input {
+  inputs 0
+  name Inputimg
+  xpos -943
+  ypos 330
+ }
+ Dot {
+  name Dot4
+  xpos -909
+  ypos 396
+ }
+set Ne1f5f000 [stack 0]
+ BlinkScript {
+  inputs 3
+  recompileCount 126
+  ProgramGroup 1
+  KernelDescription "2 \"SurfaceBlurKernel\" iterate pixelWise 5fba0883134b5d54bd13935b4d2e0ef673a87c025efe85222a36c6265c165078 4 \"src\" Read Ranged2D \"normals\" Read Point \"filter\" Read Random \"dst\" Write Point 3 \"cameraMatrix\" Float 16 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA== \"multichannelNormalise\" Bool 1 AA== \"useCameraMatrix\" Bool 1 AA== 3 \"cameraMatrix\" 16 1 \"multichannelNormalise\" 1 1 \"useCameraMatrix\" 1 1 11 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"filterconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"filterTransform\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"UV\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"tempOutput\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"normalData\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"coords\" Float 2 1 AAAAAAAAAAA= \"filterResolution\" Int 2 1 AAAAAAAAAAA= \"output\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"normaliser\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "kernel SurfaceBlurKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src; // the input image  \n  Image<eRead, eAccessPoint, eEdgeClamped> normals;\n  Image<eRead, eAccessRandom, eEdgeConstant> filter;\n  Image<eWrite> dst; // the output image\n\n  param:\n    //optional user input camera matrix\n    float4x4 cameraMatrix;\n    //switch for normalisation method\n    bool multichannelNormalise;\n    //switch for whether the camera matrix is used to transform the normals\n    bool useCameraMatrix;\n\n  local:\n    //these are all used to temporarily carry data from an image\n    float4 filterTransform;\n    float4 UV;\n    float4 tempOutput;\n    float4 normalData;\n\n    //used to store coordinates to translate the filter\n    float2 coords;\n\n    //used to store the width/height of the filter image\n    int2 filterResolution;\n\n    //output image\n    float4 output = 0;\n    //stores the adjusted filter as the convolve happens\n    float4 normaliser = 0;\n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    \n  \}\n\n  // The init() function is run before any calls to process().\n  // Local variables can be initialized here.\n  void init() \{\n\n    //defines the widgth/height of the filter\n    filterResolution.x = filter.bounds.width();\n    filterResolution.y = filter.bounds.height();\n    \n  \}\n\n  void process(int2 pos) \{\n\n    //assigning normals input to float4 variable\n    normalData = normals();\n    \n    //calculating 2D transform data from normals\n    filterTransform.x = 1.0f - normalData.x;\n    filterTransform.y = 1.0f - normalData.y;\n    filterTransform.z = normals().x >= 0 ? -(atan((normalData.y)/normalData.x)) : PI-(atan((normalData.y)/normalData.x));\n\n    UV.x = normalData.z*cos(filterTransform.z)  + sin(filterTransform.z);\n    UV.y = normalData.z*-sin(filterTransform.z) + cos(filterTransform.z);\n    UV.z = normalData.z;\n\n    tempOutput.x = normalData.z;\n    tempOutput.y = 1;\n    tempOutput.z = filterTransform.z;\n\n    //creating transform matrix information\n    float A = normalData.z*cos(filterTransform.z);\n    float B = sin(filterTransform.z);\n    float C = -sin(filterTransform.z)*normalData.z;\n    float D = cos(filterTransform.z);    \n\n    //manually inverting matrix due to Blinkscript curiosities\n    float invertA = -D/(B*C-A*D);\n    float invertB = B/(B*C-A*D);\n    float invertC = C/(B*C-A*D);\n    float invertD = -A/(B*C-A*D);   \n\n    //looping for each pixel in the filter\n    for(int X = 0; X < filterResolution.x; X++)\{\n      for(int Y = 0; Y < filterResolution.y; Y++)\{\n\n        //transforming the filter using the transform matrix data\n        coords.x = (X-filterResolution.x/2)*invertA + (Y-filterResolution.y/2)*invertB + filterResolution.x/2;\n        coords.y = (X-filterResolution.x/2)*invertC + (Y-filterResolution.y/2)*invertD + filterResolution.y/2;\n        \n        //convolving\n        output += src(X-filterResolution.x/2,Y-filterResolution.y/2)*filter(coords.x,coords.y);\n        normaliser += filter(coords.x,coords.y);\n\n\n      \}\n    \}\n\n    //deciding normalisation method\n    output /= multichannelNormalise ? normaliser : normaliser.w;\n\n    //tah dah!\n    dst() = output;\n  \}\n\};\n"
+  rebuild ""
+  rebuild_finalise ""
+  name BlinkScript5
+  xpos -943
+  ypos 443
+ }
+push $Ne1f5f000
+ Dot {
+  name Dot5
+  xpos -1019
+  ypos 396
+ }
+ Dot {
+  name Dot3
+  xpos -1018
+  ypos 529
+ }
+ Merge2 {
+  inputs 2+1
+  operation copy
+  name Merge1
+  xpos -943
+  ypos 526
+ }
+ Output {
+  name Output1
+  xpos -943
+  ypos 578
+ }
+end_group
+Reformat {
+ inputs 0
+ type "to box"
+ box_width 27
+ box_height {{box_width}}
+ box_fixed true
+ name Reformat1
+ selected true
+ xpos -90
+ ypos -293
+}
+Radial {
+ area {0 0 {width} {height}}
+ softness 0
+ name Radial1
+ selected true
+ xpos -90
+ ypos -252
+}
+Dot {
+ name Dot3
+ selected true
+ xpos -56
+ ypos -122
+}
+push $Na940a000
+push $N8dd87400
+Group {
+ inputs 3
+ name SurfaceBlur12
+ tile_color 0xcc804eff
+ selected true
+ xpos 43
+ ypos -125
+ addUserKnob {20 SurfaceBlur}
+ addUserKnob {41 "Local GPU: " T BlinkScript5.gpuName}
+ addUserKnob {41 "Use GPU if Available" T BlinkScript5.useGPUIfAvailable}
+ addUserKnob {26 ""}
+ addUserKnob {41 multichannelNormalise l "Use each channel for normalisation" T BlinkScript5.SurfaceBlurKernel_multichannelNormalise}
+ addUserKnob {20 cameraMatrix l "Camera Matrix" n 1}
+ addUserKnob {41 useCameraMatrix T BlinkScript5.SurfaceBlurKernel_useCameraMatrix}
+ addUserKnob {41 "" T BlinkScript5.SurfaceBlurKernel_cameraMatrix}
+ addUserKnob {20 endGroup n -1}
+}
+ Input {
+  inputs 0
+  name Inputfilter
+  xpos -708
+  ypos 327
+  number 2
+ }
+ Dot {
+  name Dot1
+  xpos -674
+  ypos 452
+ }
+ Input {
+  inputs 0
+  name Inputnormals
+  xpos -825
+  ypos 328
+  number 1
+ }
+ ColorMatrix {
+  matrix {
+      {{parent.BlinkScript5.SurfaceBlurKernel_cameraMatrix.0} {parent.BlinkScript5.SurfaceBlurKernel_cameraMatrix.1} {parent.BlinkScript5.SurfaceBlurKernel_cameraMatrix.2}}
+      {{parent.BlinkScript5.SurfaceBlurKernel_cameraMatrix.4} {parent.BlinkScript5.SurfaceBlurKernel_cameraMatrix.5} {parent.BlinkScript5.SurfaceBlurKernel_cameraMatrix.6}}
+      {{parent.BlinkScript5.SurfaceBlurKernel_cameraMatrix.8} {parent.BlinkScript5.SurfaceBlurKernel_cameraMatrix.9} {parent.BlinkScript5.SurfaceBlurKernel_cameraMatrix.10}}
+    }
+  invert true
+  name ColorMatrix1
+  selected true
+  xpos -825
+  ypos 378
+  disable {{1-parent.BlinkScript5.SurfaceBlurKernel_useCameraMatrix}}
+ }
+ Dot {
+  name Dot2
+  xpos -791
+  ypos 419
+ }
+ Input {
+  inputs 0
+  name Inputimg
+  xpos -943
+  ypos 330
+ }
+ BlinkScript {
+  inputs 3
+  recompileCount 125
+  ProgramGroup 1
+  KernelDescription "2 \"SurfaceBlurKernel\" iterate pixelWise 01e4324b6a0a9f877fc8ea65e3b8093ce0d699b3b9b42f575480c11293e5afc1 4 \"src\" Read Ranged2D \"normals\" Read Point \"filter\" Read Random \"dst\" Write Point 3 \"cameraMatrix\" Float 16 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA== \"multichannelNormalise\" Bool 1 AA== \"useCameraMatrix\" Bool 1 AA== 3 \"cameraMatrix\" 16 1 \"multichannelNormalise\" 1 1 \"useCameraMatrix\" 1 1 11 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"filterconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"filterTransform\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"UV\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"tempOutput\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"normalData\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"coords\" Float 2 1 AAAAAAAAAAA= \"filterResolution\" Int 2 1 AAAAAAAAAAA= \"output\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"normaliser\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "// 4x4 Transformation Matrix\ninline float4 matrixTransform(float4 image, float4x4 matrix)\{\n\n    float4 matrixTransformsOutput;\n\n    matrixTransformsOutput.x = image.x * matrix\[0]\[0] + image.y * matrix\[0]\[1] + image.z * matrix\[0]\[2] + matrix\[0]\[3];\n    matrixTransformsOutput.y = image.x * matrix\[1]\[0] + image.y * matrix\[1]\[1] + image.z * matrix\[1]\[2] + matrix\[1]\[3];\n    matrixTransformsOutput.z = image.x * matrix\[2]\[0] + image.y * matrix\[2]\[1] + image.z * matrix\[2]\[2] + matrix\[2]\[3];\n    matrixTransformsOutput.w = image.x * matrix\[3]\[0] + image.y * matrix\[3]\[1] + image.z * matrix\[3]\[2] + matrix\[3]\[3];\n\n    return matrixTransformsOutput;\n\n\}\n\nkernel SurfaceBlurKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src; // the input image  \n  Image<eRead, eAccessPoint, eEdgeClamped> normals;\n  Image<eRead, eAccessRandom, eEdgeConstant> filter;\n  Image<eWrite> dst; // the output image\n\n  param:\n    //optional user input camera matrix\n    float4x4 cameraMatrix;\n    //switch for normalisation method\n    bool multichannelNormalise;\n    //switch for whether the camera matrix is used to transform the normals\n    bool useCameraMatrix;\n\n  local:\n    //these are all used to temporarily carry data from an image\n    float4 filterTransform;\n    float4 UV;\n    float4 tempOutput;\n    float4 normalData;\n\n    //used to store coordinates to translate the filter\n    float2 coords;\n\n    //used to store the width/height of the filter image\n    int2 filterResolution;\n\n    //output image\n    float4 output = 0;\n    //stores the adjusted filter as the convolve happens\n    float4 normaliser = 0;\n\n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    \n  \}\n\n  // The init() function is run before any calls to process().\n  // Local variables can be initialized here.\n  void init() \{\n\n    //defines the widgth/height of the filter\n    filterResolution.x = filter.bounds.width();\n    filterResolution.y = filter.bounds.height();\n    \n  \}\n\n  void process(int2 pos) \{\n\n    //normalData = useCameraMatrix ? matrixTransform(normals(), cameraMatrix.invert()) : normals();\n    normalData = normals();\n    \n    filterTransform.x = 1.0f - normalData.x;\n    filterTransform.y = 1.0f - normalData.y;\n    filterTransform.z = normals().x >= 0 ? -(atan((normalData.y)/normalData.x)) : PI-(atan((normalData.y)/normalData.x));\n\n    UV.x = normalData.z*cos(filterTransform.z)  + sin(filterTransform.z);\n    UV.y = normalData.z*-sin(filterTransform.z) + cos(filterTransform.z);\n    UV.z = normalData.z;\n\n    tempOutput.x = normalData.z;\n    tempOutput.y = 1;\n    tempOutput.z = filterTransform.z;\n\n    float A = normalData.z*cos(filterTransform.z);\n    float B = sin(filterTransform.z);\n    float C = -sin(filterTransform.z)*normalData.z;\n    float D = cos(filterTransform.z);\n\n    \n    //tempOutput.x = A;\n    //tempOutput.y = B;\n    //tempOutput.z = C;\n    //tempOutput.w = D;\n\n    float invertA = -D/(B*C-A*D);\n    float invertB = B/(B*C-A*D);\n    float invertC = C/(B*C-A*D);\n    float invertD = -A/(B*C-A*D);\n\n    //coords.x = (pos.x-960)*invertA + (pos.y-540)*invertB + 960;\n    //coords.y = (pos.x-960)*invertC + (pos.y-540)*invertD + 540;\n\n    for(int X = 0; X < filterResolution.x; X++)\{\n      for(int Y = 0; Y < filterResolution.y; Y++)\{\n\n        coords.x = (X-filterResolution.x/2)*invertA + (Y-filterResolution.y/2)*invertB + filterResolution.x/2;\n        coords.y = (X-filterResolution.x/2)*invertC + (Y-filterResolution.y/2)*invertD + filterResolution.y/2;\n        //coords.x = X;\n        //coords.y = Y;\n\n        output += src(X-filterResolution.x/2,Y-filterResolution.y/2)*filter(coords.x,coords.y);\n        normaliser += filter(coords.x,coords.y);\n\n\n      \}\n    \}\n\n    output /= multichannelNormalise ? normaliser : normaliser.w;\n\n    dst() = output;\n  \}\n\};\n"
+  rebuild ""
+  group_SurfaceBlurKernel_cameraMatrix 1
+  SurfaceBlurKernel_cameraMatrix {
+      {{parent.parent.Camera1.world_matrix} {parent.parent.Camera1.world_matrix} {parent.parent.Camera1.world_matrix} {parent.parent.Camera1.world_matrix}}
+      {{parent.parent.Camera1.world_matrix} {parent.parent.Camera1.world_matrix} {parent.parent.Camera1.world_matrix} {parent.parent.Camera1.world_matrix}}
+      {{parent.parent.Camera1.world_matrix} {parent.parent.Camera1.world_matrix} {parent.parent.Camera1.world_matrix} {parent.parent.Camera1.world_matrix}}
+      {{parent.parent.Camera1.world_matrix} {parent.parent.Camera1.world_matrix} {parent.parent.Camera1.world_matrix} {parent.parent.Camera1.world_matrix}}
+    }
+  SurfaceBlurKernel_useCameraMatrix true
+  rebuild_finalise ""
+  name BlinkScript5
+  xpos -943
+  ypos 443
+ }
+ Output {
+  name Output1
+  xpos -943
+  ypos 543
+ }
+end_group
+Viewer {
+ frame 1
+ frame_range 1-100
+ colour_sample_bbox {-0.5802083611 -0.1338541657 -0.5796874762 -0.1333333403}
+ samplepoints {{-0.3520833254 0.1541666687}
+   }
+ name Viewer1
+ selected true
+ xpos 120
+ ypos 633
+}

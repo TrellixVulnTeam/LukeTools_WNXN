@@ -1,0 +1,221 @@
+set cut_paste_input [stack 0]
+version 12.2 v1
+push $cut_paste_input
+Group {
+ name ContourBlur
+ tile_color 0xcc804eff
+ selected true
+ xpos 109
+ ypos 382
+ addUserKnob {20 BlankKernel}
+ addUserKnob {41 "Local GPU: " T BlinkScript6.gpuName}
+ addUserKnob {41 "Use GPU if Available" T BlinkScript6.useGPUIfAvailable}
+ addUserKnob {26 ""}
+ addUserKnob {41 in l "normals channel" T Shuffle1.in}
+ addUserKnob {4 output M {blur vectors}}
+ addUserKnob {41 size_1 l "blur size" T BlinkScript6.size}
+ addUserKnob {41 bidirectional -STARTLINE T BlinkScript6.BlankKernel_bidirectional}
+ addUserKnob {41 BlankKernel_softFalloff l "soft falloff" -STARTLINE T BlinkScript6.BlankKernel_softFalloff}
+ addUserKnob {41 stepSize l "step size" T BlinkScript6.stepSize}
+ addUserKnob {41 size l "normals pre-blur" T Blur1.size}
+ addUserKnob {41 which_1 l "facing ratio mask" T Dissolve2.which}
+ addUserKnob {41 invert -STARTLINE T Expression2.invert}
+ addUserKnob {41 which l mix T Dissolve1.which}
+ addUserKnob {20 group_BlankKernel_cameraMatrix l cameraMatrix n 2}
+ addUserKnob {41 BlankKernel_cameraMatrix l "" -STARTLINE T BlinkScript6.BlankKernel_cameraMatrix}
+ addUserKnob {41 useCameraMatrix l "use camera matrix" -STARTLINE T BlinkScript6.useCameraMatrix}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {26 credit l "" +STARTLINE T "Chris Fryer | 2021"}
+}
+ Input {
+  inputs 0
+  name mask
+  xpos -377
+  ypos 507
+  number 1
+ }
+ Input {
+  inputs 0
+  name img
+  xpos -102
+  ypos 8
+ }
+ Dot {
+  name Dot2
+  xpos -68
+  ypos 121
+ }
+set Ne02cd000 [stack 0]
+ Dot {
+  name Dot5
+  xpos -176
+  ypos 121
+ }
+ Dot {
+  name Dot6
+  xpos -176
+  ypos 637
+ }
+set Ne02cc800 [stack 0]
+ Shuffle2 {
+  fromInput1 {{0} B}
+  in1 alpha
+  fromInput2 {{0} B}
+  mappings "4 black -1 -1 rgba.red 0 0 black -1 -1 rgba.green 0 1 black -1 -1 rgba.blue 0 2 white -1 -1 rgba.alpha 0 3"
+  name Shuffle2
+  tile_color 0xffffff00
+  xpos -279
+  ypos 633
+ }
+ Switch {
+  inputs 2
+  which {{"\[exists parent.input1]"}}
+  name Switch2
+  xpos -377
+  ypos 633
+ }
+ Dot {
+  name Dot7
+  xpos -343
+  ypos 696
+ }
+push $Ne02cd000
+ Dot {
+  name Dot3
+  xpos 121
+  ypos 121
+ }
+ Shuffle {
+  in none
+  name Shuffle1
+  xpos 87
+  ypos 239
+ }
+ Expression {
+  expr3 "(abs(r)+abs(g)+abs(b)) > 0 ? 1 : 0"
+  name Expression3
+  xpos 87
+  ypos 265
+ }
+ Blur {
+  channels rgba
+  name Blur1
+  xpos 87
+  ypos 291
+ }
+ ColorMatrix {
+  matrix {
+      {{parent.BlinkScript6.BlankKernel_cameraMatrix.0} {parent.BlinkScript6.BlankKernel_cameraMatrix.1} {parent.BlinkScript6.BlankKernel_cameraMatrix.2}}
+      {{parent.BlinkScript6.BlankKernel_cameraMatrix.4} {parent.BlinkScript6.BlankKernel_cameraMatrix.5} {parent.BlinkScript6.BlankKernel_cameraMatrix.6}}
+      {{parent.BlinkScript6.BlankKernel_cameraMatrix.8} {parent.BlinkScript6.BlankKernel_cameraMatrix.9} {parent.BlinkScript6.BlankKernel_cameraMatrix.10}}
+    }
+  invert true
+  name ColorMatrix1
+  xpos 87
+  ypos 317
+  disable {{1-parent.BlinkScript6.useCameraMatrix x1 0}}
+ }
+ Multiply {
+  channels {rgba.red rgba.green -rgba.blue none}
+  value {{"BlinkScript6.size >= 0 ? -1 : 1"} {"BlinkScript6.size < 0 ? -1 : 1"} 1 1}
+  name Multiply1
+  xpos 87
+  ypos 343
+ }
+set Na4f16000 [stack 0]
+ Expression {
+  expr0 "invert ? r*b : r*(1-b)"
+  expr1 "invert ? g*b : g*(1-b)"
+  name Expression2
+  selected true
+  xpos 162
+  ypos 402
+  addUserKnob {20 User}
+  addUserKnob {6 invert +STARTLINE}
+ }
+push $Na4f16000
+ Dissolve {
+  inputs 2
+  channels rgb
+  name Dissolve2
+  xpos 87
+  ypos 463
+ }
+ Dot {
+  name Dot1
+  xpos 121
+  ypos 568
+ }
+set Na4f15400 [stack 0]
+ Dot {
+  name Dot4
+  xpos 121
+  ypos 639
+ }
+push $Na4f15400
+push $Ne02cd000
+ BlinkScript {
+  inputs 2
+  recompileCount 376
+  ProgramGroup 1
+  KernelDescription "2 \"BlankKernel\" iterate pixelWise 22b978c5f4f4795d3c57f7782c3c2cd7ae2342fb17b040c4b6dd42db836696d8 3 \"src\" Read Random \"N\" Read Random \"dst\" Write Point 5 \"walk\" Float 1 AAAAAA== \"bidirectional\" Bool 1 AA== \"cameraMatrix\" Float 16 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA== \"reachMult\" Float 1 AAAAAA== \"softFalloff\" Bool 1 AA== 5 \"walk\" 1 1 \"bidirectional\" 1 1 \"cameraMatrix\" 16 1 \"reachMult\" 1 1 \"softFalloff\" 1 1 13 \"sample\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"sample2\" Float 2 1 AAAAAAAAAAA= \"output\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"output2\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"sample3\" Float 2 1 AAAAAAAAAAA= \"sample4\" Float 2 1 AAAAAAAAAAA= \"output3\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"output4\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"outputA\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"outputB\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"finalOutput\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"walkFloor\" Int 1 1 AAAAAA== \"walkCeil\" Int 1 1 AAAAAA=="
+  kernelSource "\n\nkernel BlankKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessRandom, eEdgeClamped> src; // the input image\n  Image<eRead, eAccessRandom, eEdgeClamped> N;\n  Image<eWrite> dst; // the output image\n\n  param:\n    // This parameter is made available to the user.\n    float walk;\n    bool bidirectional;\n    float4x4 cameraMatrix;\n    float reachMult;\n    bool softFalloff;\n\n\n  local:\n    // This local variable is not exposed to the user.\n    float4 sample;    \n    float2 sample2;\n    float4 output;\n    float4 output2;\n\n    float2 sample3;    \n    float2 sample4;\n    float4 output3;\n    float4 output4;\n\n    float4 outputA;\n    float4 outputB;\n\n    float4 finalOutput;\n\n    int walkFloor;\n    int walkCeil;\n\n    \n  // In define(), parameters can be given labels and default values.\n  void define() \{\n    \n  \}\n\n  // The init() function is run before any calls to process().\n  // Local variables can be initialized here.\n  void init() \{\n\n    walkFloor = int(walk);\n    walkCeil = ceil(walk);\n    \n  \}\n\n  void process(int2 pos) \{   \n\n\n    ///// IT WILL BREAK ON CPU IF YOU REMOVE THIS I DON'T KNOW WHY. IF YOU DO, PLEASE MESSAGE ME /////\n    sample = 0.0f;\n    sample2 = 0.0f;\n    output = 0.0f;\n    output2 = 0.0f;\n\n    sample = 0.0f;\n    sample2 = 0.0f;\n    output = 0.0f;\n    output2 = 0.0f;\n\n    float normaliser = 0.0f;\n    /////\n\n    \n    \n   \n    for(int i = 0; i < walkCeil; i++)\{\n\n      //storing previous sample\n      output3 = output;\n      output4 = output2;      \n\n      sample.x += reachMult*bilinear(N,pos.x+sample.x,pos.y+sample.y).x;\n      sample.y += reachMult*bilinear(N,pos.x+sample.x,pos.y+sample.y).y;\n    \n      output += softFalloff == 1 && walkFloor > 0 ? bilinear(src,pos.x+sample.y,pos.y+sample.x)*2.0f*(1.0f - (float(i)+1.0f)/(walkFloor+1.0f)) : bilinear(src,pos.x+sample.y,pos.y+sample.x);\n      normaliser += (1.0f - (float(i)+1.0f)/(walkCeil+1.0f));\n\n      if(bidirectional)\{\n\n        sample2.x -= bilinear(N,pos.x+sample2.x,pos.y+sample2.y).x;\n        sample2.y -= bilinear(N,pos.x+sample2.x,pos.y+sample2.y).y;\n    \n        output2 += softFalloff == 1 && walkFloor ? bilinear(src,pos.x+sample2.y,pos.y+sample2.x)*2.0f*(1.0f - (float(i)+1.0f)/(walkFloor+1.0f)) : bilinear(src,pos.x+sample2.y,pos.y+sample2.x);      \n      \n      \}\n\n      \n\n\n    \}\n\n    //output = output/(0.5f-0.25f/walkCeil);\n\n    // Write the result to the output image\n\n    if(walkCeil>0)\{\n\n      \n      outputB = (output+output2)/((1+bidirectional)*walkCeil);\n      outputA = walkFloor > 0 ? (output3+output4)/((1+bidirectional)*walkFloor) : src(pos.x,pos.y);\n\n      outputB = softFalloff && walkFloor >= 1 ? outputB * float(walkCeil)/float(walkFloor) : outputB;\n\n      finalOutput = walkFloor == walkCeil ? outputB : outputA + (outputB - outputA)*(walk-float(walkFloor));\n\n\n      //dst() = (output+output2)/((1+bidirectional)*walkCeil*2);   \n      dst() = finalOutput;\n\n    \}else\{\n\n      dst() = src(pos.x,pos.y);\n\n    \}    \n    \n    \n    \n  \}\n\};\n"
+  rebuild ""
+  BlankKernel_walk {{abs(size)}}
+  BlankKernel_bidirectional true
+  group_BlankKernel_cameraMatrix 1
+  BlankKernel_cameraMatrix {
+      {1 0 0 0}
+      {0 1 0 0}
+      {0 0 1 0}
+      {0 0 0 1}
+    }
+  BlankKernel_reachMult {{stepSize}}
+  BlankKernel_softFalloff true
+  rebuild_finalise ""
+  name BlinkScript6
+  xpos -102
+  ypos 558
+  addUserKnob {20 User}
+  addUserKnob {7 stepSize l "step size" R 0 5}
+  stepSize 1
+  addUserKnob {6 useCameraMatrix +STARTLINE}
+  useCameraMatrix true
+  addUserKnob {7 size R -30 30}
+ }
+ Switch {
+  inputs 2
+  which {{parent.output}}
+  name Switch1
+  xpos -102
+  ypos 635
+ }
+push $Ne02cc800
+ Keymix {
+  inputs 3
+  channels rgba
+  name Keymix1
+  xpos -102
+  ypos 692
+ }
+push $Ne02cc800
+ Dot {
+  name Dot8
+  xpos -176
+  ypos 757
+ }
+ Dissolve {
+  inputs 2
+  channels rgb
+  which 1
+  name Dissolve1
+  xpos -102
+  ypos 753
+ }
+ Output {
+  name Output1
+  xpos -102
+  ypos 819
+ }
+end_group

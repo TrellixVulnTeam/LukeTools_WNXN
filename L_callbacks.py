@@ -3,16 +3,17 @@ import nukescripts
 import re
 import os
 
+
 def updateAllWriteNames():
     if nuke.toNode("L_PROJECT"):
         for n in nuke.allNodes("Write"):
             updateWriteName(n)
 
 
-def updateWriteNameCallback(n = ""):
+def updateWriteNameCallback(n=""):
     if not n:
         n = nuke.thisNode()
-    
+
     kname = ''
     if nuke.thisKnob():
         kname = nuke.thisKnob().name()
@@ -22,7 +23,7 @@ def updateWriteNameCallback(n = ""):
             updateWriteName(n)
 
 
-def updateWriteName(n = ""):
+def updateWriteName(n=""):
 
     if not n:
         n = nuke.thisNode()
@@ -30,9 +31,8 @@ def updateWriteName(n = ""):
     if 'override_all' in n.knobs():
         if n['override_all'].getValue():
             return
-        
+
     if nuke.toNode("L_PROJECT"):
-       
 
         pn = nuke.toNode("L_PROJECT")
 
@@ -76,7 +76,7 @@ def updateWriteName(n = ""):
         else:
             pwritename += 'v' + versionnumber
             pwritename += '.####'
-            
+
         pwritename += '.'
 
         pwrite += n.knob('file_type').value() + '/'
@@ -87,33 +87,35 @@ def updateWriteName(n = ""):
     else:
         nuke.message("No L_PROJECT found")
 
+
 def enableOnRender():
     for n in nuke.allNodes():
         if "enableOnRender" in n.knob('label').getValue():
             n.knob('disable').setValue(False)
         if "disableOnRender" in n.knob('label').getValue():
             n.knob('disable').setValue(True)
-        
+
+
 def writeNodeFields():
     n = nuke.thisNode()
 
     if not n.knob('Luke'):
-        k = nuke.Tab_Knob("Luke","Luke")
+        k = nuke.Tab_Knob("Luke", "Luke")
         n.addKnob(k)
 
-        k = nuke.Boolean_Knob("pre","Pre Render")
+        k = nuke.Boolean_Knob("pre", "Pre Render")
         n.addKnob(k)
 
-        k = nuke.String_Knob("preLabel","Pre Render Label")
+        k = nuke.String_Knob("preLabel", "Pre Render Label")
         n.addKnob(k)
 
-        k = nuke.String_Knob("versionOverride","Render Version Override")
+        k = nuke.String_Knob("versionOverride", "Render Version Override")
         n.addKnob(k)
 
-        k = nuke.PyScript_Knob("applyNaming","Apply","L_callbacks.updateWriteName(nuke.thisNode())")
+        k = nuke.PyScript_Knob("applyNaming", "Apply", "L_callbacks.updateWriteName(nuke.thisNode())")
         k.setFlag(nuke.STARTLINE)
         n.addKnob(k)
 
-        k = nuke.Boolean_Knob("override_all","Disable write node naming callback")
+        k = nuke.Boolean_Knob("override_all", "Disable write node naming callback")
         k.setFlag(nuke.STARTLINE)
         n.addKnob(k)

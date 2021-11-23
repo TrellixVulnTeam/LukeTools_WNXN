@@ -46,6 +46,7 @@ if __lukescripts_local__:
 nuke.knobDefault('Roto.cliptype', "0")
 nuke.knobDefault('Merge.bbox', "B")
 nuke.knobDefault('ChannelMerge.bbox', "union")
+nuke.knobDefault('Copy.bbox', "B side")
 
 import L_createRead
 nuke.menu( 'Nuke' ).addCommand( 'Luke/create Read', "L_createRead.createReadFromWrite()", "shift+r")

@@ -1,8 +1,11 @@
+set cut_paste_input [stack 0]
+version 13.0 v5
+push $cut_paste_input
 Group {
  name expoglow
  selected true
- xpos 100
- ypos -150
+ xpos -267
+ ypos -123
  addUserKnob {20 exponentialGlow l "Exponential Glow"}
  addUserKnob {20 PreGrade n 1}
  PreGrade 0
@@ -30,6 +33,7 @@ Group {
  addUserKnob {6 ignore_alpha l "ignore alpha" t "Will apply the glow only to rgb and keep the original alpha intact." +STARTLINE}
  ignore_alpha true
  addUserKnob {4 cropbehavior l "crop to" t "Lets you select different crop behaviors." M {"incoming bbox" "incoming format" glow "" ""}}
+ cropbehavior glow
  addUserKnob {20 endGroup_4 l endGroup n -1}
  addUserKnob {26 ""}
  addUserKnob {20 PostGrade n 1}
@@ -80,7 +84,7 @@ Group {
   name BackdropNode1
   tile_color 0x272727ff
   label PreGrade
-  note_font "Arial"
+  note_font Arial
   note_font_size 100
   xpos -1145
   ypos 612
@@ -92,7 +96,7 @@ Group {
   name BackdropNode10
   tile_color 0x272727ff
   label Shift
-  note_font "Arial"
+  note_font Arial
   note_font_size 100
   xpos -1143
   ypos 2119
@@ -104,7 +108,7 @@ Group {
   name BackdropNode11
   tile_color 0x272727ff
   label Crop
-  note_font "Arial"
+  note_font Arial
   note_font_size 100
   xpos -1142
   ypos 2408
@@ -116,7 +120,7 @@ Group {
   name BackdropNode12
   tile_color 0x272727ff
   label Format
-  note_font "Arial"
+  note_font Arial
   note_font_size 100
   xpos -1143
   ypos 829
@@ -128,7 +132,7 @@ Group {
   name BackdropNode2
   tile_color 0x272727ff
   label Blur
-  note_font "Arial"
+  note_font Arial
   note_font_size 100
   xpos -1141
   ypos 1164
@@ -140,7 +144,7 @@ Group {
   name BackdropNode3
   tile_color 0x272727ff
   label PostGrade
-  note_font "Arial"
+  note_font Arial
   note_font_size 100
   xpos -1142
   ypos 1906
@@ -152,7 +156,7 @@ Group {
   name BackdropNode4
   tile_color 0x272727ff
   label BlendMode
-  note_font "Arial"
+  note_font Arial
   note_font_size 100
   xpos -1144
   ypos 2636
@@ -164,7 +168,7 @@ Group {
   name BackdropNode5
   tile_color 0x272727ff
   label Preview
-  note_font "Arial"
+  note_font Arial
   note_font_size 100
   xpos -1145
   ypos 2856
@@ -176,7 +180,7 @@ Group {
   name BackdropNode6
   tile_color 0x272727ff
   label IgnoreA
-  note_font "Arial"
+  note_font Arial
   note_font_size 100
   xpos -1144
   ypos 3078
@@ -188,7 +192,7 @@ Group {
   name BackdropNode7
   tile_color 0x272727ff
   label Input
-  note_font "Arial"
+  note_font Arial
   note_font_size 100
   xpos -1145
   ypos 179
@@ -200,7 +204,7 @@ Group {
   name BackdropNode8
   tile_color 0x272727ff
   label Output
-  note_font "Arial"
+  note_font Arial
   note_font_size 100
   xpos -1144
   ypos 3297
@@ -212,7 +216,7 @@ Group {
   name BackdropNode9
   tile_color 0x272727ff
   label Mask
-  note_font "Arial"
+  note_font Arial
   note_font_size 100
   xpos -1145
   ypos 390
@@ -231,7 +235,7 @@ Group {
   xpos -384
   ypos 273
  }
-set N53654400 [stack 0]
+set N69ea2400 [stack 0]
  Dot {
   name Dot16
   xpos -616
@@ -242,13 +246,13 @@ set N53654400 [stack 0]
   xpos -616
   ypos 2497
  }
-set N53655c00 [stack 0]
+set N69ea1c00 [stack 0]
  Dot {
   name Dot7
   xpos -616
   ypos 2728
  }
-set N53675c00 [stack 0]
+set N69ea1800 [stack 0]
  Dot {
   name Dot13
   xpos -616
@@ -267,14 +271,14 @@ set N53675c00 [stack 0]
   ypos 494
   number 1
  }
-push $N53654400
+push $N69ea2400
  Dot {
   name Dot8
   xpos -350
   ypos 432
  }
-set N53674c00 [stack 0]
-push $N53674c00
+set N69ea0800 [stack 0]
+push $N69ea0800
  Dot {
   name Dot10
   xpos -435
@@ -314,7 +318,7 @@ push $N53674c00
   xpos -350
   ypos 711
  }
-set N5b737400 [stack 0]
+set N69e66c00 [stack 0]
  Dot {
   name Dot17
   xpos -480
@@ -325,19 +329,19 @@ set N5b737400 [stack 0]
   xpos -480
   ypos 2964
  }
-push $N5b737400
+push $N69e66c00
  Dot {
   name Dot29
   xpos -350
   ypos 917
  }
-set N5b736800 [stack 0]
+set N69e66000 [stack 0]
  Dot {
   name Dot30
   xpos -194
   ypos 917
  }
-set N5b736400 [stack 0]
+set N69e65c00 [stack 0]
  Dot {
   name Dot31
   xpos -59
@@ -348,7 +352,7 @@ set N5b736400 [stack 0]
   xpos -59
   ypos 1048
  }
-push $N5b736400
+push $N69e65c00
  Reformat {
   type "to box"
   box_width {{width}}
@@ -368,7 +372,7 @@ push $N5b736400
   ypos 985
   disable {{parent.cropbehavior==2}}
  }
-push $N5b736800
+push $N69e66000
  AdjBBox {
   numpixels 100
   name AdjBBox1
@@ -389,91 +393,91 @@ push $N5b736800
   xpos -350
   ypos 1254
  }
-set N5b758800 [stack 0]
+set N69e1f800 [stack 0]
  Dot {
   name Dot150
   xpos -350
   ypos 1290
  }
-set N5b758400 [stack 0]
+set N69e1f400 [stack 0]
  Dot {
   name Dot149
   xpos -350
   ypos 1326
  }
-set N5b758000 [stack 0]
+set N69e1f000 [stack 0]
  Dot {
   name Dot148
   xpos -350
   ypos 1362
  }
-set N5b785c00 [stack 0]
+set N69e1ec00 [stack 0]
  Dot {
   name Dot152
   xpos -350
   ypos 1398
  }
-set N5b785800 [stack 0]
+set N69e1e800 [stack 0]
  Dot {
   name Dot151
   xpos -350
   ypos 1434
  }
-set N5b785400 [stack 0]
+set N69e1e400 [stack 0]
  Dot {
   name Dot153
   xpos -350
   ypos 1470
  }
-set N5b785000 [stack 0]
+set N69e1e000 [stack 0]
  Dot {
   name Dot147
   xpos -350
   ypos 1506
  }
-set N5b784c00 [stack 0]
+set N69e1dc00 [stack 0]
  Dot {
   name Dot1
   xpos -350
   ypos 1542
  }
-set N5b784800 [stack 0]
+set N69e1d800 [stack 0]
  Dot {
   name Dot2
   xpos -350
   ypos 1578
  }
-set N5b784400 [stack 0]
+set N69e1d400 [stack 0]
  Dot {
   name Dot3
   xpos -350
   ypos 1613
  }
-set N5b784000 [stack 0]
+set N69e1d000 [stack 0]
  Dot {
   name Dot4
   xpos -350
   ypos 1650
  }
-set N5b79fc00 [stack 0]
+set N69e1cc00 [stack 0]
  Dot {
   name Dot5
   xpos -350
   ypos 1688
  }
-set N5b79f800 [stack 0]
+set N69e1c800 [stack 0]
  Dot {
   name Dot6
   xpos -350
   ypos 1726
  }
-set N5b79f400 [stack 0]
+set N69e1c400 [stack 0]
  Dot {
   name Dot154
   xpos -350
   ypos 1803
  }
-push $N5b79f400
+push $N69e1c400
  Blur {
   channels rgba
   size {{"parent.stretch > 0 ? (1+parent.stretch)*8192:8192"} {"stretch < 0 ? (1-stretch)*8192:8192"}}
@@ -483,7 +487,7 @@ push $N5b79f400
   ypos 1723
   disable {{parent.Merge6.disable}}
  }
-push $N5b79f800
+push $N69e1c800
  Blur {
   channels rgba
   size {{"parent.stretch > 0 ? (1+parent.stretch)*4096:4096"} {"stretch < 0 ? (1-stretch)*4096:4096"}}
@@ -493,7 +497,7 @@ push $N5b79f800
   ypos 1685
   disable {{parent.Merge5.disable}}
  }
-push $N5b79fc00
+push $N69e1cc00
  Blur {
   channels rgba
   size {{"parent.stretch > 0 ? (1+parent.stretch)*2048:2048"} {"stretch < 0 ? (1-stretch)*2048:2048"}}
@@ -503,7 +507,7 @@ push $N5b79fc00
   ypos 1647
   disable {{parent.Merge4.disable}}
  }
-push $N5b784000
+push $N69e1d000
  Blur {
   channels rgba
   size {{"parent.stretch > 0 ? (1+parent.stretch)*1024:1024"} {"stretch < 0 ? (1-stretch)*1024:1024"}}
@@ -513,7 +517,7 @@ push $N5b784000
   ypos 1610
   disable {{parent.Merge3.disable}}
  }
-push $N5b784400
+push $N69e1d400
  Blur {
   channels rgba
   size {{"parent.stretch > 0 ? (1+parent.stretch)*512:512"} {"stretch < 0 ? (1-stretch)*512:512"}}
@@ -523,7 +527,7 @@ push $N5b784400
   ypos 1575
   disable {{parent.Merge2.disable}}
  }
-push $N5b784800
+push $N69e1d800
  Blur {
   channels rgba
   size {{"parent.stretch > 0 ? (1+parent.stretch)*256:256"} {"stretch < 0 ? (1-stretch)*256:256"}}
@@ -533,7 +537,7 @@ push $N5b784800
   ypos 1539
   disable {{parent.Merge1.disable}}
  }
-push $N5b784c00
+push $N69e1dc00
  Blur {
   channels rgba
   size {{"parent.stretch > 0 ? (1+parent.stretch)*128:128"} {"stretch < 0 ? (1-stretch)*128:128" 128}}
@@ -543,7 +547,7 @@ push $N5b784c00
   ypos 1503
   disable {{parent.Merge23.disable}}
  }
-push $N5b785000
+push $N69e1e000
  Blur {
   channels rgba
   size {{"parent.stretch > 0 ? (1+parent.stretch)*64:64"} {"stretch < 0 ? (1-stretch)*64:64"}}
@@ -553,7 +557,7 @@ push $N5b785000
   ypos 1467
   disable {{parent.Merge22.disable}}
  }
-push $N5b785400
+push $N69e1e400
  Blur {
   channels rgba
   size {{"parent.stretch > 0 ? (1+parent.stretch)*32:32"} {"stretch < 0 ? (1-stretch)*32:32"}}
@@ -563,7 +567,7 @@ push $N5b785400
   ypos 1431
   disable {{parent.Merge21.disable}}
  }
-push $N5b785800
+push $N69e1e800
  Blur {
   channels rgba
   size {{"parent.stretch > 0 ? (1+parent.stretch)*16:16"} {"stretch < 0 ? (1-stretch)*16:16"}}
@@ -573,7 +577,7 @@ push $N5b785800
   ypos 1395
   disable {{parent.Merge20.disable}}
  }
-push $N5b785c00
+push $N69e1ec00
  Blur {
   channels rgba
   size {{"parent.stretch > 0 ? (1+parent.stretch)*8:8"} {"stretch < 0 ? (1-stretch)*8:8"}}
@@ -583,7 +587,7 @@ push $N5b785c00
   ypos 1359
   disable {{parent.Merge19.disable}}
  }
-push $N5b758000
+push $N69e1f000
  Blur {
   channels rgba
   size {{"parent.stretch > 0 ? (1+parent.stretch)*4 : 4"} {"stretch < 0 ? (1-stretch)*4:4"}}
@@ -593,7 +597,7 @@ push $N5b758000
   ypos 1323
   disable {{parent.Plus3.disable}}
  }
-push $N5b758400
+push $N69e1f400
  Blur {
   channels rgba
   size {{"parent.stretch > 0 ? (1+parent.stretch)*2 : 2"} {"stretch < 0 ? (1-stretch)*2:2"}}
@@ -603,7 +607,7 @@ push $N5b758400
   ypos 1287
   disable {{parent.Plus2.disable}}
  }
-push $N5b758800
+push $N69e1f800
  Blur {
   channels rgba
   size {{"parent.stretch > 0 ? (1+parent.stretch)*1 : 1"} {"stretch < 0 ? (1-stretch)*1 : 1"}}
@@ -768,7 +772,7 @@ push $N5b758800
   xpos -151
   ypos 2161
  }
-set N5c8a5400 [stack 0]
+set N69cfb800 [stack 0]
  Dot {
   name Dot25
   xpos -12
@@ -800,7 +804,7 @@ set N5c8a5400 [stack 0]
   ypos 2314
  }
 push 0
-push $N5c8a5400
+push $N69cfb800
  Dot {
   name Dot24
   xpos -299
@@ -831,7 +835,7 @@ push $N5c8a5400
   xpos -299
   ypos 2314
  }
-push $N5c8a5400
+push $N69cfb800
  Shuffle {
   red green
   blue green
@@ -863,13 +867,13 @@ push $N5c8a5400
   xpos -151
   ypos 2473
  }
-set N5c921800 [stack 0]
+set N69c8f800 [stack 0]
  Dot {
   name Dot9
   xpos -53
   ypos 2473
  }
-set N5c921400 [stack 0]
+set N69c8f400 [stack 0]
  Dot {
   name Dot19
   xpos 46
@@ -880,21 +884,21 @@ set N5c921400 [stack 0]
   xpos 46
   ypos 2513
  }
-push $N5c921400
+push $N69c8f400
  Reformat {
   type "to box"
   box_width {{Input.width}}
   box_height {{Input.height}}
   box_pixel_aspect {{Input.pixel_aspect}}
   resize none
-  filter Impulse
+  filter impulse
   black_outside true
   name Reformat1
   xpos -87
   ypos 2496
  }
-push $N53655c00
-push $N5c921800
+push $N69ea1c00
+push $N69c8f800
  CopyBBox {
   inputs 2
   name CopyBBox1
@@ -913,7 +917,7 @@ push $N5c921800
   xpos -151
   ypos 2689
  }
-set N5c945c00 [stack 0]
+set N69c8d800 [stack 0]
  Dot {
   name Dot15
   xpos 101
@@ -924,8 +928,8 @@ set N5c945c00 [stack 0]
   xpos 101
   ypos 2940
  }
-push $N5c945c00
-push $N53675c00
+push $N69c8d800
+push $N69ea1800
  Merge2 {
   inputs 2
   operation {{"group.screen == true ?25:24"}}
@@ -960,7 +964,6 @@ push $N53675c00
   ypos 3165
   disable {{"parent.ignore_alpha == 1 ? 0 : 1"}}
  }
-set N5c944c00 [stack 0]
  Output {
   name Output1
   xpos -185
