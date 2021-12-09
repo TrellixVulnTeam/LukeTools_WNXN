@@ -1,19 +1,32 @@
+import W_hotboxManager
+import W_hotbox
+import AnimationMaker
+import AlignDots
+import L_dragDropHandler
+import L_ToolSets
+import RetimeCamera
+import SearchReplacePanel
+import labelConnector
+import channel_hotbox
+import sb_backdrop
+import pixelfudger
+import L_openInFileBrowser
+import L_createRead
+import nukescripts
+import nuke
 nuke.tprint('LukeTools menu.py')
 
-import nuke
-import nukescripts
 
 if __lukescripts_local__:
     nuke.tprint('local LukeTools menu.py')
     import L_newProject
-    nuke.menu( 'Nuke' ).addCommand( 'Luke/new Project', "L_newProject.L_newProject()")
+    nuke.menu('Nuke').addCommand('Luke/new Project', "L_newProject.L_newProject()")
 
     import L_callbacks
-    
-    nuke.addKnobChanged(L_callbacks.updateWriteNameCallback, nodeClass="Write")
-    nuke.addOnCreate(L_callbacks.writeNodeFields, nodeClass= "Write")
-    nuke.addOnScriptSave(L_callbacks.updateAllWriteNames)
 
+    nuke.addKnobChanged(L_callbacks.updateWriteNameCallback, nodeClass="Write")
+    nuke.addOnCreate(L_callbacks.writeNodeFields, nodeClass="Write")
+    nuke.addOnScriptSave(L_callbacks.updateAllWriteNames)
 
     # knobDefaults local
     nuke.knobDefault('Root.workingSpaceLUT', "acescg")
@@ -48,20 +61,19 @@ nuke.knobDefault('Merge.bbox', "B")
 nuke.knobDefault('ChannelMerge.bbox', "union")
 nuke.knobDefault('Copy.bbox', "B side")
 
-import L_createRead
-nuke.menu( 'Nuke' ).addCommand( 'Luke/create Read', "L_createRead.createReadFromWrite()", "shift+r")
+nuke.menu('Nuke').addCommand('Luke/create Read', "L_createRead.createReadFromWrite()", "shift+r")
 
-import L_openInFileBrowser
-nuke.menu( 'Nuke' ).addCommand( 'Luke/Open in File Browser', "L_openInFileBrowser.openInFileBrowser()", "ctrl+shift+e")
+nuke.menu('Nuke').addCommand('Luke/Open in File Browser',
+                             "L_openInFileBrowser.openInFileBrowser()", "ctrl+shift+e")
 
 # import L_djvViewThis
 # nuke.menu( 'Nuke' ).addCommand( 'Luke/DJV this', "L_djvViewThis.djvViewThis(nuke.selectedNodes())", "ctrl+shift+d")
 
 
-#Menues
-lukeGizmosMenu = nuke.toolbar("Nodes").addMenu( "Luke" )
+# Menues
+lukeGizmosMenu = nuke.toolbar("Nodes").addMenu("Luke")
 
-#Gizmos
+# Gizmos
 # lukeGizmosMenu.addCommand("L_AdvancedGrain", "nuke.createNode('L_AdvancedGrain')", '')
 # lukeGizmosMenu.addCommand("L_expoglow", "nuke.createNode('L_expoglow')", '')
 # lukeGizmosMenu.addCommand("L_UnsharpMask", "nuke.createNode('L_UnsharpMask')", '')
@@ -94,46 +106,40 @@ lukeGizmosMenu = nuke.toolbar("Nodes").addMenu( "Luke" )
 
 # lukeGizmosMenu.addCommand('L_AutoFlare', 'nuke.createNode("AutoFlare2")')
 
-import pixelfudger
 
-import sb_backdrop
 lukeGizmosMenu.addCommand("sb Backdrop", 'sb_backdrop.sb_backdrop()', 'alt+b')
 
-import channel_hotbox
 nuke.menu('Nuke').findItem('Edit').addCommand('HotBox', 'channel_hotbox.start()', 'alt+v')
 
-import labelConnector
-nuke.menu( 'Nuke' ).addCommand( 'Luke/Make connector', "labelConnector.makeConnector()", 'F9' ) # also renames an existing connector
-nuke.menu( 'Nuke' ).addCommand( 'Luke/Connect connectors', "labelConnector.runLabelMatch()", 'F8' ) # standard run to match labels, connect nodes, or make new connections
-nuke.menu( 'Nuke' ).addCommand( 'Luke/Force Connect connectors', "labelConnector.runLabelMatch(forceShowUi = True)", 'ctrl+F8' ) # force show UI to make new connection when a single Node is selected
+nuke.menu('Nuke').addCommand('Luke/Make connector', "labelConnector.makeConnector()",
+                             'F9')  # also renames an existing connector
+nuke.menu('Nuke').addCommand('Luke/Connect connectors', "labelConnector.runLabelMatch()",
+                             'F8')  # standard run to match labels, connect nodes, or make new connections
+nuke.menu('Nuke').addCommand('Luke/Force Connect connectors', "labelConnector.runLabelMatch(forceShowUi = True)",
+                             'ctrl+F8')  # force show UI to make new connection when a single Node is selected
 
-import AnimationMaker  
 
-import W_hotbox, W_hotboxManager
-
-import SearchReplacePanel
 def addSRPanel():
-        '''Run the panel script and add it as a tab into the pane it is called from'''
-        myPanel = SearchReplacePanel.SearchReplacePanel()
-        return myPanel.addToPane()
- 
+    '''Run the panel script and add it as a tab into the pane it is called from'''
+    myPanel = SearchReplacePanel.SearchReplacePanel()
+    return myPanel.addToPane()
+
+
 nuke.menu('Pane').addCommand('SearchReplace', addSRPanel)
 nukescripts.registerPanel('com.ohufx.SearchReplace', addSRPanel)
 
 # currently no Nuke 13 support
 # import knob_scripter
 
-import RetimeCamera
-lukeGizmosMenu.addCommand( 'Retime Camera', 'RetimeCamera.create_RCPanel()')
+lukeGizmosMenu.addCommand('Retime Camera', 'RetimeCamera.create_RCPanel()')
 
-import L_ToolSets
 L_ToolSets.createToolsetsMenu(nuke.menu("Nodes"))
 
 nuke.menu('Nuke').findItem('Edit').findItem('Extract').setShortcut('e')
 
 # drag n drop handler
-import L_dragDropHandler
 nukescripts.drop.addDropDataCallback(L_dragDropHandler.dropHandler)
 
-import AlignDots
-nuke.menu( 'Nuke' ).addCommand('Luke/Align Dots', "AlignDots.AlignDots()", "alt+.", shortcutContext=2)
+nuke.menu('Nuke').addCommand('Luke/Align Dots', "AlignDots.AlignDots()", "alt+.", shortcutContext=2)
+
+nuke.pluginAddPath('./NukeSurvivalToolkit')

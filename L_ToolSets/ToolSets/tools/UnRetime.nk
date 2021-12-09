@@ -1,0 +1,14 @@
+set cut_paste_input [stack 0]
+version 13.0 v5
+push $cut_paste_input
+NoOp {
+name UnRetime2
+tile_color 0xb0a45d00
+selected true
+xpos 659
+ypos 8370
+addUserKnob {20 unretimeTab l UnRetime}
+addUserKnob {3 timingFrame2 l frame}
+addUserKnob {22 update -STARTLINE T "# Wouter Gilsing\n\ndef unretime():\n    \"\"\"\n    \"\"\"\n    \n    node = nuke.thisNode()\n    \n    inputNode = node.input(0)\n    \n    if not inputNode:\n        nuke.message('Connect this to a Kronos.')\n        return\n\n    sourceKnob = inputNode.knob('timingFrame2')\n    \n    if not sourceKnob:\n        nuke.message('Connect this to a Kronos.')\n        return\n        \n    destination = node.knob('timingFrame2')\n\n    destination.clearAnimated()\n    destination.setAnimated()\n\n    rootNode = nuke.toNode('root')\n    \n    frameRange = nuke.getFramesAndViews('range', '\{\}-\{\}'.format(int(rootNode.knob('first_frame').value()), int(rootNode.knob('last_frame').value())))\n    \n    if not frameRange:\n        return\n        \n    frameRange = \[int(f) for f in frameRange\[0].split('-')]\n    for frame in range(*frameRange):\n        value = sourceKnob.getValueAt(frame)\n        destination.setValueAt(frame, value)\n        \nunretime()"}
+addUserKnob {26 WouterGilsing l "" +STARTLINE +INVISIBLE}
+}

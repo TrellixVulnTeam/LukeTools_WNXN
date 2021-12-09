@@ -1,0 +1,31 @@
+set cut_paste_input [stack 0]
+version 13.0 v5
+BackdropNode {
+ inputs 0
+ name BackdropNode3
+ tile_color 0x453647ff
+ label "REPLACE\n\nE:/_VFX\n\nWITH\n\n//HEDI/TMH-Projects/LOREAL\n\non all nodes to convert to local marmalade servers :)\n\nyou can also just use this button:"
+ note_font_size 44
+ selected true
+ xpos 2749
+ ypos 6251
+ bdwidth 1102
+ bdheight 698
+}
+push $cut_paste_input
+NoOp {
+ name RENAMER
+ tile_color 0xff5f00ff
+ selected true
+ xpos 3150
+ ypos 6855
+ addUserKnob {20 User}
+ addUserKnob {26 text l "" +STARTLINE T "simple renamer for Camera, Read, Write, ReadGeo, Axis Nodes"}
+ addUserKnob {26 ""}
+ addUserKnob {1 old_string l old}
+ old_string E:/_VFX
+ addUserKnob {1 new_string l new}
+ new_string //hedi/TMH-Projects/LOREAL
+ addUserKnob {22 rename l Rename T "old_string = nuke.thisNode().knob('old_string').value()\nnew_string = nuke.thisNode().knob('new_string').value()\n\ndef replaceString(knob):\n    str = knob.value()\n    newstr = str.replace(old_string, new_string)\n    knob.setValue(newstr)\n    print(\"renamed %s to %s\" % (str, newstr)) \n\nfor n in nuke.allNodes('Read'):\n    replaceString(n.knob('file'))\n\nfor n in nuke.allNodes('Write'):\n    replaceString(n.knob('file'))\n\nfor n in nuke.allNodes('ReadGeo2'):\n    replaceString(n.knob('file'))\n\nfor n in nuke.allNodes('Axis3'):\n    replaceString(n.knob('file'))\n\nfor n in nuke.allNodes('Camera3'):\n    replaceString(n.knob('file_link'))" +STARTLINE}
+ addUserKnob {22 swap l Swap -STARTLINE T "n = nuke.thisNode()\n\nold = n.knob('old_string').value()\nnew = n.knob('new_string').value()\n\nn.knob('old_string').setValue(new)\nn.knob('new_string').setValue(old)"}
+}

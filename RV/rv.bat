@@ -1,6 +1,6 @@
 @ECHO OFF
 
-set OCIO=K:/git/LukeTools/aces/aces_1.0.3_L/config.ocio
+set OCIO=C:/Program Files/Nuke13.1v1/plugins/OCIOConfigs/configs/aces_1.2/config.ocio
 set RV_SUPPORT_PATH=K:/git/LukeTools/RV
 
 call rv.exe %*
