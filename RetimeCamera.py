@@ -201,11 +201,14 @@ def create_RCPanel():
         camNode = None
         retimeNode = None
 
+        ThreeD_classes = ['Camera', 'Camera2', 'Camera3', 'Axis', 'Axis2', 'Axis3']
+        retime_classes = ['Kronos', 'OFlow2', 'OFXuk.co.thefoundry.time.oflow_v100']
+
         for node in nodes:
-            if (node.Class() == 'Axis2') or (node.Class() == 'Axis') or (node.Class() == 'Camera') or (node.Class() == 'Camera2'):
+            if node.Class() in ThreeD_classes:
                 camNode = node
                 areNodes += 1
-            elif (node.Class() == 'Kronos') or (node.Class() == 'OFlow2') or (node.Class() == 'OFXuk.co.thefoundry.time.oflow_v100'):
+            elif node.Class() in retime_classes:
                 retimeNode = node
                 areNodes += 1
 

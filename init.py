@@ -31,7 +31,7 @@ else:
 nuke.pluginAddPath('./higx/PointRender')
 
 #pgBokeh
-nuke.pluginAddPath('pgBokeh')
+# nuke.pluginAddPath('pgBokeh')
 
 # Gizmos
 nuke.pluginAddPath('gizmos')

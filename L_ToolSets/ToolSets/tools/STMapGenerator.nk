@@ -1,0 +1,12 @@
+set cut_paste_input [stack 0]
+version 13.1 v1
+push $cut_paste_input
+Expression {
+ expr0 "(x + .5) / width"
+ expr1 "(y + .5) / height"
+ expr2 0
+ name STMapGenerator
+ selected true
+ xpos 159
+ ypos -186
+}

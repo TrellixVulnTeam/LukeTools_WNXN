@@ -1,0 +1,103 @@
+set cut_paste_input [stack 0]
+version 13.0 v5
+push $cut_paste_input
+Group {
+name MultiFrameKronosPatch
+selected true
+xpos 805
+ypos 1210
+addUserKnob {20 User}
+addUserKnob {41 firstbad T Switch1.firstbad}
+addUserKnob {41 lastbad T Switch1.lastbad}
+addUserKnob {26 "" +STARTLINE}
+addUserKnob {41 retimedChannels l Channels T Kronos.retimedChannels}
+addUserKnob {41 input.first l "Input Range" T Kronos.input.first}
+addUserKnob {41 motionEstimation l Motion T Kronos.motionEstimation}
+addUserKnob {41 vectorDetailReg l "Vector Detail" T Kronos.vectorDetailReg}
+addUserKnob {41 strengthReg l Strength T Kronos.strengthReg}
+addUserKnob {20 Shutter n 1}
+Shutter 0
+addUserKnob {41 shutterSamples l "Shutter Samples" T Kronos.shutterSamples}
+addUserKnob {41 shutterTime l "Shutter Time" T Kronos.shutterTime}
+addUserKnob {26 "" l " " T ""}
+addUserKnob {41 autoShutterTime l "Automatic Shutter Time" -STARTLINE T Kronos.autoShutterTime}
+addUserKnob {20 "" n -1}
+addUserKnob {20 Advanced n 1}
+Advanced 0
+addUserKnob {41 flickerCompensation l "Flicker Compensation" -STARTLINE T Kronos.flickerCompensation}
+addUserKnob {41 showLegacyMode l "Show Legacy Mode" -STARTLINE +INVISIBLE T Kronos.showLegacyMode}
+addUserKnob {41 legacyModeNuke9 l "Legacy Mode" +HIDDEN T Kronos.legacyModeNuke9}
+addUserKnob {20 Tolerances n 1}
+Tolerances 0
+addUserKnob {41 weightRed l "Weight Red" T Kronos.weightRed}
+addUserKnob {41 weightGreen l "Weight Green" T Kronos.weightGreen}
+addUserKnob {41 weightBlue l "Weight Blue" T Kronos.weightBlue}
+addUserKnob {20 "" n -1}
+addUserKnob {41 vectorSpacing l "Vector Spacing" T Kronos.vectorSpacing}
+addUserKnob {41 showVectors l "Overlay Vectors" -STARTLINE T Kronos.showVectors}
+addUserKnob {20 "" n -1}
+addUserKnob {26 "" +STARTLINE}
+addUserKnob {26 gpuName l "" +STARTLINE T "NVIDIA GeForce RTX 3090"}
+addUserKnob {41 useGPUIfAvailable l "Use GPU if available" T Kronos.useGPUIfAvailable}
+}
+Input {
+inputs 0
+name Input1
+xpos -70
+ypos -319
+}
+Dot {
+name Dot10
+xpos -36
+ypos -279
+}
+set N666e1800 [stack 0]
+FrameHold {
+firstFrame {{Switch1.lastbad+1}}
+name FrameHold2
+xpos -180
+ypos -241
+}
+push $N666e1800
+FrameHold {
+firstFrame {{Switch1.firstbad-1}}
+name FrameHold1
+xpos -290
+ypos -241
+}
+Switch {
+inputs 2
+which {{"frame == 0 ? 0 : 1"}}
+name Switch3
+xpos -240
+ypos -168
+}
+Kronos {
+input.last 1200
+timing2 Frame
+timingFrame2 {{"(frame - (Switch1.firstbad-1)) / (Switch1.lastbad-Switch1.firstbad+2)"}}
+motionEstimation Regularized
+name Kronos
+selected true
+xpos -240
+ypos -115
+}
+push $N666e1800
+Switch {
+inputs 2
+which {{"(frame >= firstbad ? 1 : 0) * (frame <= lastbad ? 1 : 0)" i}}
+name Switch1
+xpos -70
+ypos -43
+addUserKnob {20 User}
+addUserKnob {3 firstbad}
+firstbad 993
+addUserKnob {3 lastbad}
+lastbad 998
+}
+Output {
+name Output1
+xpos -70
+ypos 57
+}
+end_group

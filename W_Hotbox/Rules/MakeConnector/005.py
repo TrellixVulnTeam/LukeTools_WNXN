@@ -13,5 +13,5 @@ txt = nuke.getInput('Change label', 'new label')
 
 if txt:
     n.setName("Connector")
-    n.knob('note_font_size').setValue(44)
+    n.knob('note_font_size').setValue(22)
     n.knob('label').setValue(txt.upper())

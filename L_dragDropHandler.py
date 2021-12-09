@@ -67,6 +67,8 @@ def fileHandler(dropped_data):
 
     else:
         read_node = nuke.createNode("Read", inpanel=False)
+        if file_ext.lower() in ['.mov', '.mp4']:
+            read_node["colorspace"].setValue("Output - sRGB")
         read_node["file"].fromUserText(dropped_data)
         return True
 
@@ -81,7 +83,6 @@ def pathHandler(dropped_data, recursive=True):
 
 
 def dropHandler(droptype, dropped_data):
-    nuke.allNodes().setSelected(False)
     if dropped_data.startswith("file://"):
         dropped_data = dropped_data[7:]
     if os.path.isfile(dropped_data) or os.path.isdir(dropped_data):

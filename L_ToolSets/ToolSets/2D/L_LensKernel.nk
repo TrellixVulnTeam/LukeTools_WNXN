@@ -1,12 +1,12 @@
 set cut_paste_input [stack 0]
-version 12.0 v3
+version 13.0 v5
 push $cut_paste_input
 Group {
  name L_LensKernel
  selected true
- xpos -354
- ypos -625
- addUserKnob {20 User}
+ xpos -18
+ ypos -412
+ addUserKnob {20 L_LensKernelTab l L_LensKernel}
  addUserKnob {20 group l Input n 1}
  addUserKnob {41 gamma T INPUT_CC.gamma}
  addUserKnob {41 gain T INPUT_CC.gain}
@@ -14,29 +14,36 @@ Group {
  addUserKnob {20 endGroup n -1}
  addUserKnob {20 group_3 l color n 1}
  addUserKnob {41 saturation l "input saturation" T INPUT_CC.saturation}
- addUserKnob {41 inner_color l "inner color" T FLARE.inner_color}
- addUserKnob {41 ring_color l "outer color" T FLARE.ring_color}
  addUserKnob {20 endGroup_3 l endGroup n -1}
  addUserKnob {20 group_1 l Dot n 1}
- addUserKnob {41 gamma_1 l falloff T DOT_FALLOFF.gamma}
- addUserKnob {41 mix_2 l "dot amount" T DOT_AMOUNT.mix}
+ addUserKnob {41 white l gain T DOT_CC.white}
+ addUserKnob {41 gamma_1 l gamma T DOT_CC.gamma}
  addUserKnob {20 endGroup_1 l endGroup n -1}
  addUserKnob {20 group_2 l Flare n 1}
  addUserKnob {41 corners T FLARE.corners}
+ addUserKnob {41 flattening l "edge flattening" T FLARE.flattening}
  addUserKnob {41 corners_angle l angle T FLARE.corners_angle}
- addUserKnob {41 gamma_2 l falloff T FLARE_FALLOFF.gamma}
+ addUserKnob {7 flareRadius l radius R 0 500}
+ flareRadius 40
  addUserKnob {7 flare_amount l "flare amount"}
- flare_amount 0.695
+ flare_amount 0.2
+ addUserKnob {41 chroma_spread l "chroma spread" T FLARE.chroma_spread}
+ addUserKnob {41 chroma_shift l "chroma shift" T FLARE.chroma_shift}
+ addUserKnob {41 chroma_shift_angle l "chroma angle" T FLARE.chroma_shift_angle}
  addUserKnob {20 endGroup_2 l endGroup n -1}
  addUserKnob {20 group_4 l noise n 1}
  addUserKnob {41 size l "noise size" T NOISE.size}
  addUserKnob {41 zoffset l "noise z" T NOISE.zoffset}
  addUserKnob {41 mix_1 l "noise amount" T NOISE_STRENGTH.mix}
  addUserKnob {20 endGroup_4 l endGroup n -1}
- addUserKnob {26 "" +STARTLINE}
- addUserKnob {41 size_1 l soften T SOFTEN.size}
- addUserKnob {41 scale T FLARE_SIZE.scale}
+ addUserKnob {26 ""}
+ addUserKnob {41 size_1 l "blur flare" T Blur1.size}
  addUserKnob {6 boolean l "show flare" +STARTLINE}
+ addUserKnob {20 output_group l Output n 1}
+ addUserKnob {41 saturation_1 l saturation T OUTPUT_CC.saturation}
+ addUserKnob {41 gamma_2 l gamma T OUTPUT_CC.gamma}
+ addUserKnob {41 gain_1 l gain T OUTPUT_CC.gain}
+ addUserKnob {20 endGroup_5 l endGroup n -1}
 }
  Crop {
   inputs 0
@@ -45,71 +52,62 @@ Group {
   crop false
   name Crop1
   xpos 419
-  ypos -294
+  ypos -368
  }
-set N6b49f400 [stack 0]
- Radial {
-  area {100 100 900 900}
-  name Radial1
-  xpos 644
-  ypos -247
- }
- Grade {
-  black 0.08
-  white 0.79
-  gamma 0.2
-  name FLARE_FALLOFF
-  xpos 644
-  ypos -164
- }
-push $N6b49f400
+set Nbeeb2800 [stack 0]
  Noise {
   maskChannelMask rgba.red
-  size 100
-  zoffset 2.98
+  size 88
   center {960 540}
   name NOISE
   xpos 522
-  ypos -250
+  ypos -323
  }
-push $N6b49f400
+ Dot {
+  name Dot1
+  xpos 556
+  ypos -156
+ }
+push $Nbeeb2800
  Radial {
-  opacity 0.248
-  area {380.75 380.75 619.25 619.25}
-  color {1}
+  area {381 381 620 620}
   color_panelDropped true
   name DOT
   xpos 307
-  ypos -247
+  ypos -322
  }
  Grade {
-  white {{parent.FLARE.inner_color} {parent.FLARE.inner_color} {parent.FLARE.inner_color} 1}
-  white_panelDropped true
-  gamma 0.33
-  name DOT_FALLOFF
+  gamma 0.0008
+  name Grade1
   xpos 307
-  ypos -190
+  ypos -270
  }
-push $N6b49f400
+ Grade {
+  gamma 0.5
+  name DOT_CC
+  xpos 307
+  ypos -246
+ }
+push $Nbeeb2800
  Flare {
   position {500 500}
-  radius {147.91 339.91 500}
-  ring_color {0.43 0.43 0.43}
+  radius {0 {parent.flareRadius} 500}
+  ring_color {0 0 0}
   ring_color_panelDropped true
   inner_color {1 1 1}
   inner_color_panelDropped true
-  outer_falloff 5
-  brightness {{"0.01 * parent.flare_amount"}}
+  inner_falloff 0.06
+  brightness {{"0.1 * parent.flare_amount"}}
   corners 8
-  flattening 200
+  flattening 40
   sharpness 1
-  corners_angle -4
+  corners_angle -15
   asym_multiplier 0.79
   asym_angle 54
   mult_offset 0
   name FLARE
   xpos 419
-  ypos -248
+  ypos -322
  }
  Merge2 {
   inputs 2
@@ -125,23 +123,14 @@ push $N6b49f400
   inputs 2
   operation multiply
   bbox B
-  mix 0.3
   name NOISE_STRENGTH
   xpos 419
-  ypos -116
- }
- Merge2 {
-  inputs 2
-  operation multiply
-  bbox B
-  name Merge1
-  xpos 419
-  ypos -54
+  ypos -117
  }
  Blur {
-  name SOFTEN
+  name Blur1
   xpos 419
-  ypos 30
+  ypos -68
  }
  Reformat {
   type scale
@@ -150,14 +139,15 @@ push $N6b49f400
   xpos 419
   ypos 139
  }
-set Nac7c6c00 [stack 0]
+set Na90bb400 [stack 0]
  Grade {
   white 1000
   name Grade2
+  selected true
   xpos 419
-  ypos 211
+  ypos 213
  }
-push $Nac7c6c00
+push $Na90bb400
  Input {
   inputs 0
   name InputIMG
@@ -171,7 +161,7 @@ push $Nac7c6c00
  }
  Keyer {
   operation "luminance key"
-  range {0 2.379965152 7.013181485 7.200727254}
+  range {1 4 50 51}
   name input_keyer
   xpos 192
   ypos -61
@@ -197,11 +187,16 @@ push $Nac7c6c00
   which {{parent.boolean}}
   name toggle_show_flare
   xpos 192
-  ypos 265
+  ypos 264
+ }
+ ColorCorrect {
+  name OUTPUT_CC
+  xpos 192
+  ypos 343
  }
  Output {
   name Output1
   xpos 192
-  ypos 345
+  ypos 430
  }
 end_group

@@ -1,0 +1,60 @@
+set cut_paste_input [stack 0]
+version 13.1 v1
+push $cut_paste_input
+add_layer {FinalImageMovieRenderQueue_WorldPos FinalImageMovieRenderQueue_WorldPos.red FinalImageMovieRenderQueue_WorldPos.green FinalImageMovieRenderQueue_WorldPos.blue FinalImageMovieRenderQueue_WorldPos.alpha}
+Shuffle2 {
+fromInput1 {{0} B}
+in1 FinalImageMovieRenderQueue_WorldPos
+out1 FinalImageMovieRenderQueue_WorldPos
+fromInput2 {{0} B}
+mappings "4 FinalImageMovieRenderQueue_WorldPos.alpha 0 3 FinalImageMovieRenderQueue_WorldPos.alpha 0 3 FinalImageMovieRenderQueue_WorldPos.red 0 0 FinalImageMovieRenderQueue_WorldPos.blue 0 2 FinalImageMovieRenderQueue_WorldPos.green 0 1 FinalImageMovieRenderQueue_WorldPos.red 0 0 FinalImageMovieRenderQueue_WorldPos.blue 0 2 FinalImageMovieRenderQueue_WorldPos.green 0 1"
+name Shuffle1
+selected true
+xpos -3715
+ypos -17173
+}
+add_layer {FinalImageMovieRenderQueue_WorldNormal FinalImageMovieRenderQueue_WorldNormal.red FinalImageMovieRenderQueue_WorldNormal.green FinalImageMovieRenderQueue_WorldNormal.blue FinalImageMovieRenderQueue_WorldNormal.alpha}
+Shuffle2 {
+fromInput1 {{0} B}
+in1 FinalImageMovieRenderQueue_WorldNormal
+out1 FinalImageMovieRenderQueue_WorldNormal
+fromInput2 {{0} B}
+mappings "4 FinalImageMovieRenderQueue_WorldNormal.alpha 0 3 FinalImageMovieRenderQueue_WorldNormal.alpha 0 3 FinalImageMovieRenderQueue_WorldNormal.red 0 0 FinalImageMovieRenderQueue_WorldNormal.blue 0 2 FinalImageMovieRenderQueue_WorldNormal.green 0 1 FinalImageMovieRenderQueue_WorldNormal.red 0 0 FinalImageMovieRenderQueue_WorldNormal.blue 0 2 FinalImageMovieRenderQueue_WorldNormal.green 0 1"
+name Shuffle3
+selected true
+xpos -3715
+ypos -17149
+}
+ColorMatrix {
+channels FinalImageMovieRenderQueue_WorldPos
+matrix {
+    {{Axis1.world_matrix.0} {Axis1.world_matrix.1} {Axis1.world_matrix.2}}
+    {{Axis1.world_matrix.4} {Axis1.world_matrix.5} {Axis1.world_matrix.6}}
+    {{Axis1.world_matrix.8} {Axis1.world_matrix.9} {Axis1.world_matrix.10}}
+  }
+name ColorMatrix1
+selected true
+xpos -3715
+ypos -17110
+}
+ColorMatrix {
+channels FinalImageMovieRenderQueue_WorldNormal
+matrix {
+    {{Axis1.world_matrix.0} {Axis1.world_matrix.1} {Axis1.world_matrix.2}}
+    {{Axis1.world_matrix.4} {Axis1.world_matrix.5} {Axis1.world_matrix.6}}
+    {{Axis1.world_matrix.8} {Axis1.world_matrix.9} {Axis1.world_matrix.10}}
+  }
+name ColorMatrix2
+selected true
+xpos -3715
+ypos -17074
+}
+Axis2 {
+inputs 0
+rotate {0 90 0}
+scaling {-1 1 1}
+name Axis1
+selected true
+xpos -3897
+ypos -17112
+}
