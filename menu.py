@@ -1,3 +1,5 @@
+import convertGizmosToGroups
+import sb_convertCornerPin
 import W_hotboxManager
 import W_hotbox
 import AnimationMaker
@@ -14,6 +16,7 @@ import L_openInFileBrowser
 import L_createRead
 import nukescripts
 import nuke
+
 nuke.tprint('LukeTools menu.py')
 
 
@@ -141,5 +144,9 @@ nuke.menu('Nuke').findItem('Edit').findItem('Extract').setShortcut('e')
 nukescripts.drop.addDropDataCallback(L_dragDropHandler.dropHandler)
 
 nuke.menu('Nuke').addCommand('Luke/Align Dots', "AlignDots.AlignDots()", "alt+.", shortcutContext=2)
+
+lukeGizmosMenu.addCommand('Luke/sb_convertCornerPin', "sb_convertCornerPin.sb_convertCornerPin()")
+
+lukeGizmosMenu.addCommand('Luke/convertGizmosToGroups', "convertGizmosToGroups.convertGizmosToGroups()")
 
 nuke.pluginAddPath('./NukeSurvivalToolkit')
