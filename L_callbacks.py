@@ -36,10 +36,19 @@ def updateWriteName(n=""):
 
         pn = nuke.toNode("L_PROJECT")
 
-        pwrite = pn.knob('proot').getValue() + pn.knob('pproject').getValue() + '/' + pn.knob('pshot').getValue() + '/out/'
+        pwrite = pn.knob('proot').getValue() + pn.knob('pproject').getValue() + '/' + pn.knob('pshot').getValue()
         pwritename = pn.knob('pproject').getValue() + '_' + pn.knob('pshot').getValue() + '_'
 
-        pwrite += pn.knob('ptask').getValue() + '/'
+        # check Marmalade knob
+        # !!! OLAY ONLY FOR NOW - BEWARE !!!
+        if pn.knob('pMarmalade').getValue():
+            pwrite += '/02_Render/05_MainComp/'
+            pwritename = 'OLAY_' + pwritename
+        else:
+            pwrite += '/out/'
+            pwrite += pn.knob('ptask').getValue() + '/'
+
+
         pwritename += pn.knob('ptask').getValue() + '_'
 
         if n.knob("pre").getValue():
@@ -63,6 +72,10 @@ def updateWriteName(n=""):
 
         pwrite += 'v' + versionnumber + '/'
 
+        if n.knob('file_type').value() == 'exr':
+            if n.knob('compression').value() in ['DWAA', 'DWAB']:
+                pwritename += 'preview_'
+
         if n['file_type'].value() == 'mov':
             if "mov64_codec" in n.knobs():
                 if n.knob("mov64_codec").value() == "appr":
@@ -79,7 +92,13 @@ def updateWriteName(n=""):
 
         pwritename += '.'
 
-        pwrite += n.knob('file_type').value() + '/'
+        pwrite += n.knob('file_type').value()
+
+        if n.knob('file_type').value() == 'exr':
+            if n.knob('compression').value() in ['DWAA', 'DWAB']:
+                pwrite += '-preview'
+
+        pwrite += '/'
         pwritename += n.knob('file_type').value()
 
         n.knob('file').setValue(pwrite + pwritename)

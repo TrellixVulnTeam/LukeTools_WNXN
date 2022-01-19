@@ -115,11 +115,11 @@ lukeGizmosMenu.addCommand("sb Backdrop", 'sb_backdrop.sb_backdrop()', 'alt+b')
 nuke.menu('Nuke').findItem('Edit').addCommand('HotBox', 'channel_hotbox.start()', 'alt+v')
 
 nuke.menu('Nuke').addCommand('Luke/Make connector', "labelConnector.makeConnector()",
-                             'F9')  # also renames an existing connector
+                             'alt+shift+A', shortcutContext=2)  # also renames an existing connector
 nuke.menu('Nuke').addCommand('Luke/Connect connectors', "labelConnector.runLabelMatch()",
-                             'F8')  # standard run to match labels, connect nodes, or make new connections
+                             'A', shortcutContext=2)  # standard run to match labels, connect nodes, or make new connections
 nuke.menu('Nuke').addCommand('Luke/Force Connect connectors', "labelConnector.runLabelMatch(forceShowUi = True)",
-                             'ctrl+F8')  # force show UI to make new connection when a single Node is selected
+                             'alt+A', shortcutContext=2)  # force show UI to make new connection when a single Node is selected
 
 
 def addSRPanel():
@@ -150,3 +150,5 @@ lukeGizmosMenu.addCommand('Luke/sb_convertCornerPin', "sb_convertCornerPin.sb_co
 lukeGizmosMenu.addCommand('Luke/convertGizmosToGroups', "convertGizmosToGroups.convertGizmosToGroups()")
 
 nuke.pluginAddPath('./NukeSurvivalToolkit')
+
+nuke.pluginAddPath('./Deadline')

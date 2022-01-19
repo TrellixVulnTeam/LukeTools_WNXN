@@ -3,7 +3,7 @@ import os
 import L_callbacks
 def L_newProject():
 
-    pnode = False
+    pnode = ""
 
     proot = 'E:/_VFX/'
     pproject = 'L'
@@ -21,8 +21,7 @@ def L_newProject():
             exists = True
             break
 
-    if not pnode:
-        pnode = nuke.nodes.NoOp(name = "L_PROJECT")
+    
 
 
     p = nuke.Panel('KLXR NEW PROJECT')
@@ -30,6 +29,7 @@ def L_newProject():
     p.addSingleLineInput('Project', pproject)
     p.addSingleLineInput('Shot', pshot)
     p.addSingleLineInput('Task', ptask)
+    p.addBooleanCheckBox('save new script?', False)
 
     p.setWidth(300)
 
@@ -38,11 +38,16 @@ def L_newProject():
 
 
     if p.show():
+        
+        if not pnode:
+            pnode = nuke.nodes.NoOp(name = "L_PROJECT")
 
         proot = p.value('Root')
         pproject = p.value('Project')
         pshot = p.value('Shot')
         ptask = p.value('Task')
+
+        psave = p.value('save new script?')
 
 
         if proot == '':
@@ -63,7 +68,7 @@ def L_newProject():
         pscripts = pfolder+'scripts/'
         pscriptname = pscripts + pproject + '_' + pshot + '_' + ptask + '_v001.nk'
 
-        if not os.path.isdir(pscripts):
+        if not os.path.isdir(pscripts) and psave:
             os.makedirs(pscripts)
 
         if exists:
@@ -94,4 +99,10 @@ def L_newProject():
             k.setValue(ptask)
             pnode.addKnob(k)
 
-        nuke.scriptSaveAs(pscriptname)
+            k = nuke.Boolean_Knob("pMarmalade","Marmalade Mode")
+            k.setValue(False)
+            k.setFlag(nuke.STARTLINE)
+            pnode.addKnob(k)
+
+        if psave:
+            nuke.scriptSaveAs(pscriptname)
