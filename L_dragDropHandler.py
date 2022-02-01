@@ -23,7 +23,7 @@ import nukescripts
 def fileHandler(dropped_data):
 
     for singlenode in nuke.allNodes():
-        singlenode["selected"].setValue(0)
+        singlenode.setSelected(False)
 
     file_path = dropped_data
     file_range = ''
@@ -85,6 +85,17 @@ def pathHandler(dropped_data, recursive=True):
 def dropHandler(droptype, dropped_data):
     if dropped_data.startswith("file://"):
         dropped_data = dropped_data[7:]
+
+    if os.name == 'nt':
+        dropped_data = dropped_data.replace("/", "\\")
+        if os.path.isdir(dropped_data) and not dropped_data.endswith("\\"):
+            dropped_data += "\\"
+        # if not dropped_data.startswith("\\\\?\\"):
+        #     dropped_data = '\\\\?\\' + dropped_data
+    
+    # nuke.tprint("dropped: " + dropped_data)
+
     if os.path.isfile(dropped_data) or os.path.isdir(dropped_data):
         return pathHandler(dropped_data)
+    
     return False

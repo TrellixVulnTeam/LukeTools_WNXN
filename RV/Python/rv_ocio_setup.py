@@ -17,7 +17,12 @@ def ocio_node_from_media(config, node, default, media=None, attributes={}):
     nodeType = commands.nodeType(node)
 
     if nodeType == "RVDisplayPipelineGroup":
+
         display = config.getDefaultDisplay()
+
+        viewspace = os.environ.get("DISPLAY", config.getDefaultView(display))
+
+
         result = [
             {
                 "nodeType": "OCIODisplay",
@@ -25,7 +30,7 @@ def ocio_node_from_media(config, node, default, media=None, attributes={}):
                 "properties": {
                     "ocio.function": "display",
                     "ocio.inColorSpace": OCIO.Constants.ROLE_SCENE_LINEAR,
-                    "ocio_display.view": config.getDefaultView(display),
+                    "ocio_display.view": viewspace,
                     "ocio_display.display": display,
                 },
             }

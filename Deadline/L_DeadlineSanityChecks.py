@@ -8,6 +8,7 @@ def L_sanityChecks():
     DeadlineGlobals.initReloadPlugin = True
 
     DeadlineGlobals.initSelectedOnly = True
+    DeadlineGlobals.initConcurrentTasks = 2   
 
     writenames = []
 
@@ -24,5 +25,11 @@ def L_sanityChecks():
         # print("selected Nodes are: " + str(writenames))
 
         DeadlineGlobals.initExtraInfo0 = writenames
+
+    if len(selectedWrites) == 1:
+        write = selectedWrites[0]
+        if write.knob('use_limit').getValue():
+            DeadlineGlobals.initFrameList = str(int(write.knob('first').getValue())) + '-' + str(int(write.knob('last').getValue()))
+
 
     return True

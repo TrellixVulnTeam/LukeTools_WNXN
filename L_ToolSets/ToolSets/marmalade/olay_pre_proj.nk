@@ -1,0 +1,182 @@
+set cut_paste_input [stack 0]
+version 13.1 v2
+BackdropNode {
+inputs 0
+name BackdropNode45
+tile_color 0x274732ff
+label "pre proj"
+note_font_size 44
+selected true
+xpos 212
+ypos -18164
+bdwidth 543
+bdheight 640
+}
+push 0
+PostageStamp {
+name Connected16
+tile_color 0x505050ff
+label VIGNETTE
+selected true
+xpos 326
+ypos -17991
+hide_input true
+postage_stamp true
+}
+Reformat {
+name Reformat19
+selected true
+xpos 326
+ypos -17907
+}
+push $cut_paste_input
+PostageStamp {
+name Connected15
+tile_color 0x505050ff
+label "PLATE DN"
+selected true
+xpos 453
+ypos -18027
+hide_input true
+postage_stamp true
+}
+Group {
+name AutoCrop3
+tile_color 0xa34795ff
+selected true
+xpos 453
+ypos -17943
+addUserKnob {20 User}
+addUserKnob {41 preset T Crop8.preset}
+addUserKnob {41 reset l Reset -STARTLINE T Crop8.reset}
+addUserKnob {14 keepbbox l "add BBox" R 0 100}
+addUserKnob {41 softness T Crop8.softness}
+addUserKnob {41 reformat T Crop8.reformat}
+addUserKnob {41 intersect -STARTLINE T Crop8.intersect}
+addUserKnob {41 crop l "black outside" -STARTLINE T Crop8.crop}
+}
+Input {
+inputs 0
+name Input1
+xpos -884
+ypos -589
+}
+Crop {
+box {{-parent.keepbbox.w} {-parent.keepbbox.h} {width+parent.keepbbox.w} {height+parent.keepbbox.h}}
+name Crop8
+xpos -884
+ypos -549
+}
+Output {
+name Output1
+xpos -884
+ypos -449
+}
+end_group
+MergeExpression {
+inputs 2
+channel0 {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+expr0 Br/Ar
+expr1 Bg/Ag
+expr2 Bb/Ab
+name MergeExpression3
+label divide
+selected true
+xpos 453
+ypos -17913
+}
+LensDistortion2 {
+distortionModelPreset "3DEqualizer/3DE4 Radial - Standard, Degree 4"
+distortionNumerator0 0.0543144
+distortionNumerator1 -0.0303818
+output Undistort
+outputBBox {-26 -16 1946 1096}
+featuresKnob "
+version 1
+entries 0
+entries 0
+"
+enableBeamSplitter true
+distortionModelType "Radial-Tangential/R-T Uncoupled"
+distortionOrder {2 0}
+normalisationType Diagonal
+distortInFisheyeSpace false
+distortionModelDisplayX "xu = xd * (1 + k0 * rd^2 + k1 * rd^4) + (rd^2 + 2 * xd^2) * (k2 + k3 * rd^2) + (2 * xd * yd) * (k4 + k5 * rd^2)"
+distortionModelDisplayY "yu = yd * (1 + k0 * rd^2 + k1 * rd^4) + (rd^2 + 2 * yd^2) * (k4 + k5 * rd^2) + (2 * xd * yd) * (k2 + k3 * rd^2)"
+name LensDistortion1
+label Olay_SR_S030
+selected true
+xpos 453
+ypos -17866
+}
+Reformat {
+type scale
+scale 1.05
+resize none
+name Reformat18
+selected true
+xpos 453
+ypos -17797
+}
+Group {
+name AutoCrop4
+tile_color 0xa34795ff
+selected true
+xpos 453
+ypos -17773
+addUserKnob {20 User}
+addUserKnob {41 preset T Crop8.preset}
+addUserKnob {41 reset l Reset -STARTLINE T Crop8.reset}
+addUserKnob {14 keepbbox l "add BBox" R 0 100}
+addUserKnob {41 softness T Crop8.softness}
+addUserKnob {41 reformat T Crop8.reformat}
+addUserKnob {41 intersect -STARTLINE T Crop8.intersect}
+addUserKnob {41 crop l "black outside" -STARTLINE T Crop8.crop}
+}
+Input {
+inputs 0
+name Input1
+xpos -884
+ypos -589
+}
+Crop {
+box {{-parent.keepbbox.w} {-parent.keepbbox.h} {width+parent.keepbbox.w} {height+parent.keepbbox.h}}
+name Crop8
+xpos -884
+ypos -549
+}
+Output {
+name Output1
+xpos -884
+ypos -449
+}
+end_group
+EdgeExtend {
+sourceIsPremultiplied true
+detailAmount 0
+premultiply false
+name EdgeExtend1
+selected true
+xpos 453
+ypos -17731
+}
+Write {
+file E:/_VFX/21452892HAM_Proof3.0/05_Work/06_Shots/SR/S030/02_Render/05_MainComp/pre/proj-plate/v013/exr-preview/OLAY_SR_S030_MainComp_prerender_proj-plate_preview_v013.####.exr
+file_type exr
+compression DWAA
+dw_compression_level 75
+first_part rgba
+create_directories true
+name Write8
+selected true
+xpos 453
+ypos -17676
+addUserKnob {20 Luke}
+addUserKnob {6 pre l "Pre Render" -STARTLINE}
+pre true
+addUserKnob {1 preLabel l "Pre Render Label"}
+preLabel proj-plate
+addUserKnob {1 versionOverride l "Render Version Override"}
+addUserKnob {22 applyNaming l Apply T L_callbacks.updateWriteName(nuke.thisNode()) +STARTLINE}
+addUserKnob {6 override_all l "Disable write node naming callback" +STARTLINE}
+}

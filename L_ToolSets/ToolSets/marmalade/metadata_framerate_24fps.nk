@@ -1,0 +1,13 @@
+set cut_paste_input [stack 0]
+version 13.1 v2
+push $cut_paste_input
+ModifyMetaData {
+ metadata {
+  {set input/frame_rate 24}
+ }
+ name ModifyMetaData1
+ label "Framerate to 24"
+ selected true
+ xpos -480
+ ypos 5940
+}
