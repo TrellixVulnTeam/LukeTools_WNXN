@@ -102,6 +102,8 @@ lukeGizmosMenu.addCommand('Luke/sb_convertCornerPin', "sb_convertCornerPin.sb_co
 
 lukeGizmosMenu.addCommand('Luke/convertGizmosToGroups', "convertGizmosToGroups.convertGizmosToGroups()")
 
+nuke.pluginAddPath('./ParticlesCollection')
+
 nuke.pluginAddPath('./NukeSurvivalToolkit')
 
 nuke.pluginAddPath('./Deadline')
