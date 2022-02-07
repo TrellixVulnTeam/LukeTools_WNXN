@@ -21,7 +21,7 @@ import webbrowser
 
 #Read Particles folder path
 Particles_path = os.path.dirname(__file__)
-print ("Particles path: " + Particles_path)
+# print ("Particles path: " + Particles_path)
 
 
 toolbar = nuke.toolbar("Nodes")

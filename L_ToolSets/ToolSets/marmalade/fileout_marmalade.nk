@@ -1,103 +1,154 @@
 set cut_paste_input [stack 0]
 version 13.1 v2
 BackdropNode {
- inputs 0
- name BackdropNode4
- tile_color 0x414744ff
- label "file out"
- note_font_size 44
- selected true
- xpos -579
- ypos 3460
- bdwidth 752
- bdheight 526
+inputs 0
+name BackdropNode46
+tile_color 0x414744ff
+label "file out"
+note_font_size 44
+selected true
+xpos -3497
+ypos 1248
+bdwidth 740
+bdheight 591
 }
 push $cut_paste_input
 Dot {
- name Dot4
- selected true
- xpos -395
- ypos 3515
+name Dot17
+selected true
+xpos -3313
+ypos 1303
 }
-set Nec6ea800 [stack 0]
+set N47a9e000 [stack 0]
 Write {
- file E:/_VFX/21452892HAM_Proof3.0/05_Work/06_Shots/SR/S080/02_Render/05_MainComp/v001/exr/OLAY_SR_S080_MainComp_v001.####.exr
- colorspace "Output - Rec.709"
- file_type exr
- first_part rgba
- create_directories true
- version 1
- name Write2
- label FINAL
- selected true
- xpos -429
- ypos 3643
- addUserKnob {20 Luke}
- addUserKnob {6 pre l "Pre Render" -STARTLINE}
- addUserKnob {1 preLabel l "Pre Render Label"}
- addUserKnob {1 versionOverride l "Render Version Override"}
- addUserKnob {22 applyNaming l Apply T L_callbacks.updateWriteName(nuke.thisNode()) +STARTLINE}
- addUserKnob {6 override_all l "Disable write node naming callback" +STARTLINE}
+file E:/_VFX/21452892HAM_Proof3.0/05_Work/06_Shots/SR/S120/02_Render/05_MainComp/v006/exr/OLAY_SR_S120_MainComp_v006.####.exr
+colorspace "Output - Rec.709"
+file_type exr
+first_part rgba
+create_directories true
+version 1
+in_colorspace "ACES - ACEScg"
+out_colorspace "ACES - ACEScg"
+name Write15
+label FINAL
+selected true
+xpos -3347
+ypos 1431
+addUserKnob {20 Luke}
+addUserKnob {6 pre l "Pre Render" -STARTLINE}
+addUserKnob {1 preLabel l "Pre Render Label"}
+addUserKnob {1 versionOverride l "Render Version Override"}
+addUserKnob {22 applyNaming l Apply T L_callbacks.updateWriteName(nuke.thisNode()) +STARTLINE}
+addUserKnob {6 override_all l "Disable write node naming callback" +STARTLINE}
 }
-push $Nec6ea800
+push $N47a9e000
 Dot {
- name Dot5
- selected true
- xpos -107
- ypos 3515
+name Dot88
+selected true
+xpos -3025
+ypos 1303
+}
+set N47a9d400 [stack 0]
+Write {
+file E:/_VFX/21452892HAM_Proof3.0/05_Work/06_Shots/SR/S120/02_Render/05_MainComp/v006/exr-preview/OLAY_SR_S120_MainComp_preview_v006.####.exr
+colorspace "Output - Rec.709"
+file_type exr
+compression DWAA
+dw_compression_level 100
+first_part rgba
+create_directories true
+version 1
+in_colorspace "ACES - ACEScg"
+out_colorspace "ACES - ACEScg"
+name Write16
+label PREVIEW
+selected true
+xpos -3059
+ypos 1434
+addUserKnob {20 Luke}
+addUserKnob {6 pre l "Pre Render" -STARTLINE}
+addUserKnob {1 preLabel l "Pre Render Label"}
+addUserKnob {1 versionOverride l "Render Version Override"}
+addUserKnob {22 applyNaming l Apply T L_callbacks.updateWriteName(nuke.thisNode()) +STARTLINE}
+addUserKnob {6 override_all l "Disable write node naming callback" +STARTLINE}
+}
+push $N47a9d400
+Write {
+file E:/_VFX/21452892HAM_Proof3.0/05_Work/06_Shots/SR/S120/02_Render/05_MainComp/vCurrent/exr-preview/OLAY_SR_S120_MainComp_preview_vCurrent.####.exr
+colorspace "Output - Rec.709"
+file_type exr
+compression DWAA
+dw_compression_level 100
+first_part rgba
+create_directories true
+version 1
+name Write19
+label PREVIEW
+selected true
+xpos -3059
+ypos 1497
+addUserKnob {20 Luke}
+addUserKnob {6 pre l "Pre Render" -STARTLINE}
+addUserKnob {1 preLabel l "Pre Render Label"}
+addUserKnob {1 versionOverride l "Render Version Override"}
+versionOverride Current
+addUserKnob {22 applyNaming l Apply T L_callbacks.updateWriteName(nuke.thisNode()) +STARTLINE}
+addUserKnob {6 override_all l "Disable write node naming callback" +STARTLINE}
+}
+push $N47a9e000
+Write {
+file E:/_VFX/21452892HAM_Proof3.0/05_Work/06_Shots/SR/S120/02_Render/05_MainComp/vCurrent/exr/OLAY_SR_S120_MainComp_vCurrent.####.exr
+colorspace "Output - Rec.709"
+file_type exr
+first_part rgba
+create_directories true
+version 1
+name Write18
+label FINAL
+selected true
+xpos -3347
+ypos 1496
+addUserKnob {20 Luke}
+addUserKnob {6 pre l "Pre Render" -STARTLINE}
+addUserKnob {1 preLabel l "Pre Render Label"}
+addUserKnob {1 versionOverride l "Render Version Override"}
+versionOverride Current
+addUserKnob {22 applyNaming l Apply T L_callbacks.updateWriteName(nuke.thisNode()) +STARTLINE}
+addUserKnob {6 override_all l "Disable write node naming callback" +STARTLINE}
 }
 Write {
- file E:/_VFX/21452892HAM_Proof3.0/05_Work/06_Shots/SR/S080/02_Render/05_MainComp/v001/exr-preview/OLAY_SR_S080_MainComp_preview_v001.####.exr
- colorspace "Output - Rec.709"
- file_type exr
- compression DWAA
- dw_compression_level 100
- first_part rgba
- create_directories true
- version 1
- name Write3
- label PREVIEW
- selected true
- xpos -141
- ypos 3646
- addUserKnob {20 Luke}
- addUserKnob {6 pre l "Pre Render" -STARTLINE}
- addUserKnob {1 preLabel l "Pre Render Label"}
- addUserKnob {1 versionOverride l "Render Version Override"}
- addUserKnob {22 applyNaming l Apply T L_callbacks.updateWriteName(nuke.thisNode()) +STARTLINE}
- addUserKnob {6 override_all l "Disable write node naming callback" +STARTLINE}
-}
-Write {
- inputs 0
- file E:/_VFX/21452892HAM_Proof3.0/05_Work/06_Shots/SR/S080/02_Render/05_MainComp/v001/mov/OLAY_SR_S080_MainComp_h264_v001.mov
- colorspace "Output - Rec.709"
- raw true
- file_type mov
- mov64_format "mov (QuickTime / MOV)"
- mov64_codec h264
- mov_h264_codec_profile "High 4:2:0 8-bit"
- mov64_pixel_format {{0}}
- mov64_quality Custom
- mov64_fast_start true
- mov64_write_timecode true
- mov64_gop_size 12
- mov64_b_frames 0
- mov64_bitrate 18000
- mov64_bitrate_tolerance 0
- mov64_quality_min 3
- mov64_quality_max 7
- create_directories true
- checkHashOnRead false
- version 1
- name Write4
- label PREVIEW
- selected true
- xpos -138
- ypos 3851
- addUserKnob {20 Luke}
- addUserKnob {6 pre l "Pre Render" -STARTLINE}
- addUserKnob {1 preLabel l "Pre Render Label"}
- addUserKnob {1 versionOverride l "Render Version Override"}
- addUserKnob {22 applyNaming l Apply T L_callbacks.updateWriteName(nuke.thisNode()) +STARTLINE}
- addUserKnob {6 override_all l "Disable write node naming callback" +STARTLINE}
+inputs 0
+file E:/_VFX/21452892HAM_Proof3.0/05_Work/06_Shots/SR/S120/02_Render/05_MainComp/v006/mov/OLAY_SR_S120_MainComp_h264_v006.mov
+colorspace "Output - Rec.709"
+raw true
+file_type mov
+mov64_format "mov (QuickTime / MOV)"
+mov64_codec h264
+mov_h264_codec_profile "High 4:2:0 8-bit"
+mov64_pixel_format {{0} "yuv420p\tYCbCr 4:2:0 8-bit"}
+mov64_quality Custom
+mov64_fast_start true
+mov64_write_timecode true
+mov64_gop_size 12
+mov64_b_frames 0
+mov64_bitrate 18000
+mov64_bitrate_tolerance 0
+mov64_quality_min 3
+mov64_quality_max 7
+create_directories true
+checkHashOnRead false
+version 1
+in_colorspace "ACES - ACEScg"
+out_colorspace "ACES - ACEScg"
+name Write17
+label PREVIEW
+selected true
+xpos -3058
+ypos 1678
+addUserKnob {20 Luke}
+addUserKnob {6 pre l "Pre Render" -STARTLINE}
+addUserKnob {1 preLabel l "Pre Render Label"}
+addUserKnob {1 versionOverride l "Render Version Override"}
+addUserKnob {22 applyNaming l Apply T L_callbacks.updateWriteName(nuke.thisNode()) +STARTLINE}
+addUserKnob {6 override_all l "Disable write node naming callback" +STARTLINE}
 }

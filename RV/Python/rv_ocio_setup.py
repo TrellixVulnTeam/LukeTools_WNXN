@@ -20,8 +20,7 @@ def ocio_node_from_media(config, node, default, media=None, attributes={}):
 
         display = config.getDefaultDisplay()
 
-        viewspace = os.environ.get("DISPLAY", config.getDefaultView(display))
-
+        viewspace = os.environ.get("DISPLAY", "Rec.709")
 
         result = [
             {
@@ -46,12 +45,12 @@ def ocio_node_from_media(config, node, default, media=None, attributes={}):
 
         if inspace == "":
             if "exr" in media:
-                inspace = "acescg"
+                inspace = "Output - Rec.709"
             if "jpg" in media or "jpeg" in media:
                 inspace = "out_srgb"
 
         if inspace == "":
-             inspace = config.getColorSpace(OCIO.Constants.ROLE_SCENE_LINEAR).getName()
+             inspace = config.getColorSpace(OCIO.Constants.ROLE_SCENE_LINEAR).getName()        
 
         if inspace != "":
             result = [

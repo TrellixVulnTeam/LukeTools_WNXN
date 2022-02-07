@@ -41,13 +41,18 @@ def updateWriteName(n=""):
 
         # check Marmalade knob
         # !!! OLAY ONLY FOR NOW - BEWARE !!!
-        if pn.knob('pMarmalade').getValue():
+
+        marmaladeScript = False
+
+        if 'pMarmalade' in pn.knobs():
+            marmaladeScript = pn.knob('pMarmalade').getValue()
+
+        if marmaladeScript:
             pwrite += '/02_Render/05_MainComp/'
             pwritename = 'OLAY_' + pwritename
         else:
             pwrite += '/out/'
             pwrite += pn.knob('ptask').getValue() + '/'
-
 
         pwritename += pn.knob('ptask').getValue() + '_'
 
@@ -63,9 +68,11 @@ def updateWriteName(n=""):
 
         versionnumber = '001'
 
-        if n.knob("versionOverride").getValue():
-            versionnumber = re.sub(r'[\D]', '', n.knob("versionOverride").getValue())
-            n.knob("versionOverride").setValue(versionnumber)
+        versionOverride = n.knob("versionOverride").getValue()
+
+        if versionOverride:
+            versionnumber = versionOverride
+            # n.knob("versionOverride").setValue(versionnumber)
 
         elif nuke.root().name():
             versionnumber = re.search("v\d+", os.path.basename(nuke.root().name())).group()[1:]
