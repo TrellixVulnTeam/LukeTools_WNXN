@@ -5,8 +5,8 @@ import DeadlineGlobals
 def L_sanityChecks():
     DeadlineGlobals.initMemoryUsage = 25000
     DeadlineGlobals.initBatchMode = True
-    DeadlineGlobals.initUseNukeX = False
-    DeadlineGlobals.initReloadPlugin = True
+    DeadlineGlobals.initUseNukeX = True
+    DeadlineGlobals.initReloadPlugin = False
     DeadlineGlobals.initSelectedOnly = False
 
     DeadlineGlobals.initConcurrentTasks = 2
