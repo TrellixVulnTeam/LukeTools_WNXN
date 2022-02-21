@@ -34,7 +34,7 @@ def createExrCamRS( node ):
         return
     fRange = nuke.FrameRange( ret[0] )
     
-    cam = nuke.createNode( 'Camera2' )
+    cam = nuke.createNode( 'Camera3' )
     cam['useMatrix'].setValue( False )
     
     for k in ( 'focal', 'haperture', 'vaperture', 'translate', 'rotate', 'focal_point'):
@@ -71,7 +71,7 @@ def createExrCamRS( node ):
         for k,v in enumerate( matrixCamera ):
             matrixCreated[k] = v
         
-        # matrixCreated.rotateX( math.radians(-90) ) # this is needed for VRay, it's a counter clockwise rotation
+        matrixCreated.rotateY( math.radians(-180) ) # this is needed for VRay, it's a counter clockwise rotation
         translate = matrixCreated.transform( nuke.math.Vector3(0,0,0) )  # get a vector that represents the camera translation   
         rotate = matrixCreated.rotationsZXY() # give us xyz rotations from cam matrix (must be converted to degrees)
     

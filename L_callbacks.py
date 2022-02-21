@@ -11,6 +11,9 @@ def updateAllWriteNames():
 
 
 def updateWriteNameCallback(n=""):
+
+    
+
     if not n:
         n = nuke.thisNode()
 
@@ -18,7 +21,7 @@ def updateWriteNameCallback(n=""):
     if nuke.thisKnob():
         kname = nuke.thisKnob().name()
 
-    if kname in ['selected', 'pre', 'preLabel', 'versionOverride']:
+    if kname in ['disable', 'pre', 'preLabel', 'versionOverride', 'file_type', 'colorspace', 'mov64_codec', 'compression']:
         if nuke.toNode("L_PROJECT"):
             updateWriteName(n)
 
@@ -37,7 +40,14 @@ def updateWriteName(n=""):
         pn = nuke.toNode("L_PROJECT")
 
         pwrite = pn.knob('proot').getValue() + pn.knob('pproject').getValue() + '/' + pn.knob('pshot').getValue()
-        pwritename = pn.knob('pproject').getValue() + '_' + pn.knob('pshot').getValue() + '_'
+
+        pwritename = ''
+
+        if 'pCustomPrefix' in pn.knobs():
+            if pn.knob('pCustomPrefix').getValue():
+                pwritename += pn.knob('pCustomPrefix').getValue() + '_'
+
+        pwritename += pn.knob('pproject').getValue() + '_' + pn.knob('pshot').getValue() + '_'
 
         # check Marmalade knob
         # !!! OLAY ONLY FOR NOW - BEWARE !!!
@@ -47,9 +57,11 @@ def updateWriteName(n=""):
         if 'pMarmalade' in pn.knobs():
             marmaladeScript = pn.knob('pMarmalade').getValue()
 
+
+
         if marmaladeScript:
             pwrite += '/02_Render/05_MainComp/'
-            pwritename = 'OLAY_' + pwritename
+
         else:
             pwrite += '/out/'
             pwrite += pn.knob('ptask').getValue() + '/'
@@ -72,7 +84,6 @@ def updateWriteName(n=""):
 
         if versionOverride:
             versionnumber = versionOverride
-            # n.knob("versionOverride").setValue(versionnumber)
 
         elif nuke.root().name():
             versionnumber = re.search("v\d+", os.path.basename(nuke.root().name())).group()[1:]
@@ -97,16 +108,28 @@ def updateWriteName(n=""):
             pwritename += 'v' + versionnumber
             pwritename += '.####'
 
+        if 'pCustomPostfix' in pn.knobs():
+            if pn.knob('pCustomPostfix').getValue():
+                pwritename += '_' + pn.knob('pCustomPostfix').getValue()
+
         pwritename += '.'
 
-        pwrite += n.knob('file_type').value()
+        if n['file_type'].value() == 'mov' and n.knob("mov64_codec").value() == "h264":
+            pwrite += "mp4"
+
+        else:
+            pwrite += n.knob('file_type').value()   
 
         if n.knob('file_type').value() == 'exr':
             if n.knob('compression').value() in ['DWAA', 'DWAB']:
                 pwrite += '-preview'
 
         pwrite += '/'
-        pwritename += n.knob('file_type').value()
+
+        if n['file_type'].value() == 'mov' and n.knob("mov64_codec").value() == "h264":
+            pwritename += "mp4"
+        else:
+            pwritename += n.knob('file_type').value()
 
         n.knob('file').setValue(pwrite + pwritename)
 
@@ -145,3 +168,6 @@ def writeNodeFields():
         k = nuke.Boolean_Knob("override_all", "Disable write node naming callback")
         k.setFlag(nuke.STARTLINE)
         n.addKnob(k)
+
+        updateWriteName(n)
+

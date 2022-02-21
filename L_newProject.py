@@ -9,6 +9,8 @@ def L_newProject():
     pproject = 'L'
     pshot = 'sh0100'
     ptask = 'comp'
+    pCustomPrefix = ''
+    pCustomPostfix = ''
     exists = False
 
     for n in nuke.allNodes():
@@ -18,6 +20,11 @@ def L_newProject():
             pproject = n['pproject'].value()
             pshot = n['pshot'].value()
             ptask = n['ptask'].value()
+            if 'pCustomPrefix' in n.knobs():
+                pCustomPrefix = n['pCustomPrefix'].value()
+
+            if 'pCustomPostfix' in n.knobs():
+                pCustomPostfix = n['pCustomPostfix'].value()
             exists = True
             break
 
@@ -29,6 +36,8 @@ def L_newProject():
     p.addSingleLineInput('Project', pproject)
     p.addSingleLineInput('Shot', pshot)
     p.addSingleLineInput('Task', ptask)
+    p.addSingleLineInput('Custom Prefix', pCustomPrefix)
+    p.addSingleLineInput('Custom Postfix', pCustomPostfix)
     p.addBooleanCheckBox('save new script?', False)
 
     p.setWidth(300)
@@ -46,6 +55,8 @@ def L_newProject():
         pproject = p.value('Project')
         pshot = p.value('Shot')
         ptask = p.value('Task')
+        pCustomPrefix = p.value('Custom Prefix')
+        pCustomPostfix = p.value('Custom Postfix')
 
         psave = p.value('save new script?')
 
@@ -66,7 +77,7 @@ def L_newProject():
         pfolder = proot + pproject+'/'+pshot+'/'
 
         pscripts = pfolder+'scripts/'
-        pscriptname = pscripts + pproject + '_' + pshot + '_' + ptask + '_v001.nk'
+        pscriptname = pscripts + pCustomPrefix + '_' + pproject + '_' + pshot + '_' + ptask + '_v001.nk'
 
         if not os.path.isdir(pscripts) and psave:
             os.makedirs(pscripts)
@@ -76,6 +87,22 @@ def L_newProject():
             n['pproject'].setValue(pproject)
             n['pshot'].setValue(pshot)
             n['ptask'].setValue(ptask)
+
+            if 'pCustomPrefix' in n.knobs():
+                n['pCustomPrefix'].setValue(pCustomPrefix)
+                
+            else:
+                k = nuke.String_Knob("pCustomPrefix","Custom Prefix")
+                k.setValue(pCustomPrefix)
+                pnode.addKnob(k)
+
+            if 'pCustomPostfix' in n.knobs():
+                n['pCustomPostfix'].setValue(pCustomPostfix)
+                
+            else:
+                k = nuke.String_Knob("pCustomPostfix","Custom Postfix")
+                k.setValue(pCustomPostfix)
+                pnode.addKnob(k)
             
         else:
             write = nuke.createNode('Write', inpanel = False)
@@ -97,6 +124,14 @@ def L_newProject():
 
             k = nuke.String_Knob("ptask","Task")
             k.setValue(ptask)
+            pnode.addKnob(k)
+
+            k = nuke.String_Knob("pCustomPrefix","Custom Prefix")
+            k.setValue(pCustomPrefix)
+            pnode.addKnob(k)
+
+            k = nuke.String_Knob("pCustomPostfix","Custom Postfix")
+            k.setValue(pCustomPostfix)
             pnode.addKnob(k)
 
             k = nuke.Boolean_Knob("pMarmalade","Marmalade Mode")

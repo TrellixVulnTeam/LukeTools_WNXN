@@ -36,7 +36,7 @@ def createExrCamVray( node ):
         return
     fRange = nuke.FrameRange( ret[0] )
     
-    cam = nuke.createNode( 'Camera2' )
+    cam = nuke.createNode( 'Camera3' )
     cam['useMatrix'].setValue( False )
     
     for k in ( 'focal', 'haperture', 'vaperture', 'translate', 'rotate'):
