@@ -134,7 +134,7 @@ def updateWriteName(n=""):
         n.knob('file').setValue(pwrite + pwritename)
 
     else:
-        nuke.message("No L_PROJECT found")
+        nuke.tprint("No L_PROJECT found")
 
 
 def enableOnRender():
