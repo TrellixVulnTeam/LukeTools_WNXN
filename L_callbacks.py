@@ -21,7 +21,7 @@ def updateWriteNameCallback(n=""):
     if nuke.thisKnob():
         kname = nuke.thisKnob().name()
 
-    if kname in ['disable', 'pre', 'preLabel', 'versionOverride', 'file_type', 'colorspace', 'mov64_codec', 'compression']:
+    if kname in ['disable', 'pre', 'preLabel', 'versionOverride', 'file_type', 'colorspace', 'mov64_codec', 'compression', 'mov_prores_codec_profile']:
         if nuke.toNode("L_PROJECT"):
             updateWriteName(n)
 
@@ -49,9 +49,6 @@ def updateWriteName(n=""):
 
         pwritename += pn.knob('pproject').getValue() + '_' + pn.knob('pshot').getValue() + '_'
 
-        # check Marmalade knob
-        # !!! OLAY ONLY FOR NOW - BEWARE !!!
-
         marmaladeScript = False
 
         if 'pMarmalade' in pn.knobs():
@@ -60,7 +57,7 @@ def updateWriteName(n=""):
 
 
         if marmaladeScript:
-            pwrite += '/02_Render/05_MainComp/'
+            pwrite += '/02_Render/'
 
         else:
             pwrite += '/out/'
@@ -69,8 +66,16 @@ def updateWriteName(n=""):
         pwritename += pn.knob('ptask').getValue() + '_'
 
         if n.knob("pre").getValue():
-            pwrite += 'pre/'
+            if marmaladeScript:
+                pwrite += '04_PreComp/'
+            else:
+                pwrite += 'pre/'
             pwritename += 'prerender_'
+        
+        else:
+            if marmaladeScript:
+                pwrite += '05_MainComp/'
+                
 
         if n.knob("preLabel").getValue():
             prelabel = re.sub(r'[\s]', '', n.knob("preLabel").getValue())

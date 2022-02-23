@@ -8,7 +8,8 @@ def L_sanityChecks():
     DeadlineGlobals.initUseNukeX = True
     DeadlineGlobals.initReloadPlugin = False
     DeadlineGlobals.initSelectedOnly = False
-
+    DeadlineGlobals.initSubmitScene = True
+    DeadlineGlobals.initUseGpu = True
     DeadlineGlobals.initConcurrentTasks = 2
 
     writenames = []

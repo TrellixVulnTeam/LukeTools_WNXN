@@ -17,14 +17,14 @@
 
 import os
 import nuke
-import nukescripts
+# import nukescripts
 
 
 def fileHandler(dropped_data):
 
     for singlenode in nuke.allNodes():
         singlenode.setSelected(False)
-
+        
     file_path = dropped_data
     file_range = ''
 
