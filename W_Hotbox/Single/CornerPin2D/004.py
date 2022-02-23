@@ -56,15 +56,15 @@ if (ret):
     
     frame_range = nuke.FrameRange( frames )
     
-    for n in nuke.selectedNodes():
+    selection = nuke.selectedNodes()
     
+    for n in selection:
         n["selected"].setValue(False)
+    
+    for n in selection:
              
         c = nuke.createNode("Roto")
-        c.setInput(0,None)
-        c.setInput(1,None)
-        c.setInput(2,None)
-        
+                
         curve = c['curves']
         root = curve.rootLayer
         transform = root.getTransform()
@@ -84,4 +84,5 @@ if (ret):
         ypos = n['ypos'].value()
                     
         c.setXYpos(int(xpos), int(ypos) + 70)
+        c["selected"].setValue(0)
     

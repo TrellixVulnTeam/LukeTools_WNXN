@@ -1,0 +1,246 @@
+set cut_paste_input [stack 0]
+version 13.1 v2
+push $cut_paste_input
+Group {
+ name ChromaticTransform
+ selected true
+ xpos 8208
+ ypos 2642
+ addUserKnob {20 User}
+ addUserKnob {26 info l "" +STARTLINE T "C H R O M A T I C  T R A N S F O R M v1.0 \nby Mads Hagbarth Damsbo 2017\n\nChromatic Transform is a node that creates a wavelength based chromatic smear \nusing eighter a transform or a input vector map.\nYou can also input a luminance map and use the \"Generate Normals\" checkbox.\n\n\n"}
+ addUserKnob {26 deviderGeneral l "<b><font color=#70EE70>GENERAL</font><b>"}
+ addUserKnob {41 divisions l Samples T TimeBlur6.divisions}
+ addUserKnob {4 Mode M {Transform "Vector (Using vector map)"}}
+ addUserKnob {26 DeviderVector l "<b><font color=#70EE70>VECTOR</font><b>"}
+ addUserKnob {7 VectorMultiply l "Vector Multiply" R 0 100}
+ VectorMultiply 48
+ addUserKnob {6 SobelNormal l "Generate Normals (Sobel)" -STARTLINE}
+ addUserKnob {26 DeviderTransform l "<b><font color=#70EE70>TRANSFORM</font><b>"}
+ addUserKnob {41 translate T TransformFrom.translate}
+ addUserKnob {41 rotate T TransformFrom.rotate}
+ addUserKnob {41 scale T TransformFrom.scale}
+ addUserKnob {41 skewX l "skew X" T TransformFrom.skewX}
+ addUserKnob {41 skewY l "skew Y" T TransformFrom.skewY}
+ addUserKnob {41 center T TransformFrom.center}
+ addUserKnob {26 ""}
+ addUserKnob {41 translate_1 l translate T TransformTo.translate}
+ addUserKnob {41 rotate_1 l rotate T TransformTo.rotate}
+ addUserKnob {41 scale_1 l scale T TransformTo.scale}
+ addUserKnob {41 skewX_1 l "skew X" T TransformTo.skewX}
+ addUserKnob {41 skewY_1 l "skew Y" T TransformTo.skewY}
+ addUserKnob {41 center_1 l center T TransformTo.center}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x8e388e00
+  label Transform
+  note_font_size 42
+  xpos 146
+  ypos -414
+  bdwidth 265
+  bdheight 161
+ }
+ Crop {
+  inputs 0
+  box {0 0 2 1}
+  reformat true
+  crop false
+  name Crop6
+  xpos 340
+  ypos -68
+ }
+ Expression {
+  expr0 1
+  expr1 1
+  expr2 1
+  name Expression11
+  xpos 340
+  ypos -44
+ }
+ BlinkScript {
+  recompileCount 27
+  ProgramGroup 1
+  KernelDescription "2 \"WavelengthKernel\" iterate pixelWise b7a56c9b75cb36b8d8dab924acc10f8370a4f0dae201f8eae370c2dba27fd46d 2 \"src\" Read Point \"dst\" Write Point 1 \"frequency\" Float 1 AADIQw== 1 \"frequency\" 1 1 0"
+  kernelSource "kernel WavelengthKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessPoint, eEdgeClamped> src;\n  Image<eWrite> dst;\n\n  param:\n    float frequency; \n\n  void define() \{\n    defineParam(frequency, \"frequency\", 400.0f);\n  \}\n\n  void init() \{\n\n  \}\n\nvoid spectral_color(double &r,double &g,double &b,double l)\n    \{\n    double t;  r=0.0; g=0.0; b=0.0;\n         if ((l>=400.0)&&(l<410.0)) \{ t=(l-400.0)/(410.0-400.0); r=    +(0.33*t)-(0.20*t*t); \}\n    else if ((l>=410.0)&&(l<475.0)) \{ t=(l-410.0)/(475.0-410.0); r=0.14         -(0.13*t*t); \}\n    else if ((l>=545.0)&&(l<595.0)) \{ t=(l-545.0)/(595.0-545.0); r=    +(1.98*t)-(     t*t); \}\n    else if ((l>=595.0)&&(l<650.0)) \{ t=(l-595.0)/(650.0-595.0); r=0.98+(0.06*t)-(0.40*t*t); \}\n    else if ((l>=650.0)&&(l<700.0)) \{ t=(l-650.0)/(700.0-650.0); r=0.65-(0.84*t)+(0.20*t*t); \}\n         if ((l>=415.0)&&(l<475.0)) \{ t=(l-415.0)/(475.0-415.0); g=             +(0.80*t*t); \}\n    else if ((l>=475.0)&&(l<590.0)) \{ t=(l-475.0)/(590.0-475.0); g=0.8 +(0.76*t)-(0.80*t*t); \}\n    else if ((l>=585.0)&&(l<639.0)) \{ t=(l-585.0)/(639.0-585.0); g=0.84-(0.84*t)           ; \}\n         if ((l>=400.0)&&(l<475.0)) \{ t=(l-400.0)/(475.0-400.0); b=    +(2.20*t)-(1.50*t*t); \}\n    else if ((l>=475.0)&&(l<560.0)) \{ t=(l-475.0)/(560.0-475.0); b=0.7 -(     t)+(0.30*t*t); \}\n    \}\n\n  void process() \{\n    double red, green, blue;\n\n    spectral_color(red,green,blue,frequency);\n    dst() = 1.0f*float4(red,green,blue,1);\n  \}\n\};\n"
+  rebuild ""
+  WavelengthKernel_frequency {{((1-(frame-floor(frame)))*300)+400}}
+  rebuild_finalise ""
+  name BlinkScript11
+  xpos 340
+  ypos -16
+ }
+set Nff918800 [stack 0]
+ TimeBlur {
+  divisions 20
+  shutter 1
+  shutteroffset start
+  shuttercustomoffset 1
+  name TimeBlur6
+  xpos 340
+  ypos 32
+ }
+ set Cff918400 [stack 0]
+push $Nff918800
+ Input {
+  inputs 0
+  name InputVector
+  xpos -186
+  ypos -618
+  number 1
+ }
+set Nd6733c00 [stack 0]
+ Matrix {
+  channels {rgba.red -rgba.green -rgba.blue none}
+  matrix {
+      {1 0 -1}
+      {2 0 -2}
+      {1 0 -1}
+    }
+  name Matrix1
+  xpos -301
+  ypos -589
+ }
+ Matrix {
+  channels {-rgba.red rgba.green -rgba.blue none}
+  matrix {
+      {-1 -2 -1}
+      {0 0 0}
+      {1 2 1}
+    }
+  name Matrix2
+  xpos -301
+  ypos -553
+ }
+ Grade {
+  white 18
+  black_clamp false
+  name Grade1
+  xpos -301
+  ypos -529
+ }
+push $Nd6733c00
+ Switch {
+  inputs 2
+  which {{parent.SobelNormal}}
+  name Switch2
+  xpos -186
+  ypos -529
+ }
+ Input {
+  inputs 0
+  name InputSrc
+  xpos 163
+  ypos -579
+ }
+ NoTimeBlur {
+  name NoTimeBlur1
+  selected true
+  xpos 163
+  ypos -555
+ }
+ Dot {
+  name Dot2
+  xpos 197
+  ypos -505
+ }
+set Nd6732000 [stack 0]
+ Dot {
+  name Dot3
+  xpos 30
+  ypos -505
+ }
+add_layer {distort distort.red distort.green distort.blue distort.alpha}
+ ShuffleCopy {
+  inputs 2
+  alpha alpha2
+  black red
+  white green
+  red2 blue
+  green2 alpha
+  out2 distort
+  name ShuffleCopy1
+  label "\[python nuke.thisNode().knob('in').value()] >> \[python nuke.thisNode().knob('out').value()]"
+  xpos -186
+  ypos -414
+ }
+ IDistort {
+  uv distort
+  uv_scale {{(frame-floor(frame))*parent.VectorMultiply}}
+  name IDistort1
+  xpos -186
+  ypos -291
+ }
+ Dot {
+  name Dot1
+  xpos -152
+  ypos -193
+ }
+push $Nd6732000
+ Transform {
+  translate {{(TransformFrom.translate*(1-(frame-floor(frame))))+(TransformTo.translate*(frame-floor(frame)))} {(TransformFrom.translate*(1-(frame-floor(frame))))+(TransformTo.translate*(frame-floor(frame)))}}
+  rotate {{(TransformFrom.rotate*(1-(frame-floor(frame))))+(TransformTo.rotate*(frame-floor(frame)))}}
+  scale {{(TransformFrom.scale*(1-(frame-floor(frame))))+(TransformTo.scale*(frame-floor(frame)))}}
+  skewX {{(TransformFrom.skewX*(1-(frame-floor(frame))))+(TransformTo.skewX*(frame-floor(frame)))}}
+  skewY {{(TransformFrom.skewY*(1-(frame-floor(frame))))+(TransformTo.skewY*(frame-floor(frame)))}}
+  center {{(TransformFrom.center*(1-(frame-floor(frame))))+(TransformTo.center*(frame-floor(frame)))} {(TransformFrom.center*(1-(frame-floor(frame))))+(TransformTo.center*(frame-floor(frame)))}}
+  shutteroffset centred
+  name Transform5
+  xpos 163
+  ypos -324
+ }
+ Switch {
+  inputs 2
+  which {{parent.Mode}}
+  name Switch1
+  xpos 163
+  ypos -188
+ }
+ MergeExpression {
+  inputs 2
+  expr0 B.r*A.r(0,0)
+  expr1 B.g*A.g(0,0)
+  expr2 B.b*A.b(0,0)
+  name MergeExpression1
+  xpos 163
+  ypos -12
+ }
+clone $Cff918400 {
+  xpos 163
+  ypos 34
+  selected false
+ }
+ MergeExpression {
+  inputs 2
+  expr0 B.r/A.r(0,0)
+  expr1 B.g/A.g(0,0)
+  expr2 B.b/A.b(0,0)
+  name MergeExpression2
+  xpos 163
+  ypos 87
+ }
+ Output {
+  name Output1
+  xpos 163
+  ypos 187
+ }
+ Transform {
+  inputs 0
+  scale 1.14
+  center {{input.width/2 x1 0 x8 0} {input.height/2 x1 0 x8 0}}
+  shutteroffset centred
+  name TransformTo
+  xpos 318
+  ypos -351
+  disable true
+ }
+ Transform {
+  inputs 0
+  center {{input.width/2 x8 0} {input.height/2 x8 0}}
+  shutteroffset centred
+  name TransformFrom
+  xpos 328
+  ypos -298
+  disable true
+ }
+end_group

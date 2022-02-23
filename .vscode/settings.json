@@ -1,14 +1,17 @@
 {
-    "python.pythonPath": "C:\\Python27\\python.exe",
     "python.formatting.autopep8Args": [
         "--max-line-length",
         "150"
     ],
     "python.autoComplete.extraPaths": [
-        "C:/Program Files/Nuke12.0v3/pythonextensions"
+        "C:/Program Files/Nuke13.1v2/pythonextensions",
+        "C:/Program Files/Nuke13.1v2/Lib/site-packages",
+        "C:/Program Files/Nuke13.1v2/plugins"
     ],
     "editor.formatOnSave": false,
     "python.analysis.extraPaths": [
-        "C:/Program Files/Nuke12.0v3/pythonextensions"
+        "C:/Program Files/Nuke13.1v2/pythonextensions",
+        "C:/Program Files/Nuke13.1v2/Lib/site-packages",
+        "C:/Program Files/Nuke13.1v2/plugins"
     ]
 }

@@ -1,0 +1,138 @@
+set cut_paste_input [stack 0]
+version 13.1 v2
+BackdropNode {
+ inputs 0
+ name BackdropNode25
+ tile_color 0x274732ff
+ label backplate-preview
+ note_font_size 44
+ selected true
+ xpos 81
+ ypos 15915
+ bdwidth 397
+ bdheight 480
+}
+push $cut_paste_input
+Group {
+ name AutoCrop5
+ tile_color 0xa34795ff
+ selected true
+ xpos 231
+ ypos 16065
+ addUserKnob {20 User}
+ addUserKnob {41 preset T Crop8.preset}
+ addUserKnob {41 reset l Reset -STARTLINE T Crop8.reset}
+ addUserKnob {14 keepbbox l "add BBox" R 0 100}
+ addUserKnob {41 softness T Crop8.softness}
+ addUserKnob {41 reformat T Crop8.reformat}
+ addUserKnob {41 intersect -STARTLINE T Crop8.intersect}
+ addUserKnob {41 crop l "black outside" -STARTLINE T Crop8.crop}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -884
+  ypos -589
+ }
+ Crop {
+  box {{-parent.keepbbox.w} {-parent.keepbbox.h} {width+parent.keepbbox.w} {height+parent.keepbbox.h}}
+  name Crop8
+  xpos -884
+  ypos -549
+ }
+ Output {
+  name Output1
+  xpos -884
+  ypos -449
+ }
+end_group
+LensDistortion2 {
+ distortionModelPreset "3DEqualizer/3DE4 Radial - Standard, Degree 4"
+ distortionNumerator0 0.0330923
+ distortionNumerator1 -0.0235975
+ output Undistort
+ filter Keys
+ outputBBox {-15 -9 1935 1089}
+ featuresKnob "
+version 1
+entries 0
+entries 0
+"
+ enableBeamSplitter true
+ distortionModelType "Radial-Tangential/R-T Uncoupled"
+ distortionOrder {2 0}
+ normalisationType Diagonal
+ distortInFisheyeSpace false
+ distortionModelDisplayX "xu = xd * (1 + k0 * rd^2 + k1 * rd^4) + (rd^2 + 2 * xd^2) * (k2 + k3 * rd^2) + (2 * xd * yd) * (k4 + k5 * rd^2)"
+ distortionModelDisplayY "yu = yd * (1 + k0 * rd^2 + k1 * rd^4) + (rd^2 + 2 * yd^2) * (k4 + k5 * rd^2) + (2 * xd * yd) * (k2 + k3 * rd^2)"
+ name LensDistortion3
+ label Olay_SR_S070
+ selected true
+ xpos 231
+ ypos 16109
+}
+Reformat {
+ type scale
+ scale 1.05
+ resize none
+ name Reformat17
+ selected true
+ xpos 231
+ ypos 16157
+}
+Group {
+ name AutoCrop6
+ tile_color 0xa34795ff
+ selected true
+ xpos 231
+ ypos 16181
+ addUserKnob {20 User}
+ addUserKnob {41 preset T Crop8.preset}
+ addUserKnob {41 reset l Reset -STARTLINE T Crop8.reset}
+ addUserKnob {14 keepbbox l "add BBox" R 0 100}
+ addUserKnob {41 softness T Crop8.softness}
+ addUserKnob {41 reformat T Crop8.reformat}
+ addUserKnob {41 intersect -STARTLINE T Crop8.intersect}
+ addUserKnob {41 crop l "black outside" -STARTLINE T Crop8.crop}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -884
+  ypos -589
+ }
+ Crop {
+  box {{-parent.keepbbox.w} {-parent.keepbbox.h} {width+parent.keepbbox.w} {height+parent.keepbbox.h}}
+  crop false
+  name Crop8
+  xpos -884
+  ypos -549
+ }
+ Output {
+  name Output1
+  xpos -884
+  ypos -449
+ }
+end_group
+Write {
+ file E:/_VFX/21452892HAM_Proof3.0/05_Work/06_Shots/SR/S070/02_Render/05_MainComp/pre/undist-backplate-preview/v006/jpeg/OLAY_SR_S070_MainComp_prerender_undist-backplate-preview_v006.####.jpeg
+ raw true
+ file_type jpeg
+ _jpeg_quality 0.97
+ _jpeg_sub_sampling 4:4:4
+ create_directories true
+ checkHashOnRead false
+ version 2
+ name Write4
+ selected true
+ xpos 231
+ ypos 16289
+ addUserKnob {20 Luke}
+ addUserKnob {6 pre l "Pre Render" -STARTLINE}
+ pre true
+ addUserKnob {1 preLabel l "Pre Render Label"}
+ preLabel undist-backplate-preview
+ addUserKnob {1 versionOverride l "Render Version Override"}
+ addUserKnob {22 applyNaming l Apply T L_callbacks.updateWriteName(nuke.thisNode()) +STARTLINE}
+ addUserKnob {6 override_all l "Disable write node naming callback" +STARTLINE}
+}

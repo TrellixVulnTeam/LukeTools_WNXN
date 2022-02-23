@@ -17,7 +17,11 @@ def ocio_node_from_media(config, node, default, media=None, attributes={}):
     nodeType = commands.nodeType(node)
 
     if nodeType == "RVDisplayPipelineGroup":
+
         display = config.getDefaultDisplay()
+
+        viewspace = os.environ.get("DISPLAY", "Rec.709")
+
         result = [
             {
                 "nodeType": "OCIODisplay",
@@ -25,7 +29,7 @@ def ocio_node_from_media(config, node, default, media=None, attributes={}):
                 "properties": {
                     "ocio.function": "display",
                     "ocio.inColorSpace": OCIO.Constants.ROLE_SCENE_LINEAR,
-                    "ocio_display.view": config.getDefaultView(display),
+                    "ocio_display.view": viewspace,
                     "ocio_display.display": display,
                 },
             }
@@ -41,12 +45,12 @@ def ocio_node_from_media(config, node, default, media=None, attributes={}):
 
         if inspace == "":
             if "exr" in media:
-                inspace = "acescg"
+                inspace = "Output - Rec.709"
             if "jpg" in media or "jpeg" in media:
                 inspace = "out_srgb"
 
         if inspace == "":
-             inspace = config.getColorSpace(OCIO.Constants.ROLE_SCENE_LINEAR).getName()
+             inspace = config.getColorSpace(OCIO.Constants.ROLE_SCENE_LINEAR).getName()        
 
         if inspace != "":
             result = [

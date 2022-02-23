@@ -23,7 +23,7 @@ def onAutoSave(filename):
 
             fileNo = fileNo + 1
 
-    if ( fileNo > 5 ):
+    if ( fileNo > 9 ):
         fileNo = 0
 
     if ( fileNo != 0 ):

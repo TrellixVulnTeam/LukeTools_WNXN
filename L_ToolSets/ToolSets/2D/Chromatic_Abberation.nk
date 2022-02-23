@@ -1,5 +1,5 @@
 set cut_paste_input [stack 0]
-version 13.0 v4
+version 13.1 v1
 push $cut_paste_input
 Group {
  name Chromatic_Abberation
@@ -7,8 +7,8 @@ Group {
  gl_color 0xf200ffff
  note_font "Verdana Bold Italic"
  selected true
- xpos 1109
- ypos 191
+ xpos -522
+ ypos -780
  addUserKnob {20 User l "abberation options"}
  addUserKnob {26 red l Red}
  addUserKnob {41 size l "blur size red" T Blur_red.size}
@@ -48,7 +48,7 @@ Group {
   xpos -432
   ypos -198
  }
-set Nbebe6400 [stack 0]
+set Ncd6a6c00 [stack 0]
  Dot {
   name Dot10
   xpos -651
@@ -95,7 +95,7 @@ entries 0
   xpos -651
   ypos 90
  }
-push $Nbebe6400
+push $Ncd6a6c00
  Shuffle2 {
   fromInput1 {{0} B}
   fromInput2 {{0} B}
@@ -117,7 +117,7 @@ entries 0
   distortionModelDisplayY "yu = yd / (1 + k0 * rd^2 + k1 * rd^4)"
   name LensDistortion_green
   xpos -466
-  ypos -84
+  ypos -86
  }
  Transform {
   scale 1.0005
@@ -138,7 +138,7 @@ entries 0
   xpos -466
   ypos 87
  }
-push $Nbebe6400
+push $Ncd6a6c00
  Dot {
   name Dot8
   xpos -215
@@ -192,12 +192,38 @@ entries 0
   xpos -466
   ypos 144
  }
- Crop {
-  box {0 0 1920 1080}
-  name Crop1
+ Group {
+  name AutoCrop
+  tile_color 0xa34795ff
   xpos -466
-  ypos 201
+  ypos 199
+  addUserKnob {20 User}
+  addUserKnob {41 preset T Crop8.preset}
+  addUserKnob {41 reset l Reset -STARTLINE T Crop8.reset}
+  addUserKnob {14 keepbbox l "add BBox" R 0 100}
+  addUserKnob {41 softness T Crop8.softness}
+  addUserKnob {41 reformat T Crop8.reformat}
+  addUserKnob {41 intersect -STARTLINE T Crop8.intersect}
+  addUserKnob {41 crop l "black outside" -STARTLINE T Crop8.crop}
  }
+  Input {
+   inputs 0
+   name Input1
+   xpos -884
+   ypos -589
+  }
+  Crop {
+   box {{-parent.keepbbox.w} {-parent.keepbbox.h} {width+parent.keepbbox.w} {height+parent.keepbbox.h}}
+   name Crop8
+   xpos -884
+   ypos -549
+  }
+  Output {
+   name Output1
+   xpos -884
+   ypos -449
+  }
+ end_group
  Output {
   name Output1
   xpos -466

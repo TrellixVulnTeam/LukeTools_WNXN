@@ -1,3 +1,5 @@
+import convertGizmosToGroups
+import sb_convertCornerPin
 import W_hotboxManager
 import W_hotbox
 import AnimationMaker
@@ -14,8 +16,8 @@ import L_openInFileBrowser
 import L_createRead
 import nukescripts
 import nuke
-nuke.tprint('LukeTools menu.py')
 
+nuke.tprint('LukeTools menu.py')
 
 if __lukescripts_local__:
     nuke.tprint('local LukeTools menu.py')
@@ -29,11 +31,11 @@ if __lukescripts_local__:
     nuke.addOnScriptSave(L_callbacks.updateAllWriteNames)
 
     # knobDefaults local
-    nuke.knobDefault('Root.workingSpaceLUT', "acescg")
-    nuke.knobDefault('Root.int8Lut', "out_srgb")
-    nuke.knobDefault('Root.int16Lut', "out_srgb")
-    nuke.knobDefault('Root.logLut', "logc3ei800_alexawide")
-    nuke.knobDefault('Root.floatLut', "acescg")
+    # nuke.knobDefault('Root.workingSpaceLUT', "acescg")
+    # nuke.knobDefault('Root.int8Lut', "out_srgb")
+    # nuke.knobDefault('Root.int16Lut', "out_srgb")
+    # nuke.knobDefault('Root.logLut', "logc3ei800_alexawide")
+    # nuke.knobDefault('Root.floatLut', "acescg")
 
     nuke.knobDefault('Root.format', "HD_1080")
     nuke.knobDefault('Root.fps', "25")
@@ -46,14 +48,6 @@ if __lukescripts_local__:
     nuke.knobDefault('Write.write_full_layer_names', "1")
     nuke.knobDefault('Write.standard layer name format', "1")
 
-    # nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Anamorphic_Standard_Degree_4", "nuke.createNode('LD_3DE4_Anamorphic_Standard_Degree_4')")
-    # nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Anamorphic_Rescaled_Degree_4", "nuke.createNode('LD_3DE4_Anamorphic_Rescaled_Degree_4')")
-    # nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Anamorphic_Degree_6", "nuke.createNode('LD_3DE4_Anamorphic_Degree_6')")
-    # nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Radial_Standard_Degree_4", "nuke.createNode('LD_3DE4_Radial_Standard_Degree_4')")
-    # nuke.menu("Nodes").addCommand("3DE4/LD_3DE4_Radial_Fisheye_Degree_8", "nuke.createNode('LD_3DE4_Radial_Fisheye_Degree_8')")
-    # nuke.menu("Nodes").addCommand("3DE4/LD_3DE_Classic_LD_Model", "nuke.createNode('LD_3DE_Classic_LD_Model')")
-
-
 # knobDefaults
 
 nuke.knobDefault('Roto.cliptype', "0")
@@ -61,62 +55,24 @@ nuke.knobDefault('Merge.bbox', "B")
 nuke.knobDefault('ChannelMerge.bbox', "union")
 nuke.knobDefault('Copy.bbox', "B side")
 
-nuke.menu('Nuke').addCommand('Luke/create Read', "L_createRead.createReadFromWrite()", "shift+r")
+nuke.menu('Nuke').addCommand('Luke/create Read', "L_createRead.createReadFromWrite()", "shift+r", shortcutContext=2)
 
 nuke.menu('Nuke').addCommand('Luke/Open in File Browser',
                              "L_openInFileBrowser.openInFileBrowser()", "ctrl+shift+e")
 
-# import L_djvViewThis
-# nuke.menu( 'Nuke' ).addCommand( 'Luke/DJV this', "L_djvViewThis.djvViewThis(nuke.selectedNodes())", "ctrl+shift+d")
-
-
 # Menues
 lukeGizmosMenu = nuke.toolbar("Nodes").addMenu("Luke")
 
-# Gizmos
-# lukeGizmosMenu.addCommand("L_AdvancedGrain", "nuke.createNode('L_AdvancedGrain')", '')
-# lukeGizmosMenu.addCommand("L_expoglow", "nuke.createNode('L_expoglow')", '')
-# lukeGizmosMenu.addCommand("L_UnsharpMask", "nuke.createNode('L_UnsharpMask')", '')
-# lukeGizmosMenu.addCommand("L_GradMagic", "nuke.createNode('L_gradmagic')", '')
-# lukeGizmosMenu.addCommand("L_DespillMadness", "nuke.createNode('L_DespillMadness')", '')
-# lukeGizmosMenu.addCommand("L_LUE4NUKE", "nuke.createNode('L_LUE4NUKE')", '')
-# lukeGizmosMenu.addCommand("L_GradientEditor", "nuke.createNode('h_gradienteditor')", '')
-# lukeGizmosMenu.addCommand("L_Deflicker_Velocity", "nuke.createNode('L_Deflicker_Velocity')", '')
-# lukeGizmosMenu.addCommand("L_LensKernel", "nuke.createNode('L_LensKernel')", '')
-# lukeGizmosMenu.addCommand("L_OpticalZDefocus", "nuke.createNode('L_OpticalZDefocus')", '')
-# lukeGizmosMenu.addCommand("L_aPMatte", "nuke.createNode('L_aPMatte')", '')
-
-# lukeGizmosMenu.addCommand("EdgeExtend/L_KeyEdgeExtend", "nuke.createNode('L_KeyEdgeExtend')", '')
-# lukeGizmosMenu.addCommand("EdgeExtend/L_FillSampler", "nuke.createNode('L_FillSampler')", '')
-# lukeGizmosMenu.addCommand("EdgeExtend/L_Pixelspread", "nuke.createNode('L_Pixelspread')", '')
-
-# lukeGizmosMenu.addCommand("P_Matte", "nuke.createNode('P_Matte')", '')
-
-# lukeGizmosMenu.addCommand("X_Tools/L_X_Aton", "nuke.createNode('L_X_Aton')", '')
-# lukeGizmosMenu.addCommand("X_Tools/L_X_Distort", "nuke.createNode('L_X_Distort')", '')
-# lukeGizmosMenu.addCommand("X_Tools/L_X_Tesla", "nuke.createNode('L_X_Tesla')", '')
-
-# lukeGizmosMenu.addCommand('bm/L_bm_OpticalGlow', 'nuke.createNode("L_bm_OpticalGlow")', icon="bm_OpticalGlow_icon.png")
-# lukeGizmosMenu.addCommand('bm/L_bm_Lightwrap', 'nuke.createNode("L_bm_Lightwrap")', icon="bm_Lightwrap_icon.png")
-# lukeGizmosMenu.addCommand('bm/L_bm_NoiseGen', 'nuke.createNode("L_bm_NoiseGen")', icon="bm_NoiseGen_icon.png")
-# lukeGizmosMenu.addCommand('bm/L_bm_CurveRemapper', 'nuke.createNode("L_bm_CurveRemapper")', icon="bm_CurveRemapper_icon.png")
-# lukeGizmosMenu.addCommand('bm/L_bm_CameraShake', 'nuke.createNode("L_bm_CameraShake")', icon="bm_CameraShake_icon.png")
-# lukeGizmosMenu.addCommand('bm/L_bm_EdgeMatte', 'nuke.createNode("L_bm_EdgeMatte")', icon="BlackOutside.png")
-# lukeGizmosMenu.addCommand('bm/L_bm_MatteCheck', 'nuke.createNode("L_bm_MatteCheck")', icon="bm_MatteCheck_icon.png")
-
-# lukeGizmosMenu.addCommand('L_AutoFlare', 'nuke.createNode("AutoFlare2")')
-
-
-lukeGizmosMenu.addCommand("sb Backdrop", 'sb_backdrop.sb_backdrop()', 'alt+b')
+lukeGizmosMenu.addCommand("sb Backdrop", 'sb_backdrop.sb_backdrop()', 'alt+b', shortcutContext=2)
 
 nuke.menu('Nuke').findItem('Edit').addCommand('HotBox', 'channel_hotbox.start()', 'alt+v')
 
 nuke.menu('Nuke').addCommand('Luke/Make connector', "labelConnector.makeConnector()",
-                             'F9')  # also renames an existing connector
+                             'alt+shift+A', shortcutContext=2)  # also renames an existing connector
 nuke.menu('Nuke').addCommand('Luke/Connect connectors', "labelConnector.runLabelMatch()",
-                             'F8')  # standard run to match labels, connect nodes, or make new connections
+                             'A', shortcutContext=2)  # standard run to match labels, connect nodes, or make new connections
 nuke.menu('Nuke').addCommand('Luke/Force Connect connectors', "labelConnector.runLabelMatch(forceShowUi = True)",
-                             'ctrl+F8')  # force show UI to make new connection when a single Node is selected
+                             'alt+A', shortcutContext=2)  # force show UI to make new connection when a single Node is selected
 
 
 def addSRPanel():
@@ -142,4 +98,33 @@ nukescripts.drop.addDropDataCallback(L_dragDropHandler.dropHandler)
 
 nuke.menu('Nuke').addCommand('Luke/Align Dots', "AlignDots.AlignDots()", "alt+.", shortcutContext=2)
 
+lukeGizmosMenu.addCommand('Luke/sb_convertCornerPin', "sb_convertCornerPin.sb_convertCornerPin()")
+
+lukeGizmosMenu.addCommand('Luke/convertGizmosToGroups', "convertGizmosToGroups.convertGizmosToGroups()")
+
+nuke.pluginAddPath('./ParticlesCollection')
+
 nuke.pluginAddPath('./NukeSurvivalToolkit')
+
+nuke.pluginAddPath('./Deadline')
+
+menuBar = nuke.menu("Nuke")
+
+import W_smartAlign
+
+menuBar.addCommand("Edit/Node/Align/Left", 'W_smartAlign.alignNodes("left")', "shift+left", shortcutContext=2)
+menuBar.addCommand("Edit/Node/Align/Right", 'W_smartAlign.alignNodes("right")', "shift+right", shortcutContext=2)
+menuBar.addCommand("Edit/Node/Align/Up", 'W_smartAlign.alignNodes("up")', "shift+up", shortcutContext=2)
+menuBar.addCommand("Edit/Node/Align/Down", 'W_smartAlign.alignNodes("down")', "shift+down", shortcutContext=2)
+
+import L_moveNodes
+
+menuBar.addCommand("Edit/Node/Move/Left", 'L_moveNodes.moveSel_left()', "ctrl+alt+left", shortcutContext=2)
+menuBar.addCommand("Edit/Node/Move/Right", 'L_moveNodes.moveSel_right()', "ctrl+alt+right", shortcutContext=2)
+menuBar.addCommand("Edit/Node/Move/Up", 'L_moveNodes.moveSel_up()', "ctrl+alt+up", shortcutContext=2)
+menuBar.addCommand("Edit/Node/Move/Down", 'L_moveNodes.moveSel_down()', "ctrl+alt+down", shortcutContext=2)
+
+menuBar.addCommand("Edit/Node/Move/Left (large)", 'L_moveNodes.moveSel_left(large = True)', "ctrl+shift+left", shortcutContext=2)
+menuBar.addCommand("Edit/Node/Move/Right (large)", 'L_moveNodes.moveSel_right(large = True)', "ctrl+shift+right", shortcutContext=2)
+menuBar.addCommand("Edit/Node/Move/Up (large)", 'L_moveNodes.moveSel_up(large = True)', "ctrl+shift+up", shortcutContext=2)
+menuBar.addCommand("Edit/Node/Move/Down (large)", 'L_moveNodes.moveSel_down(large = True)', "ctrl+shift+down", shortcutContext=2)

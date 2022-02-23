@@ -1,0 +1,16 @@
+set cut_paste_input [stack 0]
+version 13.1 v2
+push $cut_paste_input
+push 0
+MergeExpression {
+inputs 2
+channel0 {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+expr0 Br/Ar
+expr1 Bg/Ag
+expr2 Bb/Ab
+name MergeExpression1
+label divide
+selected true
+xpos -871
+ypos 5565
+}
