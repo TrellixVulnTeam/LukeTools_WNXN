@@ -67,7 +67,7 @@ def updateWriteName(n=""):
 
         if n.knob("pre").getValue():
             if marmaladeScript:
-                pwrite += '04_PreComp/'
+                pwrite += '03_PreRender/'
             else:
                 pwrite += 'pre/'
             pwritename += 'prerender_'
@@ -109,13 +109,18 @@ def updateWriteName(n=""):
                     pwritename += 'h264_'
             pwritename += 'v' + versionnumber
 
+            if 'pCustomPostfix' in pn.knobs():
+                if pn.knob('pCustomPostfix').getValue():
+                    pwritename += '_' + pn.knob('pCustomPostfix').getValue()
+
         else:
             pwritename += 'v' + versionnumber
+            if 'pCustomPostfix' in pn.knobs():
+                if pn.knob('pCustomPostfix').getValue():
+                    pwritename += '_' + pn.knob('pCustomPostfix').getValue()
             pwritename += '.####'
 
-        if 'pCustomPostfix' in pn.knobs():
-            if pn.knob('pCustomPostfix').getValue():
-                pwritename += '_' + pn.knob('pCustomPostfix').getValue()
+      
 
         pwritename += '.'
 
