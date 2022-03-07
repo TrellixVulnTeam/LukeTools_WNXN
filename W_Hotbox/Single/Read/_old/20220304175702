@@ -2,16 +2,10 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: Limit to Project Range
-# COLOR: #52462c
+# NAME: Reload all Reads
+# COLOR: #2c522c
 #
 #----------------------------------------------------------------------------------------------------------
 
-node = nuke.selectedNode()
-
-first = nuke.Root().knob('first_frame').value()
-last = nuke.Root().knob('last_frame').value()
-
-node.knob('first').setValue(int(first))
-node.knob('last').setValue(int(last))
-
+for read in nuke.allNodes("Read"):
+        read.knob('reload').execute()

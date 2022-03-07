@@ -2,7 +2,7 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: create Camera from VRAY EXR
+# NAME: create Camera from Unreal EXR
 #
 #----------------------------------------------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ def createExrCamVray( node ):
     '''
 
     mDat = node.metadata()
-    reqFields = ['exr/camera%s' % i for i in ('FocalLength', 'Aperture', 'Transform')]
+    reqFields = ['exr/unreal/camera/curPos/%s' % i for i in ('x', 'y', 'z')]
     if not set( reqFields ).issubset( mDat ):
         nuke.critical( 'No metadata for camera found! Please select a read node with EXR metadata from VRay!' )
         return
@@ -49,15 +49,15 @@ def createExrCamVray( node ):
             break
         task.setMessage( 'processing frame %s' % frame )
         
-        hap = node.metadata( 'exr/cameraAperture', frame ) # get horizontal aperture
-        fov = node.metadata( 'exr/cameraFov', frame ) # get camera FOV
+        hap = node.metadata( 'exr/unreal/camera/FinalImage/sensorWidth', frame ) # get horizontal aperture
+        fov = node.metadata( 'exr/unreal/camera/FinalImage/fov', frame ) # get camera FOV
         
-        focal = float(hap) / ( 2.0 * math.tan( math.radians(fov) * 0.5 ) ) # convert the fov and aperture into focal length
+        focal = node.metadata( 'exr/unreal/camera/FinalImage/focalLength', frame ) # get camera FOV
 
         width = node.metadata( 'input/width', frame )
         height = node.metadata( 'input/height', frame )
         aspect = float(width) / float(height) # calulate aspect ratio from width and height
-        vap = float(hap) / aspect # calculate vertical aperture from aspect ratio
+        vap = node.metadata( 'exr/unreal/camera/FinalImage/sensorHeight', frame ) # get horizontal aperture
         
         cam['focal'].setValueAt( float(focal), frame )
         cam['haperture'].setValueAt( float(hap), frame )

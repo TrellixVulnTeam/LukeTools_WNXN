@@ -78,7 +78,7 @@ def updateWriteName(n=""):
                 
 
         if n.knob("preLabel").getValue():
-            prelabel = re.sub(r'[\s]', '', n.knob("preLabel").getValue())
+            prelabel = re.sub(r'[\s]', '-', n.knob("preLabel").getValue())
             n.knob("preLabel").setValue(prelabel)
             pwrite += prelabel + '/'
             pwritename += prelabel + '_'

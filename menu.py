@@ -21,6 +21,9 @@ nuke.tprint('LukeTools menu.py')
 
 if __lukescripts_local__:
     nuke.tprint('local LukeTools menu.py')
+
+    from KnobScripter.knob_scripter import *
+
     import L_newProject
     nuke.menu('Nuke').addCommand('Luke/new Project', "L_newProject.L_newProject()")
 
@@ -83,9 +86,6 @@ def addSRPanel():
 
 nuke.menu('Pane').addCommand('SearchReplace', addSRPanel)
 nukescripts.registerPanel('com.ohufx.SearchReplace', addSRPanel)
-
-# currently no Nuke 13 support
-# import knob_scripter
 
 lukeGizmosMenu.addCommand('Retime Camera', 'RetimeCamera.create_RCPanel()')
 

@@ -2,7 +2,7 @@
 #
 # AUTOMATICALLY GENERATED FILE TO BE USED BY W_HOTBOX
 #
-# NAME: create Camera from Unreal EXR
+# NAME: create Camera from RS EXR
 #
 #----------------------------------------------------------------------------------------------------------
 
@@ -15,19 +15,17 @@
 import math
 
 
-def createExrCamVray( node ):
+def createExrCamRS( node ):
     '''
     Create a camera node based on VRay metadata.
     This works specifically on VRay data coming from maya.
     '''
 
     mDat = node.metadata()
-    reqFields = ['exr/unreal/camera/curPos/%s' % i for i in ('x', 'y', 'z')]
+    reqFields = ['exr/rs/camera/%s' % i for i in ('DOFFocusDistance', 'FStop', 'transform')]
     if not set( reqFields ).issubset( mDat ):
-        nuke.critical( 'No metadata for camera found! Please select a read node with EXR metadata from VRay!' )
+        nuke.critical( 'No metadata for camera found! Please select a read node with EXR metadata from RS!' )
         return
-
-    nuke.message( "Creating a camera node based on VRay metadata. This works specifically on VRay data coming from Maya!\n\nIf you get both focal and aperture as they are in the metadata, there's no guarantee your Nuke camera will have the same FOV as the one that rendered the scene (because the render could have been fit to horizontal, to vertical, etc). Nuke always fits to the horizontal aperture. If you set the horizontal aperture as it is in the metadata, then you should use the FOV in the metadata to figure out the correct focal length for Nuke's camera. Or, you could keep the focal as is in the metadata, and change the horizontal_aperture instead. I'll go with the former here. Set the haperture knob as per the metadata, and derive the focal length from the FOV." )
 
     first = node.firstFrame()
     last = node.lastFrame()
@@ -39,7 +37,7 @@ def createExrCamVray( node ):
     cam = nuke.createNode( 'Camera3' )
     cam['useMatrix'].setValue( False )
     
-    for k in ( 'focal', 'haperture', 'vaperture', 'translate', 'rotate'):
+    for k in ( 'focal', 'haperture', 'vaperture', 'translate', 'rotate', 'focal_point'):
         cam[k].setAnimated()
     
     task = nuke.ProgressTask( 'Baking camera from meta data in %s' % node.name() )
@@ -49,21 +47,23 @@ def createExrCamVray( node ):
             break
         task.setMessage( 'processing frame %s' % frame )
         
-        hap = node.metadata( 'exr/unreal/camera/FinalImage/sensorWidth', frame ) # get horizontal aperture
-        fov = node.metadata( 'exr/unreal/camera/FinalImage/fov', frame ) # get camera FOV
+        hap = 1.0 # get horizontal aperture
+        fov = node.metadata( 'exr/rs/camera/fov', frame ) # get camera FOV
         
-        focal = node.metadata( 'exr/unreal/camera/FinalImage/focalLength', frame ) # get camera FOV
+        focal = float(hap) / ( 2.0 * math.tan( math.radians(float(fov)) * 0.5 ) ) # convert the fov and aperture into focal length
 
         width = node.metadata( 'input/width', frame )
         height = node.metadata( 'input/height', frame )
+        focalDistance = node.metadata( 'exr/rs/camera/DOFFocusDistance', frame )
         aspect = float(width) / float(height) # calulate aspect ratio from width and height
-        vap = node.metadata( 'exr/unreal/camera/FinalImage/sensorHeight', frame ) # get horizontal aperture
+        vap = float(hap) / aspect # calculate vertical aperture from aspect ratio
         
         cam['focal'].setValueAt( float(focal), frame )
         cam['haperture'].setValueAt( float(hap), frame )
         cam['vaperture'].setValueAt( float(vap), frame )
+        cam['focal_point'].setValueAt( float(focalDistance), frame )
         
-        matrixCamera = node.metadata( 'exr/cameraTransform', frame ) # get camera transform data
+        matrixCamera = node.metadata( 'exr/rs/camera/transform', frame ) # get camera transform data
         
         # create a matrix to shove the original data into 
         matrixCreated = nuke.math.Matrix4()
@@ -71,7 +71,7 @@ def createExrCamVray( node ):
         for k,v in enumerate( matrixCamera ):
             matrixCreated[k] = v
         
-        matrixCreated.rotateX( math.radians(-90) ) # this is needed for VRay, it's a counter clockwise rotation
+        matrixCreated.rotateY( math.radians(-180) ) # this is needed for VRay, it's a counter clockwise rotation
         translate = matrixCreated.transform( nuke.math.Vector3(0,0,0) )  # get a vector that represents the camera translation   
         rotate = matrixCreated.rotationsZXY() # give us xyz rotations from cam matrix (must be converted to degrees)
     
@@ -91,4 +91,4 @@ except:
     nuke.critical( 'No node selected! Please select a read node with EXR metadata from VRay!' )
 
 if node is not None:
-    createExrCamVray( node )
+    createExrCamRS( node )
