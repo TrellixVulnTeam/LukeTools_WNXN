@@ -37,17 +37,10 @@ nuke.pluginAddPath('./higx/PointRender')
 nuke.pluginAddPath('gizmos')
 nuke.pluginAddPath('pixelfudger')
 # nuke.pluginAddPath( './gizmos/bm_NukeTools' )
-# nuke.pluginAddPath( 'cryptomatte' )
 
 # Icons
 nuke.pluginAddPath('icons')
 
-# Gradient Editor
-# nuke.pluginAddPath('./GradientEditor')
-# nuke.pluginAddPath('./GradientEditor/icons')
-# nuke.pluginAddPath('./GradientEditor/tools')
-# nuke.pluginAddPath('./GradientEditor/grapichs')
-# nuke.pluginAddPath('./GradientEditor/python')
 
 # AutoFlare
 nuke.pluginAddPath('AutoFlare')
@@ -55,5 +48,4 @@ nuke.pluginAddPath('./AutoFlare/BOKEHS')
 nuke.pluginAddPath('./AutoFlare/BOKEHS/polygons')
 
 
-# nuke.pluginAddPath('rv_ocio')
 

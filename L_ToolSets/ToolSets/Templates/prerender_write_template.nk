@@ -2,46 +2,47 @@ set cut_paste_input [stack 0]
 version 13.1 v2
 BackdropNode {
  inputs 0
- name BackdropNode8
+ name BackdropNode6
  tile_color 0x7b5c00ff
  label prerender
  note_font_size 44
  selected true
- xpos -771
- ypos -2022
+ xpos 312
+ ypos -1569
  bdwidth 576
  bdheight 489
 }
 push $cut_paste_input
 Dot {
- name Dot1
+ name Dot5
  selected true
- xpos -391
- ypos -1857
+ xpos 692
+ ypos -1404
 }
-set N6282f800 [stack 0]
+set Nbe99e400 [stack 0]
+Switch {
+ which 1
+ name Switch2
+ selected true
+ xpos 658
+ ypos -1248
+ disable true
+}
+push $Nbe99e400
 Write {
- file E:/_VFX/21452892HAM_Proof3.0/05_Work/06_Shots/SR/S010/02_Render/05_MainComp/v001/exr/OLAY_SR_S010_MainComp_v001.####.exr
+ file E:/_VFX/21452892HAM_Proof3.0/05_Work/06_Shots/ATC/S310/02_Render/03_PreRender/v002/exr/OLAY_ATC_S310_MainComp_prerender_v002_ls.####.exr
  file_type exr
  first_part rgba
  create_directories true
- name Write1
+ name Write2
  selected true
- xpos -621
- ypos -1872
+ xpos 462
+ ypos -1419
  addUserKnob {20 Luke}
  addUserKnob {6 pre l "Pre Render" -STARTLINE}
+ pre true
  addUserKnob {1 preLabel l "Pre Render Label"}
  addUserKnob {1 versionOverride l "Render Version Override"}
  addUserKnob {22 applyNaming l Apply T L_callbacks.updateWriteName(nuke.thisNode()) +STARTLINE}
  addUserKnob {6 override_all l "Disable write node naming callback" +STARTLINE}
-}
-push $N6282f800
-Switch {
- which 1
- name Switch1
- selected true
- xpos -425
- ypos -1701
- disable true
 }
