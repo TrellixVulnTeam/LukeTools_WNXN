@@ -1,0 +1,29 @@
+set cut_paste_input [stack 0]
+version 13.1 v2
+push $cut_paste_input
+Expression {
+temp_name0 dist
+temp_expr0 sqrt(pow(x-center.x,2)+pow(y-center.y,2))
+temp_name1 distn
+temp_expr1 "dist/(width/2 + height/2)*ripplegrow+minSize+(1-ripplegrow)"
+expr0 "sin((hypot(x-center.x, y-center.y )) / (size*distn) +phase)"
+expr1 "sin((hypot(x-center.x, y-center.y )+phase) / (10*size*distn))"
+expr2 "sin((hypot(x-center.x, y-center.y )+phase) / (10*size*distn))"
+expr3 "sin((hypot(x-center.x, y-center.y )+phase) / (10*size*distn))"
+name waterRipples
+selected true
+xpos -2916
+ypos -2505
+addUserKnob {20 User}
+addUserKnob {7 size R 0 10}
+size 10
+addUserKnob {12 center}
+center {1024 1024}
+addUserKnob {7 phase R 0 1000}
+phase {{frame*speed}}
+addUserKnob {7 speed R -1 1}
+speed -0.28
+addUserKnob {7 minSize}
+addUserKnob {7 ripplegrow}
+ripplegrow 0.955
+}

@@ -56,6 +56,8 @@ if (ret):
     
     frame_range = nuke.FrameRange( frames )
     
+    newNodes = []
+    
     selection = nuke.selectedNodes()
     
     for n in selection:
@@ -85,4 +87,7 @@ if (ret):
                     
         c.setXYpos(int(xpos), int(ypos) + 70)
         c["selected"].setValue(0)
+        newNodes.append(c)
     
+    for n in newNodes:
+        n["selected"].setValue(True)

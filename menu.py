@@ -17,10 +17,15 @@ import L_createRead
 import nukescripts
 import nuke
 
+from KnobScripter.knob_scripter import *
+
+
 nuke.tprint('LukeTools menu.py')
 
 if __lukescripts_local__:
     nuke.tprint('local LukeTools menu.py')
+
+
     import L_newProject
     nuke.menu('Nuke').addCommand('Luke/new Project', "L_newProject.L_newProject()")
 
@@ -29,13 +34,6 @@ if __lukescripts_local__:
     nuke.addKnobChanged(L_callbacks.updateWriteNameCallback, nodeClass="Write")
     nuke.addOnCreate(L_callbacks.writeNodeFields, nodeClass="Write")
     nuke.addOnScriptSave(L_callbacks.updateAllWriteNames)
-
-    # knobDefaults local
-    # nuke.knobDefault('Root.workingSpaceLUT', "acescg")
-    # nuke.knobDefault('Root.int8Lut', "out_srgb")
-    # nuke.knobDefault('Root.int16Lut', "out_srgb")
-    # nuke.knobDefault('Root.logLut', "logc3ei800_alexawide")
-    # nuke.knobDefault('Root.floatLut', "acescg")
 
     nuke.knobDefault('Root.format', "HD_1080")
     nuke.knobDefault('Root.fps', "25")
@@ -48,9 +46,9 @@ if __lukescripts_local__:
     nuke.knobDefault('Write.write_full_layer_names', "1")
     nuke.knobDefault('Write.standard layer name format', "1")
 
-# knobDefaults
 
 nuke.knobDefault('Roto.cliptype', "0")
+nuke.knobDefault('RotoPaint.cliptype', "0")
 nuke.knobDefault('Merge.bbox', "B")
 nuke.knobDefault('ChannelMerge.bbox', "union")
 nuke.knobDefault('Copy.bbox', "B side")
@@ -83,9 +81,6 @@ def addSRPanel():
 
 nuke.menu('Pane').addCommand('SearchReplace', addSRPanel)
 nukescripts.registerPanel('com.ohufx.SearchReplace', addSRPanel)
-
-# currently no Nuke 13 support
-# import knob_scripter
 
 lukeGizmosMenu.addCommand('Retime Camera', 'RetimeCamera.create_RCPanel()')
 

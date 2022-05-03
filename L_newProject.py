@@ -77,7 +77,12 @@ def L_newProject():
         pfolder = proot + pproject+'/'+pshot+'/'
 
         pscripts = pfolder+'scripts/'
-        pscriptname = pscripts + pCustomPrefix + '_' + pproject + '_' + pshot + '_' + ptask + '_v001.nk'
+        pscriptname = pscripts
+
+        if pCustomPrefix:
+            pscriptname += pCustomPrefix + '_'
+
+        pscriptname += pproject + '_' + pshot + '_' + ptask + '_v001.nk'
 
         if not os.path.isdir(pscripts) and psave:
             os.makedirs(pscripts)

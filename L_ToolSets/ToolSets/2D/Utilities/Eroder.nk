@@ -1,0 +1,104 @@
+set cut_paste_input [stack 0]
+version 13.1 v2
+push 0
+push $cut_paste_input
+Group {
+inputs 2
+name Eroder
+selected true
+xpos -914
+ypos 1088
+addUserKnob {20 Eroder}
+addUserKnob {14 killdarks l "kill dark" R 0 100}
+killdarks 1
+addUserKnob {14 killbright l "kill bright" R 0 100}
+killbright 1
+addUserKnob {14 blur R 0 100}
+}
+Input {
+inputs 0
+name Inputmask
+xpos -740
+ypos -644
+number 1
+}
+Invert {
+channels alpha
+name Invert1
+xpos -740
+ypos -448
+}
+Dot {
+name Dot1
+xpos -706
+ypos -344
+}
+Input {
+inputs 0
+name Input
+xpos -884
+ypos -644
+}
+Dot {
+name Dot4
+xpos -850
+ypos -589
+}
+set Nd07d5000 [stack 0]
+Dot {
+name Dot3
+xpos -944
+ypos -589
+}
+Dot {
+name Dot2
+xpos -944
+ypos -344
+}
+push $Nd07d5000
+Dilate {
+size {{parent.killdarks} {parent.killdarks}}
+name Dilate1
+xpos -884
+ypos -549
+}
+Dilate {
+size {{-parent.killdarks} {-parent.killdarks}}
+name Dilate2
+xpos -884
+ypos -513
+}
+Dilate {
+size {{-parent.killbright} {-parent.killbright}}
+name Dilate3
+xpos -884
+ypos -477
+}
+Dilate {
+size {{parent.killbright} {parent.killbright}}
+name Dilate4
+xpos -884
+ypos -441
+}
+Blur {
+size {{parent.blur} {parent.blur}}
+name Blur4
+selected true
+xpos -884
+ypos -405
+}
+Merge2 {
+inputs 2+1
+operation copy
+bbox B
+name Merge1
+xpos -884
+ypos -347
+disable {{"!\[exists parent.input1]"}}
+}
+Output {
+name Output1
+xpos -884
+ypos -305
+}
+end_group
