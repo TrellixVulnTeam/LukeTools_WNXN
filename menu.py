@@ -48,6 +48,7 @@ if __lukescripts_local__:
 
 
 nuke.knobDefault('Roto.cliptype', "0")
+nuke.knobDefault('RotoPaint.cliptype', "0")
 nuke.knobDefault('Merge.bbox', "B")
 nuke.knobDefault('ChannelMerge.bbox', "union")
 nuke.knobDefault('Copy.bbox', "B side")

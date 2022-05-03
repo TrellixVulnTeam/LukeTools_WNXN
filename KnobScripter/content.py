@@ -93,23 +93,31 @@ blink_keyword_dict = {
 
 default_snippets = {
                         "all": [
-                            [" b","[$$]"], # In nuke panes, Nuke doesn't allow the [] keys with is a pain
-                            ["b","[$$]"], # In nuke panes, Nuke doesn't allow the [] keys with is a pain
+                            [" b","[$$]"], # In nuke panes, most times Nuke doesn't allow the [] keys with is a pain
+                            ["b","[$$]"], # In nuke panes, most times Nuke doesn't allow the [] keys with is a pain
                         ],
                         "blink": [
                             ["img","Image<eRead, eAccessPoint, eEdgeClamped> $$src$$;"],
                             ["kernel","kernel $$SaturationKernel$$ : ImageComputationKernel <ePixelWise>\n{\n\n}"],
                         ],
                         "python": [
-                            ["try","try:\n    $$\nexcept:\n    pass"],
-                            ["tn","nuke.thisNode()"],
-                            ["tk","nuke.thisKnob()"],
-                            ["sns","nuke.selectedNodes()"],
-                            ["sn","nuke.selectedNode()"],
+                            ["an","nuke.allNodes($$)"],
+                            ["cn","nuke.createNode(\"$$\")"],
+                            ["cx","xpos()+$_$.screenWidth()/2"],
+                            ["cy","ypos()+$_$.screenHeight()/2"],
+                            ["deselect","[n.setSelected(False) for n in $$nuke.selectedNodes()$$]"],
+                            ["docs","\"\"\"\nThis is an example of Google style.\n\nArgs:\n    param1: This is the first param.\n    param2: This is a second param.\n\nReturns:\n    This is a description of what is returned.\n\nRaises:\n    KeyError: Raises an exception.\n\"\"\""],
+                            ["nodename","$Node title$ = nuke.thisNode()\n$Node title$_name = $Node title$.name()"],
                             ["ntn","nuke.toNode($$)"],
                             ["p","print($$)"],
-                            ["an","nuke.allNodes($$)"],
-                            ["deselect","[n.setSelected(False) for n in $$nuke.selectedNodes()$$]"],
+                            ["sn","nuke.selectedNode()"],
+                            ["sns","nuke.selectedNodes()"],
+                            ["tk","nuke.thisKnob()"],
+                            ["tn","nuke.thisNode()"],
+                            ["try","try:\n    $$\nexcept:\n    pass"],
+                            ["x","xpos()"],
+                            ["xy","$node$_pos = [$node$.xpos(),$node$.ypos()]\n"],
+                            ["y","ypos()"],
                         ]
                     }
 
