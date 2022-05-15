@@ -1,6 +1,0 @@
-""" Version/author information """
-__version__ = "3.0"
-__author__ = "Adrian Pueyo"
-__date__ = "Apr 25 2021"
-__mail__ = "pueyovfx@gmail.com"
-__web__ = "www.adrianpueyo.com"

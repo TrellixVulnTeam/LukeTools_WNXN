@@ -2,108 +2,56 @@ import convertGizmosToGroups
 import sb_convertCornerPin
 import W_hotboxManager
 import W_hotbox
-import AnimationMaker
 import AlignDots
-import L_dragDropHandler
-import L_ToolSets
-import RetimeCamera
-import SearchReplacePanel
+
 import labelConnector
 import channel_hotbox
 import sb_backdrop
-import pixelfudger
-import L_openInFileBrowser
-import L_createRead
-import nukescripts
-import nuke
 
-from KnobScripter.knob_scripter import *
+import nukescripts
+
+####################################################################################
+# ADD THIS TO YOUR meu.py IN YOUR .nuke FODLER
+# nuke.pluginAddPath('PATH_TO_THIS_FOLDER')
+####################################################################################
+
+####################################################################################
+# WENN DU NUR DAS NST WILLST, SCHMEISS ALLES WEG AUSSER DIE ZWEI HIER
+####################################################################################
+import nuke
+nuke.pluginAddPath('./NukeSurvivalToolkit')
 
 
 nuke.tprint('LukeTools menu.py')
+# nuke.knobDefault('Roto.cliptype', "0")
+# nuke.knobDefault('RotoPaint.cliptype', "0")
+# nuke.knobDefault('Merge.bbox', "B")
+# nuke.knobDefault('ChannelMerge.bbox', "union")
+# nuke.knobDefault('Copy.bbox', "B side")
 
-if __lukescripts_local__:
-    nuke.tprint('local LukeTools menu.py')
-
-
-    import L_newProject
-    nuke.menu('Nuke').addCommand('Luke/new Project', "L_newProject.L_newProject()")
-
-    import L_callbacks
-
-    nuke.addKnobChanged(L_callbacks.updateWriteNameCallback, nodeClass="Write")
-    nuke.addOnCreate(L_callbacks.writeNodeFields, nodeClass="Write")
-    nuke.addOnScriptSave(L_callbacks.updateAllWriteNames)
-
-    nuke.knobDefault('Root.format', "HD_1080")
-    nuke.knobDefault('Root.fps', "25")
-    nuke.knobDefault('Root.first_frame', "1001")
-    nuke.knobDefault('Root.last_frame', "1100")
-    nuke.knobDefault('Root.lock_range', "1")
-
-    nuke.knobDefault('Write.create_directories', "1")
-    nuke.knobDefault('Write.file_type', "exr")
-    nuke.knobDefault('Write.write_full_layer_names', "1")
-    nuke.knobDefault('Write.standard layer name format', "1")
-
-
-nuke.knobDefault('Roto.cliptype', "0")
-nuke.knobDefault('RotoPaint.cliptype', "0")
-nuke.knobDefault('Merge.bbox', "B")
-nuke.knobDefault('ChannelMerge.bbox', "union")
-nuke.knobDefault('Copy.bbox', "B side")
-
-nuke.menu('Nuke').addCommand('Luke/create Read', "L_createRead.createReadFromWrite()", "shift+r", shortcutContext=2)
-
-nuke.menu('Nuke').addCommand('Luke/Open in File Browser',
-                             "L_openInFileBrowser.openInFileBrowser()", "ctrl+shift+e")
 
 # Menues
 lukeGizmosMenu = nuke.toolbar("Nodes").addMenu("Luke")
-
 lukeGizmosMenu.addCommand("sb Backdrop", 'sb_backdrop.sb_backdrop()', 'alt+b', shortcutContext=2)
 
-nuke.menu('Nuke').findItem('Edit').addCommand('HotBox', 'channel_hotbox.start()', 'alt+v')
+menuBar = nuke.menu("Nuke")
 
-nuke.menu('Nuke').addCommand('Luke/Make connector', "labelConnector.makeConnector()",
+menuBar.findItem('Edit').addCommand('HotBox', 'channel_hotbox.start()', 'alt+v')
+
+menuBar.addCommand('Luke/Make connector', "labelConnector.makeConnector()",
                              'alt+shift+A', shortcutContext=2)  # also renames an existing connector
-nuke.menu('Nuke').addCommand('Luke/Connect connectors', "labelConnector.runLabelMatch()",
+menuBar.addCommand('Luke/Connect connectors', "labelConnector.runLabelMatch()",
                              'A', shortcutContext=2)  # standard run to match labels, connect nodes, or make new connections
-nuke.menu('Nuke').addCommand('Luke/Force Connect connectors', "labelConnector.runLabelMatch(forceShowUi = True)",
+menuBar.addCommand('Luke/Force Connect connectors', "labelConnector.runLabelMatch(forceShowUi = True)",
                              'alt+A', shortcutContext=2)  # force show UI to make new connection when a single Node is selected
 
 
-def addSRPanel():
-    '''Run the panel script and add it as a tab into the pane it is called from'''
-    myPanel = SearchReplacePanel.SearchReplacePanel()
-    return myPanel.addToPane()
+# menuBar.findItem('Edit').findItem('Extract').setShortcut('e')
 
-
-nuke.menu('Pane').addCommand('SearchReplace', addSRPanel)
-nukescripts.registerPanel('com.ohufx.SearchReplace', addSRPanel)
-
-lukeGizmosMenu.addCommand('Retime Camera', 'RetimeCamera.create_RCPanel()')
-
-L_ToolSets.createToolsetsMenu(nuke.menu("Nodes"))
-
-nuke.menu('Nuke').findItem('Edit').findItem('Extract').setShortcut('e')
-
-# drag n drop handler
-nukescripts.drop.addDropDataCallback(L_dragDropHandler.dropHandler)
-
-nuke.menu('Nuke').addCommand('Luke/Align Dots', "AlignDots.AlignDots()", "alt+.", shortcutContext=2)
+menuBar.addCommand('Luke/Align Dots', "AlignDots.AlignDots()", "alt+.", shortcutContext=2)
 
 lukeGizmosMenu.addCommand('Luke/sb_convertCornerPin', "sb_convertCornerPin.sb_convertCornerPin()")
 
-lukeGizmosMenu.addCommand('Luke/convertGizmosToGroups', "convertGizmosToGroups.convertGizmosToGroups()")
-
-nuke.pluginAddPath('./ParticlesCollection')
-
-nuke.pluginAddPath('./NukeSurvivalToolkit')
-
-nuke.pluginAddPath('./Deadline')
-
-menuBar = nuke.menu("Nuke")
 
 import W_smartAlign
 
